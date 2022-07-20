@@ -12,11 +12,22 @@ repositories {
     mavenCentral()
 }
 
+// IntelliJ 프로젝트 의존성 수동 업데이트(View->Tool Windows->Gralde    project 우클릭 -> Refresh Gradle Dependencies
+
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-web-services'
     implementation 'junit:junit:4.13.2'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'
+    // 스프링부트 환경에서는 내장 톰캣에 JSP 엔진을 포함하지 않는다(따라서 따로 의존성 부여를 한다)
+    // (하단에 위치시키면 인식 불가 오류가 발생하는 경우 발생, 자동 리프레시 X)
+    implementation 'javax.servlet:jstl'
+    // jstl 관련 의존성
+
+
+
 }
 
 tasks.named('test') {
