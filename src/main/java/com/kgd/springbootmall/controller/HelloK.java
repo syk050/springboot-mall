@@ -9,5 +9,5 @@ public class HelloK {
     @GetMapping("/test")
     public String test() {
         return "Hi";
-    }
+    }  // test
 }
