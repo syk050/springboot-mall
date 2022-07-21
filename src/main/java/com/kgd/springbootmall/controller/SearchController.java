@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 
+// 구조 :
+
 // REST @Controller는 String만 출력됨
 // jsp 파일을 출력하기 위해서는 @Contoller를 사용
 @Controller
