@@ -11,7 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 // REST @Controller는 String만 출력됨
 // jsp 파일을 출력하기 위해서는 @Contoller를 사용
 @Controller
-@RequestMapping("/")
+@RequestMapping("/kgd")
 public class SearchController {
 
     @RequestMapping(value ="search", method = RequestMethod.GET)
