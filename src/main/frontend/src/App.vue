@@ -37,3 +37,7 @@ style : CSS 작성부분
 
 <!-- export default
 export 문은 JS 모듈에서 함수, 객체, 원시 값을 내보낼 때 사용한다. -->
+
+<!--
+https://ko.javascript.info/import-export#ref-4122
+-->
