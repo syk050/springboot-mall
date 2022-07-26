@@ -2,7 +2,8 @@
   <common-header/>
   <div id="content">
     <h2 id="page_title">상품 검색</h2>
-    <h4> <h3 id="search_value">{{search_value}}</h3> 에 대한 상품 검색 결과입니다.</h4>
+    <h3 class="search_value">{{search_value}}</h3>
+    <h4 class="search_value">  에 대한 상품 검색 결과입니다.</h4>
     <hr/>
   </div>
   <common-footer/>
@@ -52,7 +53,7 @@ export default {
   1개 : 4면,  2개 : 세로/가로,  3개 : 위/가로/아래,  4개 : 위/오른쪽/아래/왼쪽
   */
 }
-#search_value{
+.search_value{
   display: inline;        /* h태그 줄넘김 없애기 */
 }
 </style>
