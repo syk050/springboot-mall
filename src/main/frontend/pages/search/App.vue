@@ -5,6 +5,14 @@
     <h3 class="search_value">{{search_value}}</h3>
     <h4 class="search_value">  에 대한 상품 검색 결과입니다.</h4>
     <hr/>
+
+    <div class="search_item_list">
+      <div class="items">
+        <img class="items_img" alt="pancakes" src="../../src/assets/pancakes.jpg">
+        <h4 class="items_name">[성명이네] 맛동산 팬케이크</h4>
+        <h3 class="items_price">8,000원</h3>
+      </div>
+    </div>
   </div>
   <common-footer/>
 </template>
@@ -23,7 +31,7 @@ export default {
   },
   data(){
     return{
-      search_value : "신발"
+      search_value : "음식"
 
     }
   }
@@ -48,13 +56,25 @@ export default {
   margin: 0 auto;         /* content 화면 정 가운데 고정 */
 }
 #page_title{
-  margin : 30px 0px;
+  margin : 50px 0;
   /* 매개변수 개수에 따른 변화
   1개 : 4면,  2개 : 세로/가로,  3개 : 위/가로/아래,  4개 : 위/오른쪽/아래/왼쪽
   */
 }
 .search_value{
   display: inline;        /* h태그 줄넘김 없애기 */
+}
+.items{
+  width: 300px;
+  height: 400px;
+  padding: 50px 0;
+}
+.items_img{
+  width: 240px;
+  height: 320px
+}
+.items_name{
+  margin: 10px 0;
 }
 </style>
 
