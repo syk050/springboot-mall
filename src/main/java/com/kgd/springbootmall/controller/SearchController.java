@@ -1,5 +1,6 @@
 package com.kgd.springbootmall.controller;
 
+import com.kgd.springbootmall.dto.Item;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -7,10 +8,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 // 구조 :
 
-// REST @Controller는 String만 출력됨
+// @RESTController는 String만 출력됨(해당 어노테이션 사용 시, @ResponseBody를 생략가능)
 // jsp 파일을 출력하기 위해서는 @Contoller를 사용
 @Controller
 @RequestMapping("/kgd")
@@ -31,10 +35,18 @@ public class SearchController {
     }
 
     @GetMapping("get")
-    @ResponseBody
-    public String vueGet(){
-        String result = "Get 결과값 : 성공";
-        return result;
+    @ResponseBody                                       // @ResponseBody는 HTTP 규격에 맞는 응답을 만들어주기 위한 Annotation이다.
+    public List<Item> vueGet(){
+        List<Item> items = new ArrayList<>();           // List는 인터페이스 ArrayList는 클래스
+        Item item1 = new Item("aaa", "bbb");
+        Item item2 = new Item("ccc", "ddd");
+        items.add(item1);
+        items.add(item2);
+        return items;
+
+
+//        String result = "Get 결과값 : 성공";
+//        return result;
     }
 
 }

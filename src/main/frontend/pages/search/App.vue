@@ -11,15 +11,18 @@
         <img class="items_img" alt="pancakes" src="../../src/assets/pancakes.jpg">
         <h4 class="items_name">[성명이네] 맛동산 팬케이크</h4>
         <h3 class="items_price">8,000원</h3>
-        <div class="buttons">
-          <button @click="getData()">Get결과출력</button>
-        </div>
         <div>
-          {{}}
+          <div v-for="(item,i) in menu" :key="i">
+            <p>id : {{ item.id }}</p>
+            <p>title : {{ item.title }}</p>
+          </div>
         </div>
+        <button @click="getData()">Get결과출력</button>
       </div>
+
+
     </div>
-  </div>
+  </div>>
   <common-footer/>
 </template>
 
@@ -28,6 +31,7 @@
 <script>
 import commonHeader from "../layout/common-header";       // header 파일
 import commonFooter from "../layout/common-footer";       // footer 파일
+import {loadMenu} from "../api/communication";            // 통신전용 파일의 get 메소드
 
 export default {
   name: 'App',
@@ -37,26 +41,19 @@ export default {
   },
   data(){
     return{
-      search_value : "음식"
-
-    }
+      search_value : "음식",
+      menu:{
+        id: '',
+        title:''
+      }
+    };
+  },
+  created() {                                                   // 임포트 된 loadMenu()를 렌더링 시 생성(created)되도록 한다.
+    loadMenu()
+        .then(response => (this.menu = response.data))              // spring 서버에서 가져온 response 데이터를 변수에 저장
+        .catch(e => console.log(e))
   },
   methods: {
-    getData(){
-      let url = "/kgd/get";                   // 현재 최신버전 axios에는 ':'을 사용 시, Unsupported protocol 에러가 나기에 localhost:8080은 넣지 않아도 됨
-      console.log(url);
-      this.axios.get(url)
-          .then(function(response){
-            let result = response.data;
-            console.log(result);
-            return alert(result)
-          })
-          .catch(function(ex){
-            console.log('get실패', ex);
-          });
-    }
-
-
   }
 
 }
@@ -119,3 +116,15 @@ export 문은 JS 모듈에서 함수, 객체, 원시 값을 내보낼 때 사용
 <!--
 https://ko.javascript.info/import-export#ref-4122
 -->
+
+
+
+
+
+
+<!--
+<div class="show" v-for="(item,i) in menu" :key="i">
+          <p>id : {{ item.id }}</p>
+          <p>title : {{ item.title }}</p>
+</div>
+          -->
