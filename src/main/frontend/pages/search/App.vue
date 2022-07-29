@@ -11,6 +11,12 @@
         <img class="items_img" alt="pancakes" src="../../src/assets/pancakes.jpg">
         <h4 class="items_name">[성명이네] 맛동산 팬케이크</h4>
         <h3 class="items_price">8,000원</h3>
+        <div class="buttons">
+          <button @click="getData()">Get결과출력</button>
+        </div>
+        <div>
+          {{}}
+        </div>
       </div>
     </div>
   </div>
@@ -34,6 +40,23 @@ export default {
       search_value : "음식"
 
     }
+  },
+  methods: {
+    getData(){
+      let url = "/kgd/get";                   // 현재 최신버전 axios에는 ':'을 사용 시, Unsupported protocol 에러가 나기에 localhost:8080은 넣지 않아도 됨
+      console.log(url);
+      this.axios.get(url)
+          .then(function(response){
+            let result = response.data;
+            console.log(result);
+            return alert(result)
+          })
+          .catch(function(ex){
+            console.log('get실패', ex);
+          });
+    }
+
+
   }
 
 }

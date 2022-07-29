@@ -1,8 +1,13 @@
 import { createApp } from 'vue'
 import App from './App.vue'
-import store from '@/store'
+import axios from 'axios'                           // aios 모듈 가져오기(이전에 npm install axios 로 설치해야 함)
+// import store from '@/store'
 
-createApp(App).use(store).mount('#app')
+
+const app = createApp(App)
+app.config.globalProperties.axios = axios;          //axios 모듈 장작
+app.mount('#app')
+// createApp(App).use(store).mount('#app')
 
 
 // 가장 먼저 실행되는 자바스크립트 파일,  vue 인스턴스를 생성하는 역할

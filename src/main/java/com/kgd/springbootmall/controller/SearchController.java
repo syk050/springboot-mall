@@ -1,8 +1,10 @@
 package com.kgd.springbootmall.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 
@@ -26,6 +28,13 @@ public class SearchController {
 
         return mv;
 
+    }
+
+    @GetMapping("get")
+    @ResponseBody
+    public String vueGet(){
+        String result = "Get 결과값 : 성공";
+        return result;
     }
 
 }
