@@ -1,5 +1,6 @@
 package com.kgd.springbootmall.dto;
 
+// DTO의 getter/setter/generator 생성 단축키 : alt + insert   !!!!!!!!!!!!!
 public class Item {
     private String id;
     private String title;
