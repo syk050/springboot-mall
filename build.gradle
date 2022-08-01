@@ -12,7 +12,9 @@ repositories {
     mavenCentral()
 }
 
-// IntelliJ 프로젝트 의존성 수동 업데이트(View->Tool Windows->Gralde    project 우클릭 -> Refresh Gradle Dependencies
+// !!!!!!!!
+// -------- IntelliJ 프로젝트 의존성 수동 업데이트---------
+// (View->Tool Windows->Gralde    project 우클릭 -> Refresh Gradle Dependencies
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -27,6 +29,9 @@ dependencies {
     implementation 'javax.servlet:jstl'
     // jstl 관련 의존성
 
+    runtimeOnly 'org.mariadb.jdbc:mariadb-java-client' // MariaDB
+    implementation group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '2.4.0'
+    // DB 연결관련 의존성
 
     // implementation 과 compile의 차이
     // compile은 연결된 API 모두가 프로젝트에 의해 노출되고, implementation은 노출되지 않는다.(gradle 3.0 이상부터는 compile 사용을 권장X)
