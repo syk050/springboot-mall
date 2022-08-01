@@ -29,9 +29,13 @@ dependencies {
     implementation 'javax.servlet:jstl'
     // jstl 관련 의존성
 
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     runtimeOnly 'org.mariadb.jdbc:mariadb-java-client' // MariaDB
     implementation group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '2.4.0'
     // DB 연결관련 의존성
+
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
 
     // implementation 과 compile의 차이
     // compile은 연결된 API 모두가 프로젝트에 의해 노출되고, implementation은 노출되지 않는다.(gradle 3.0 이상부터는 compile 사용을 권장X)
