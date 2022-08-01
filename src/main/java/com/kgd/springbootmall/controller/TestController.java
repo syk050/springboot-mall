@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/test")
+@RequestMapping("/kgd/test")
 public class TestController {
     private final TestService testService;
 
