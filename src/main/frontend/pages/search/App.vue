@@ -5,19 +5,12 @@
     <h3 class="search_value">{{search_value}}</h3>
     <h4 class="search_value">  에 대한 상품 검색 결과입니다.</h4>
     <hr/>
-
+<!--  DB에서 날마다 추천 상품 받아서 전송 -->
     <div class="search_item_list">
-      <div class="items">
+      <div class="items" v-for="(item,i) in menu" :key="i">
         <img class="items_img" alt="pancakes" src="../../src/assets/pancakes.jpg">
-        <h4 class="items_name">[성명이네] 맛동산 팬케이크</h4>
-        <h3 class="items_price">8,000원</h3>
-        <div>
-          <div v-for="(item,i) in menu" :key="i">
-            <p>id : {{ item.id }}</p>
-            <p>title : {{ item.title }}</p>
-          </div>
-        </div>
-        <button @click="getData()">Get결과출력</button>
+        <h4 class="items_name">[성명이네] 맛동산 팬케이크 {{item.id}}</h4>
+        <h3 class="items_price">8,000원 {{item.title}}</h3>
       </div>
 
 
@@ -39,7 +32,7 @@ export default {
     'common-header' : commonHeader,
     'common-footer' : commonFooter
   },
-  data(){
+  data(){                                                 // data에는 변수를 저장
     return{
       search_value : "음식",
       menu:{
@@ -48,9 +41,9 @@ export default {
       }
     };
   },
-  created() {                                                   // 임포트 된 loadMenu()를 렌더링 시 생성(created)되도록 한다.
+  created() {                                               // 임포트 된 loadMenu()를 렌더링 시 생성(created, 화면 생성)되도록 한다.
     loadMenu()
-        .then(response => (this.menu = response.data))              // spring 서버에서 가져온 response 데이터를 변수에 저장
+        .then(response => (this.menu = response.data))      // spring 서버에서 가져온 response 데이터를 변수에 저장
         .catch(e => console.log(e))
   },
   methods: {
@@ -68,7 +61,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 20px;
   min-width: 1000px;
 }
 #content{
@@ -85,9 +77,11 @@ export default {
   display: inline;        /* h태그 줄넘김 없애기 */
 }
 .items{
+  display: inline-block;
+  margin-right: 10px;
   width: 300px;
-  height: 400px;
-  padding: 50px 0;
+  height: 500px;
+  padding: 50px 20px;
 }
 .items_img{
   width: 240px;
