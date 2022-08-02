@@ -29,6 +29,9 @@ module.exports = defineConfig({
       // 본래 빌드를 하고 테스트를 하는 방식이었으나
       // vue 서버를 기동시키고 해당 코드를 저장시키면, 즉시 서버 웹에 반영되는 이점이 있어서 vue를 사용한다.
 
+    },
+    itemadd: {
+
     }
   },
   devServer : {
