@@ -24,6 +24,6 @@ public class RepositoryTest {
         com.kgd.springbootmall.entity.Test tmp_user = new com.kgd.springbootmall.entity.Test(tmp_id, tmp_content);
 
         testRepository.save(tmp_user);
-        Optional<com.kgd.springbootmall.entity.Test> tmp_test = testRepository.findById(tmp_user);
+        Optional<com.kgd.springbootmall.entity.Test> tmp_test = testRepository.findById(tmp_id);
     }
 }
