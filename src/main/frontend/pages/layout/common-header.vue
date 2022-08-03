@@ -6,7 +6,13 @@
       </div>
       <input class="search_input" placeholder="검색어를 입력해주세요" maxlength="20"  />
     </div>
-
+    <div class="category">카테고리</div>
+    <ul class="menu">
+      <li><a href="">신상품</a></li>
+      <li><a href="">베스트</a></li>
+      <li><a href="">알뜰상품</a></li>
+      <li><a href="">특가혜택</a></li>
+    </ul>
   </div>
 </template>
 
@@ -57,5 +63,10 @@ export default {
     border-bottom: 3px solid;
     border-radius: 8px;
     background: transparent;
+  }
+  .menu{
+    display: flex;
+    list-style: none;
+
   }
 </style>
