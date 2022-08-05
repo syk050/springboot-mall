@@ -1,0 +1,11 @@
+JPA(Java Persistent API)
+: 자바 ORM(Object Relational Mapping) 기술에 대한 API 표준 명세를 의미한다.
+쉽게 말해 ORM을 사용하기 위한 인터페이스들을 모아둔 라이브러리라 보면 된다.
+자바 어플리케이션에서 관계형 DB를 사용하는 방법을 정의하는 것들 중 하나
+(JPA는 단순히 명세이기 때문에 구현이 없다) , javax.persistence
+
+Hibernate
+: JPA의 구현체 중 하나로 SQL을 사용하지 않고 직관적인 코드(메소드)를 사용해 조작할 수 있다.
+Hibernate가 SQL을 직접 사용하지 않는다고 해서 JDBC API를 사용하지 않는 것은 아니다.
+어려 장점들이 존재하지만 대부분 편의성에 포진해 있고, 단점으로는 난이도와 성능을 꼽을 수 있다.
+SQL 하드 코딩이 성능이 우월하다.
