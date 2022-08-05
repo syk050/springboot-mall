@@ -16,7 +16,7 @@ import javax.persistence.*;
 @EnableJpaAuditing
 @SpringBootApplication
 @EntityListeners(AuditingEntityListener.class)
-public class Test {
+public class Tests {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
@@ -26,7 +26,7 @@ public class Test {
     private String testContents;
 
     @Builder
-    public Test(Integer testId, String testContents){
+    public Tests(Integer testId, String testContents){
         this.testId = testId;
         this.testContents = testContents;
     }
