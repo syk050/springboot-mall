@@ -34,7 +34,7 @@ export default {
   },
   data(){                                                 // data에는 변수를 저장
     return{
-      search_value : "음식",
+      search_value : "성명이네 맛동산",
       menu:{
         id: '',
         title:''
@@ -42,7 +42,7 @@ export default {
     };
   },
   created() {                                               // 임포트 된 loadMenu()를 렌더링 시 생성(created, 화면 생성)되도록 한다.
-    loadMenu()
+    loadMenu(this.search_value)
         .then(response => (this.menu = response.data))      // spring 서버에서 가져온 response 데이터를 변수에 저장
         .catch(e => console.log(e))
   },
