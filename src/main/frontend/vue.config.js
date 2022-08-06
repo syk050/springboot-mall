@@ -30,9 +30,9 @@ module.exports = defineConfig({
       // vue 서버를 기동시키고 해당 코드를 저장시키면, 즉시 서버 웹에 반영되는 이점이 있어서 vue를 사용한다.
 
     },
-    itemadd: {
-
-    }
+    // itemadd: {
+    //
+    // }  요거 때매 itemadd 페이지가 없습니다 에러남, 경로 처리 요망
   },
   devServer : {
     proxy : {
