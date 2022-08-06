@@ -1,7 +1,6 @@
 package com.kgd.springbootmall.repository;
 
 import org.assertj.core.api.Assertions;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import com.kgd.springbootmall.entity.Tests;
@@ -12,14 +11,12 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Transactional
 @Rollback(value = false)
-public class RepositoryTest {
+public class RepositoryCodeTest {
 
     @Autowired
     private TestRepository testRepository;
