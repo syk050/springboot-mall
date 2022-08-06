@@ -37,7 +37,7 @@ public class RepositoryTest {
 
 
 
-        Tests tmp_user = new Tests(tmp_id, tmp_content);
+        Tests tmp_user = new Tests(tmp_content);
 
         Tests tmp_user2 = testRepository.save(tmp_user);
 

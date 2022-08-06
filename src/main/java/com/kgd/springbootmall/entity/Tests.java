@@ -26,8 +26,7 @@ public class Tests {
     private String testContents;
 
     @Builder
-    public Tests(Integer testId, String testContents){
-        this.testId = testId;
+    public Tests(String testContents){
         this.testContents = testContents;
     }
 

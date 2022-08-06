@@ -2,6 +2,7 @@ package com.kgd.springbootmall.service;
 
 
 import com.kgd.springbootmall.dto.TestDto;
+import com.kgd.springbootmall.entity.Tests;
 import com.kgd.springbootmall.repository.TestRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -14,7 +15,11 @@ public class TestService {
     private final TestRepository testRepository;
 
     public TestDto testServiceMethod(String str){
-        TestDto testDto = new TestDto(str);
+        Tests tests = new Tests(str);
+        testRepository.deleteAll();
+        testRepository.resetAuto();
+        Tests return_tests = testRepository.save(tests);
+        TestDto testDto = new TestDto(return_tests.getTestId(), return_tests.getTestContents());
         return testDto;
     }
 }

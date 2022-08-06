@@ -19,7 +19,7 @@ public class TestController {
     public String test(@PathVariable String str){
         TestDto res = testService.testServiceMethod(str);
 
-        return "hello" + res.getTestStr();
+        return "helloword " + res.getTestId() + "님, 내용 : " + res.getTestContents();
     }
 }
 
