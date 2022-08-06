@@ -16,10 +16,10 @@ public class TestController {
     private final TestService testService;
 
     @GetMapping("/{str}")
-    public String test(@PathVariable String str){
+    public TestDto test(@PathVariable String str){
         TestDto res = testService.testServiceMethod(str);
 
-        return "helloword " + res.getTestId() + "님, 내용 : " + res.getTestContents();
+        return res;
     }
 }
 
