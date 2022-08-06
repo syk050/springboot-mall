@@ -10,6 +10,8 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -22,14 +24,19 @@ public class RepositoryTest {
 
     @Test
     public void findIdTest(){
-        Integer tmp_id = 10;
+        Integer tmp_id = 1;
         String tmp_content = "안녕하세요";
 
+        testRepository.deleteAll();
 
         Tests tmp_user = new Tests(tmp_id, tmp_content);
 
         Tests tmp_user2 = testRepository.save(tmp_user);
 
+        Tests tmp_user3 = testRepository.findById(tmp_id);
+
+        System.out.println("-----------------테스트 ID : "+tmp_user2.getTestId());
+        System.out.println("-----------------테스트 ID 5번 : "+tmp_user3.getTestContents());
         Assertions.assertThat(tmp_user).isSameAs(tmp_user2);
     }
 }
