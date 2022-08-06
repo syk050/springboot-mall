@@ -29,12 +29,17 @@ public interface TestRepository extends JpaRepository<Tests, Long>{
     // SQL : 테이블을 대상으로 쿼리
     // JPQL : 엔티티 객체를 대상으로 쿼리
 
-//    @Transactional                                                          // 해당 타깃을 포인트 컷의 대상으로 자동 등록하며 트랜잭션 관리 대상이 된다.
+    @Transactional                                                          // 해당 타깃을 포인트 컷의 대상으로 자동 등록하며 트랜잭션 관리 대상이 된다.
     @Modifying                                                              // @Query 어노테이션을 통해 작성된 INSERT, UPDATE, DELETE(SELECT 제외) 쿼리에서 사용되는 어노테이션
     @Query(                                                                 // nativeQuery 옵션을 사용하면 SQL로 작성가능하다.
-            value="delete table Tests",
+            value="alter table tests auto_increment=1;",
             nativeQuery = true
     )
+    void resetAuto();
+
+
+    @Modifying                                                              // @Query 어노테이션을 통해 작성된 INSERT, UPDATE, DELETE(SELECT 제외) 쿼리에서 사용되는 어노테이션
+    @Query("delete from Tests")
     void deleteAll();
 
 

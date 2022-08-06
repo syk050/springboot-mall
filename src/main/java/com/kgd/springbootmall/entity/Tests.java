@@ -16,16 +16,9 @@ import javax.persistence.*;
 @EnableJpaAuditing
 @SpringBootApplication
 @EntityListeners(AuditingEntityListener.class)
-@SequenceGenerator(
-        name="GENERATOR",           // 식별자 생성기 이름
-        sequenceName = "Gen",       // 데이터베이스에 등록할 sequence명(default = hibernate_seuqence)
-        initialValue = 1,           // sequence 초기값
-        allocationSize = 1          // 미리 할당 받을 시퀀스 수
-
-)
 public class Tests {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "GENERATOR")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)                 // mysql은 identity(기본 키 생성을 DB에 위임하는 전략), oracle은 sequence 사용
     @Column(nullable = false)
     private Integer testId;
 
