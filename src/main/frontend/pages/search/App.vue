@@ -9,11 +9,15 @@
     <div class="search_item_list">
       <div class="items" v-for="(item,i) in menu" :key="i">
         <img class="items_img" alt="pancakes" src="../../src/assets/pancakes.jpg">
-        <h4 class="items_name">[성명이네] 맛동산 팬케이크 {{item.id}}</h4>
-        <h3 class="items_price">8,000원 {{item.title}}</h3>
+        <h4 class="items_name">[성명이네] 맛동산 팬케이크 </h4>
+        <h3 class="items_price">8,000원 </h3>
       </div>
+    </div>
 
-
+    <div>
+      <h1>spring 서버에서 받아온 데이터</h1>
+      <h2>ID : {{menu.id}}</h2>
+      <h3>Contents : {{menu.content}}</h3>
     </div>
   </div>>
   <common-footer/>
@@ -35,15 +39,16 @@ export default {
   data(){                                                 // data에는 변수를 저장
     return{
       search_value : "성명이네 맛동산",
+      server_query : "이게 나오면 성공",
       menu:{
         id: '',
-        title:''
+        content:''
       }
     };
   },
   created() {                                               // 임포트 된 loadMenu()를 렌더링 시 생성(created, 화면 생성)되도록 한다.
-    loadMenu(this.search_value)
-        .then(response => (this.menu = response.data))      // spring 서버에서 가져온 response 데이터를 변수에 저장
+    loadMenu(this.server_query)
+        .then(response => (this.menu.id = response.data.testId, this.menu.content = response.data.testContents, console.log(response)))      // spring 서버에서 가져온 response 데이터를 변수에 저장
         .catch(e => console.log(e))
   },
   methods: {
