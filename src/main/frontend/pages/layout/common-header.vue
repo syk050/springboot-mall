@@ -5,6 +5,7 @@
         <img id="header_img" alt="Vue logo" src="../../src/assets/logo.png">
       </div>
       <input class="search_input" placeholder="검색어를 입력해주세요" maxlength="20"  />
+      <button id="search_button" v-on:click="reSearch">reflesh</button>
     </div>
     <div class="category">카테고리</div>
     <ul class="menu">
@@ -36,7 +37,7 @@ export default {
 
   }
   #img_div, .search_input{
-    margin-top: 20px;
+    margin-top: 30px;
   }
 
   #img_div{
@@ -62,7 +63,9 @@ export default {
     border: 0px;
     border-bottom: 3px solid;
     border-radius: 8px;
+    border-color : #6e656a;
     background: transparent;
+    color: #6e656a;
   }
   .menu{
     display: flex;
