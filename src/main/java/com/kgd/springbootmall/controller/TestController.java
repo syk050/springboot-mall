@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/kgd/test")
@@ -16,10 +19,12 @@ public class TestController {
     private final TestService testService;
 
     @GetMapping("/{str}")
-    public TestDto test(@PathVariable String str){
-        TestDto res = testService.testServiceMethod(str);
+    public List<TestDto> test(@PathVariable String str){
+//        TestDto res = testService.testServiceMethod(str);
 
-        return res;
+        List<TestDto> dtos = testService.insertListService(str);
+
+        return dtos;
     }
 }
 
