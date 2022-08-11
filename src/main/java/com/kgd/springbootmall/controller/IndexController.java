@@ -12,10 +12,4 @@ public class IndexController {
 
     private final ItemsService itemsService;
 
-    @GetMapping("/admin/list")
-    public String index(Model model) {
-        model.addAttribute("Items", itemsService.findAllDesc());
-
-        return "Test Test";
-    }
 }

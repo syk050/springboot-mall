@@ -9,16 +9,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ItemsSaveRequestDto {
 
-    private String itemName;
+    private String name;
 
     @Builder
-    public ItemsSaveRequestDto(String itemName) {
-        this.itemName = itemName;
+    public ItemsSaveRequestDto(String name) {
+        this.name = name;
     }
 
     public Items toEntity() {
         return Items.builder()
-                .item_name(itemName)
+                .name(name)
                 .build();
     }
 }
