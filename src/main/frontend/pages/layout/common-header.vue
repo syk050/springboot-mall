@@ -5,7 +5,7 @@
         <img id="header_img" alt="Vue logo" src="../../src/assets/logo.png">
       </div>
       <input class="search_input" placeholder="검색어를 입력해주세요" maxlength="20"  />
-      <button id="search_button" v-on:click="reSearch">reflesh</button>
+
     </div>
     <div class="category">카테고리</div>
     <ul class="menu">

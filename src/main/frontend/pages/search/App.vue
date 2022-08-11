@@ -1,5 +1,6 @@
 <template>
   <common-header/>
+  <button id="reflesh_btn" v-on:click="reSearch">reflesh</button>
   <div id="content">
     <div id="search_value_div">
       <h1 class="search_value">'{{search_value}}'</h1>
@@ -31,7 +32,7 @@
 import commonHeader from "../layout/common-header";       // header 파일
 import commonFooter from "../layout/common-footer";       // footer 파일
 import {loadMenu} from "../api/communication";            // 통신전용 파일의 get 메소드
-import $ from 'jquery';                        // vue에 JQuery 적용
+import $ from 'jquery';                                   // vue에 JQuery 적용
 
 export default {
   name: 'App',
@@ -53,14 +54,23 @@ export default {
       },
     };
   },
-  created() {                                               // 임포트 된 loadMenu()를 렌더링 시 생성(created, 화면 생성)되도록 한다.
+  created() {                                               // Dom Element가 생성되기 전 호출되는 라이프사이클 훅
+    this.$nextTick(() => {
+      console.log("-----------> Netick callback ")
+
+
+      console.log('-----------> 수정 전')
+      console.log('-----------> 수정완료')
+    })
     loadMenu(this.server_query)
         .then(response => (this.menu = response.data, console.log(this.menu)))      // spring 서버에서 가져온 response 데이터를 변수에 저장
         .catch(e => console.log(e))
   },
   methods: {
     reSearch(){
-      $("#content").load(window.location.href + "#content");
+      const dom = document.getElementById('reflesh_btn')
+      dom.style.color = "pink"
+      $("#content").load("http://127.0.0.1:8081/content");
       console.log("dddd");
     }
   }
