@@ -3,6 +3,7 @@ package com.kgd.springbootmall.entity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.Id;
 import javax.persistence.Column;
@@ -11,18 +12,23 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 
 @Getter
+@Setter
 @NoArgsConstructor
-@Entity
+@Entity(name = "test_item_list")
 public class Items {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long item_id;
+    private Long id;
 
-    @Column(length = 50, nullable = false)
-    private String item_name;
+    @Column
+    private String name;
 
     @Builder
-    public Items(String item_name) {
-        this.item_name = item_name;
+    public Items(String name) {
+        this.name = name;
+    }
+
+    public void update(String name) {
+        this.name = name;
     }
 }

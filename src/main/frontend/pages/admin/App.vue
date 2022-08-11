@@ -1,57 +1,25 @@
 <template>
-  <div>
-    <div class="menu">
-      <a v-for="(btn, i) in menus" :key="btn"> {{i}}.{{btn}} </a>
-    </div>
-    <br>
-    <table class="table table-horizontal table-bordered">
-      <thead class="thead-strong">
-      <tr>
-        <th>아이템 ID</th>
-        <th>이름</th>
-      </tr>
-      </thead>
-      <tbody id="tbody">
-      <tr>
-        <td>{{ item_id }}</td>
-        <td>{{ item_name }}</td>
-      </tr>
-      </tbody>
-    </table>
-  </div>
-
+  <commonHeader/> <!-- 헤더 컴포넌트 -->
+  <router-view/>  <!-- 페이지 이동이 표시될 곳 -->
+  <commonFooter/> <!-- 푸터 컴포넌트 -->
 </template>
 
 <script>
+import commonHeader from "../layout/common-header";
+import commonFooter from "../layout/common-footer";
 
 
 export default {
   name: 'App',
-  data() {
-    return {
-      // 데이터 보관함
-      item_id: 1,
-      item_name: "아이템 이름",
-
-      menus: ['물품 등록', '물품 등록', '물품 등록']
-    }
-  },
   components: {
+    commonHeader,
+    commonFooter
   }
 }
 
 </script>
 
 <style>
-.menu{
-  background: darkslateblue;
-  padding: 15px;
-  border-radius: 5px;
-}
-.menu a {
-  color: white;
-  padding: 10px;
-}
 
 </style>
 
