@@ -16,9 +16,9 @@ import javax.persistence.*;
 @EnableJpaAuditing
 @SpringBootApplication
 @EntityListeners(AuditingEntityListener.class)
-public class Test {
+public class Tests {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)                 // mysql은 identity(기본 키 생성을 DB에 위임하는 전략), oracle은 sequence 사용
     @Column(nullable = false)
     private Integer testId;
 
@@ -26,8 +26,7 @@ public class Test {
     private String testContents;
 
     @Builder
-    public Test(Integer testId, String testContents){
-        this.testId = testId;
+    public Tests(String testContents){
         this.testContents = testContents;
     }
 

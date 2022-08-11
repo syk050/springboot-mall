@@ -1,19 +1,25 @@
 <template>
   <common-header/>
   <div id="content">
-    <h2 id="page_title">상품 검색</h2>
-    <h3 class="search_value">{{search_value}}</h3>
-    <h4 class="search_value">  에 대한 상품 검색 결과입니다.</h4>
-    <hr/>
+    <div id="search_value_div">
+      <h1 class="search_value">'{{search_value}}'</h1>
+      <h2 class="search_value">  에 대한 상품 검색 결과입니다.</h2>
+    </div>
+      <hr/>
+
 <!--  DB에서 날마다 추천 상품 받아서 전송 -->
     <div class="search_item_list">
-      <div class="items" v-for="(item,i) in menu" :key="i">
+      <div class="items" v-for="(item,i) in items" :key="i">
         <img class="items_img" alt="pancakes" src="../../src/assets/pancakes.jpg">
-        <h4 class="items_name">[성명이네] 맛동산 팬케이크 {{item.id}}</h4>
-        <h3 class="items_price">8,000원 {{item.title}}</h3>
+        <h4 class="items_name">[성명이네] 맛동산 팬케이크 </h4>
+        <h3 class="items_price">8,000원</h3>
       </div>
+    </div>
 
-
+    <div v-for="(menu,i) in menu" :key="i">
+      <h1>spring 서버에서 받아온 데이터</h1>
+      <h2>ID : {{menu.testId}}</h2>
+      <h3>Contents : {{menu.testContents}}</h3>
     </div>
   </div>>
   <common-footer/>
@@ -25,6 +31,7 @@
 import commonHeader from "../layout/common-header";       // header 파일
 import commonFooter from "../layout/common-footer";       // footer 파일
 import {loadMenu} from "../api/communication";            // 통신전용 파일의 get 메소드
+import $ from 'jquery';                        // vue에 JQuery 적용
 
 export default {
   name: 'App',
@@ -34,19 +41,28 @@ export default {
   },
   data(){                                                 // data에는 변수를 저장
     return{
-      search_value : "음식",
-      menu:{
-        id: '',
-        title:''
-      }
+      search_value : "성명이네 맛동산",
+      server_query : "이게 나오면 성공",
+      menu:[],
+      items:{
+        name : '',
+        price : '',
+        disc_price : '',
+        desc : '',
+        delivery : ''
+      },
     };
   },
   created() {                                               // 임포트 된 loadMenu()를 렌더링 시 생성(created, 화면 생성)되도록 한다.
-    loadMenu()
-        .then(response => (this.menu = response.data))      // spring 서버에서 가져온 response 데이터를 변수에 저장
+    loadMenu(this.server_query)
+        .then(response => (this.menu = response.data, console.log(this.menu)))      // spring 서버에서 가져온 response 데이터를 변수에 저장
         .catch(e => console.log(e))
   },
   methods: {
+    reSearch(){
+      $("#content").load(window.location.href + "#content");
+      console.log("dddd");
+    }
   }
 
 }
@@ -63,25 +79,32 @@ export default {
   color: #2c3e50;
   min-width: 1000px;
 }
+
 #content{
-  width: 1000px;
+  width: 1020px;
   margin: 0 auto;         /* content 화면 정 가운데 고정 */
 }
-#page_title{
-  margin : 50px 0;
+#search_value_div{
+  margin : 50px 0 35px 0;
   /* 매개변수 개수에 따른 변화
   1개 : 4면,  2개 : 세로/가로,  3개 : 위/가로/아래,  4개 : 위/오른쪽/아래/왼쪽
   */
 }
+
+h1.search_value{
+  color: darkblue;
+}
+
 .search_value{
   display: inline;        /* h태그 줄넘김 없애기 */
 }
+
+
 .items{
   display: inline-block;
-  margin-right: 10px;
   width: 300px;
   height: 500px;
-  padding: 50px 20px;
+  padding: 30px 20px 0 20px;
 }
 .items_img{
   width: 240px;

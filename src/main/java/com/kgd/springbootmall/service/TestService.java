@@ -2,10 +2,15 @@ package com.kgd.springbootmall.service;
 
 
 import com.kgd.springbootmall.dto.TestDto;
+import com.kgd.springbootmall.entity.Tests;
 import com.kgd.springbootmall.repository.TestRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @Service
 @Component
@@ -14,9 +19,52 @@ public class TestService {
     private final TestRepository testRepository;
 
     public TestDto testServiceMethod(String str){
-        TestDto testDto = new TestDto(str);
+        Tests tests = new Tests(str);
+
+        testRepository.deleteAll();
+        testRepository.resetAuto();
+
+        Tests return_tests = testRepository.save(tests);
+        TestDto testDto = new TestDto(return_tests.getTestId(), return_tests.getTestContents());
+
         return testDto;
     }
+
+
+    public List<TestDto> insertListService(String str){
+        Tests tests = new Tests(str);
+        Tests tests2 = new Tests(str + " 두 번째");
+
+        List<Tests> testUserList = Arrays.asList(tests, tests2);
+
+        testRepository.deleteAll();
+        testRepository.resetAuto();
+
+        List<Tests> return_tests = testRepository.saveAll(testUserList);
+
+        List<TestDto> testDtos = ListEntitytoDTO(return_tests);
+
+        return testDtos;
+    }
+
+    public List<TestDto> ListEntitytoDTO(List<Tests> tests){
+
+        List<TestDto> testDtos = new ArrayList<>() {};
+        TestDto tmp;
+        for(int i=0; i < tests.size(); i++){
+            tmp = new TestDto(i, tests.get(i).getTestContents());
+            testDtos.add(tmp);
+        }
+
+        return testDtos;
+
+
+    }
+
+
+
+
+
 }
 
 
