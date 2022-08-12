@@ -20,34 +20,28 @@ import java.util.List;
 @RequestMapping("/kgd")
 public class SearchController {
 
-    @RequestMapping(value ="search", method = RequestMethod.GET)
-    public ModelAndView search(){
-//		Model : map구조이다. key, value로 저장되며
-//		model.addAttribute("변수명", 값)으로 저장한다.
-//		url을 리턴하지 않더라도 requstMapping으로 받은 url과 jsp의 이름이 같으면 자동으로 연결시켜준다.
-//		하지만, 찾아서 보여주는 구조이기에 return을 하는 것은 아니므로 model에 값을 담아 전달할 수는 없다.
+//    @RequestMapping(value ="search", method = RequestMethod.GET)
+//    public ModelAndView search(){
+////		Model : map구조이다. key, value로 저장되며
+////		model.addAttribute("변수명", 값)으로 저장한다.
+////		url을 리턴하지 않더라도 requstMapping으로 받은 url과 jsp의 이름이 같으면 자동으로 연결시켜준다.
+////		하지만, 찾아서 보여주는 구조이기에 return을 하는 것은 아니므로 model에 값을 담아 전달할 수는 없다.
+//
+//        ModelAndView mv = new ModelAndView("index")
+//                .addObject("data", "hello");
+//
+//        return mv;
+//
+//    }
+    // 현재는 vue가 이 기능을 하고 있어 필요 없음
 
-        ModelAndView mv = new ModelAndView("index")
-                .addObject("data", "hello");
-
-        return mv;
-
+    
+    @RequestMapping(value ="content", method = RequestMethod.GET)
+    @ResponseBody
+    public String returnContent(){
+        return "dd";
     }
-
-    @GetMapping("get")
-    @ResponseBody                                       // @ResponseBody는 HTTP 규격에 맞는 응답을 만들어주기 위한 Annotation이다.
-    public List<Item> vueGet(){
-        List<Item> items = new ArrayList<>();           // List는 인터페이스 ArrayList는 클래스
-        Item item1 = new Item("aaa", "bbb");
-        Item item2 = new Item("ccc", "ddd");
-        items.add(item1);
-        items.add(item2);
-        return items;
-
-
-//        String result = "Get 결과값 : 성공";
-//        return result;
-    }
+    //content 비동기 갱신용 컨트롤러
 
 }
 
