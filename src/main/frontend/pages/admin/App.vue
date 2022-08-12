@@ -1,19 +1,19 @@
 <template>
-  <commonHeader/> <!-- 헤더 컴포넌트 -->
+<!--  <commonHeader/> &lt;!&ndash; 헤더 컴포넌트 &ndash;&gt;-->
   <router-view/>  <!-- 페이지 이동이 표시될 곳 -->
-  <commonFooter/> <!-- 푸터 컴포넌트 -->
+<!--  <commonFooter/> &lt;!&ndash; 푸터 컴포넌트 &ndash;&gt;-->
 </template>
 
 <script>
-import commonHeader from "../layout/common-header";
-import commonFooter from "../layout/common-footer";
+// import commonHeader from "../layout/common-header";
+// import commonFooter from "../layout/common-footer";
 
 
 export default {
   name: 'App',
   components: {
-    commonHeader,
-    commonFooter
+    // commonHeader,
+    // commonFooter
   }
 }
 
