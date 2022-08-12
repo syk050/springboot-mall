@@ -16,23 +16,23 @@ public class ItemsApiController {
 
     private final ItemsService itemsService;
 
-    @PostMapping("/KGD/items")
+    @PostMapping("/kgd/items")
     public Long save(@RequestBody ItemsSaveRequestDto requestDto) { return itemsService.save(requestDto);}
 
-    @PutMapping("/KGD/items/{id}")
+    @PutMapping("/kgd/items/{id}")
     public Long update(@PathVariable Long id, @RequestBody ItemsUpdateRequestDto requestDto) {
         return itemsService.update(id, requestDto);
     }
 
-    @GetMapping("/KGD/items")
+    @GetMapping("/kgd/items")
     public List<ItemsListResponseDto> itemsList() {
         return itemsService.getItemsList();
     }
 
-    @GetMapping("/KGD/items/{id}")
+    @GetMapping("/kgd/items/{id}")
     public ItemsResponseDto findById(@PathVariable Long id) { return itemsService.findById(id); }
 
-    @DeleteMapping("/KDG/items/{id}")
+    @DeleteMapping("/kgd/items/{id}")
     public Long delete(@PathVariable Long id) {
         itemsService.delete(id);
         return id;
