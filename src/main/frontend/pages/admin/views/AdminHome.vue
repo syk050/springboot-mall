@@ -6,7 +6,7 @@
         <i class="fa fa-remove"></i>
       </a>
       <img src="/w3images/avatar_g2.jpg" style="width:45%;" class="w3-round"><br><br>
-      <h4><b>PORTFOLIO</b></h4>
+      <h4><b>관리자 페이지</b></h4>
       <p class="w3-text-grey">Template by W3.CSS</p>
     </div>
     <div class="w3-bar-block">
@@ -48,50 +48,15 @@
 
     <!-- First Photo Grid-->
     <div class="w3-row-padding">
-      <div class="w3-third w3-container w3-margin-bottom">
-        <img src="/w3images/mountains.jpg" alt="Norway" style="width:100%" class="w3-hover-opacity">
+      <div class="w3-third w3-container w3-margin-bottom" v-for="(item, idx) in list" :key="idx"  v-on:click="fnView(`${item.id}`)">
+        <img src="../../../src/assets/logo.png" alt="Temp Logo" style="width:100%" class="w3-hover-opacity">
         <div class="w3-container w3-white">
-          <p><b>Lorem Ipsum</b></p>
-          <p>Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
-        </div>
-      </div>
-      <div class="w3-third w3-container w3-margin-bottom">
-        <img src="/w3images/lights.jpg" alt="Norway" style="width:100%" class="w3-hover-opacity">
-        <div class="w3-container w3-white">
-          <p><b>Lorem Ipsum</b></p>
-          <p>Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
-        </div>
-      </div>
-      <div class="w3-third w3-container">
-        <img src="/w3images/nature.jpg" alt="Norway" style="width:100%" class="w3-hover-opacity">
-        <div class="w3-container w3-white">
-          <p><b>Lorem Ipsum</b></p>
-          <p>Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Second Photo Grid-->
-    <div class="w3-row-padding">
-      <div class="w3-third w3-container w3-margin-bottom">
-        <img src="/w3images/p1.jpg" alt="Norway" style="width:100%" class="w3-hover-opacity">
-        <div class="w3-container w3-white">
-          <p><b>Lorem Ipsum</b></p>
-          <p>Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
-        </div>
-      </div>
-      <div class="w3-third w3-container w3-margin-bottom">
-        <img src="/w3images/p2.jpg" alt="Norway" style="width:100%" class="w3-hover-opacity">
-        <div class="w3-container w3-white">
-          <p><b>Lorem Ipsum</b></p>
-          <p>Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
-        </div>
-      </div>
-      <div class="w3-third w3-container">
-        <img src="/w3images/p3.jpg" alt="Norway" style="width:100%" class="w3-hover-opacity">
-        <div class="w3-container w3-white">
-          <p><b>Lorem Ipsum</b></p>
-          <p>Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
+          <p><b>{{ item.name }}</b></p>
+          <p class="">
+            <span class="w3-tag w3-blue-grey">Travel</span> <span class="w3-tag w3-blue-grey">New York</span>
+            <span class="w3-tag w3-blue-grey">London</span> <span class="w3-tag w3-blue-grey">IKEA</span>
+            <span class="w3-tag w3-blue-grey">NORWAY</span> <span class="w3-tag w3-blue-grey">DIY</span>
+          </p>
         </div>
       </div>
     </div>
@@ -149,6 +114,9 @@ export default {
 </script>
 
 <style scoped>
-
+.w3-tag {
+  margin-right: 5px;
+  margin-bottom: 5px;
+}
 
 </style>
