@@ -6,7 +6,7 @@
         <i class="fa fa-remove"></i>
       </a>
       <img src="/w3images/avatar_g2.jpg" style="width:45%;" class="w3-round"><br><br>
-      <h4><b>관리자 페이지</b></h4>
+      <h4><b>안녕하세요 admin님</b></h4>
       <p class="w3-text-grey">Template by W3.CSS</p>
     </div>
     <div class="w3-bar-block">
@@ -35,7 +35,7 @@
       <a href="#"><img src="/w3images/avatar_g2.jpg" style="width:65px;" class="w3-circle w3-right w3-margin w3-hide-large w3-hover-opacity"></a>
       <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i class="fa fa-bars"></i></span>
       <div class="w3-container">
-        <h1><b>My Portfolio</b></h1>
+        <h1><b>상품 리스트</b></h1>
         <div class="w3-section w3-bottombar w3-padding-16">
           <span class="w3-margin-right">Filter:</span>
           <button class="w3-button w3-black">ALL</button>
