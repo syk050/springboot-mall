@@ -23,10 +23,11 @@
 
     <!-- First Photo Grid-->
     <div class="w3-row-padding">
-      <div class="w3-third w3-container w3-margin-bottom" v-for="(item, idx) in list" :key="idx"  v-on:click="fnView(`${item.id}`)">
+      <div class="w3-third w3-container w3-margin-bottom">
         <img src="../../../src/assets/logo.png" alt="Temp Logo" style="width:100%" class="w3-hover-opacity">
         <div class="w3-container w3-white">
-          <p><b>{{ item.name }}</b></p>
+          <p><b>{{ id }}</b></p>
+          <p><b>{{ name }}</b></p>
           <p class="">
             <span class="w3-tag w3-blue-grey">Travel</span> <span class="w3-tag w3-blue-grey">New York</span>
             <span class="w3-tag w3-blue-grey">London</span> <span class="w3-tag w3-blue-grey">IKEA</span>
@@ -48,6 +49,30 @@ export default {
   name: "ItemsList",
   components: {
     adminSideNav
+  },
+  data() {
+    return {
+      requestBody: this.$route.query,
+      idx: this.$route.query.idx,
+
+      id: '',
+      name: '',
+    }
+  },
+  mounted() {
+    this.fnGetView()
+  },
+  methods: {
+    fnGetView() {
+      this.$axios.get('/kgd/items/' + this.idx).then(res =>{
+        this.id = res.data.id
+        this.name = res.data.name
+      }).catch(err => {
+        if (err.message.indexOf('Network Error') > -1) {
+          alert('네트워크가 원활하지 않습니다.\n잠시 후 다시 시도해주세요.')
+        }
+      })
+    }
   }
 }
 </script>
