@@ -79,7 +79,7 @@ export default {
     fnView(idx) {
       this.requestBody.idx = idx
       this.$router.push({
-        path: '/kgd/items/' + idx,
+        path: '/admin-item',
         query: this.requestBody
       })
     },
