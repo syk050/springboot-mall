@@ -1,6 +1,8 @@
 <template>
   <common-header/>
-  <button id="reflesh_btn" v-on:click="reSearch">reflesh</button>
+  <button v-on:click="fadeIn">fadeIn</button>
+  <button v-on:click="fadeOut">fadeOut</button>
+  <button v-on:click="reSearch">reSearch</button>
   <div id="content">
     <div id="search_value_div">
       <h1 class="search_value">'{{search_value}}'</h1>
@@ -68,11 +70,22 @@ export default {
   },
   methods: {
     reSearch(){
-      const dom = document.getElementById('reflesh_btn')
-      dom.style.color = "pink"
-      $("#content").load("http://127.0.0.1:8081/content");
-      console.log("dddd");
+      // 여기서 spring boot 서버에서 데이터 받아오고 화면 갱신 알고리즘 적용
+      this.fadeIn();
+      loadMenu("content")
+          .then(response => (this.menu = response.data), this.fadeOut())
+          .catch(console.log(this.menu))
+
+    },
+    fadeIn(){
+      const dom = document.getElementById('content')
+      $(dom).animate({'opacity':'0'},1000)
+    },
+    fadeOut(){
+      const dom = document.getElementById('content')
+      $(dom).animate({'opacity':'1'},1000)
     }
+
   }
 
 }
@@ -144,14 +157,10 @@ export 문은 JS 모듈에서 함수, 객체, 원시 값을 내보낼 때 사용
 https://ko.javascript.info/import-export#ref-4122
 -->
 
+<!-- css에서의 let / var / const 의 역할
+var : 함수 범위로(블록을 벗어나도 사용가능)
+let : 한 block 단위(let는 한 번 지정한 값을 바꿀 수 있다.)
+const : 한 block 단위(const는 한 번 지정한 값을 바꿀 수 없다.)
 
-
-
-
-
-<!--
-<div class="show" v-for="(item,i) in menu" :key="i">
-          <p>id : {{ item.id }}</p>
-          <p>title : {{ item.title }}</p>
-</div>
-          -->
+https://velog.io/@gnb577/HTML-CSS-let-var-const
+-->
