@@ -1,13 +1,14 @@
 package com.kgd.springbootmall.controller;
 
 import com.kgd.springbootmall.dto.Item;
+import com.kgd.springbootmall.dto.ProductDTO;
 import com.kgd.springbootmall.dto.TestDto;
 import com.kgd.springbootmall.entity.Tests;
+import com.kgd.springbootmall.service.SearchService;
+import com.kgd.springbootmall.service.TestService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
@@ -18,9 +19,12 @@ import java.util.List;
 
 // @RESTController는 String만 출력됨(해당 어노테이션 사용 시, @ResponseBody를 생략가능)
 // jsp 파일을 출력하기 위해서는 @Contoller를 사용
-@Controller
+@RestController
+@RequiredArgsConstructor
 @RequestMapping("/kgd")
 public class SearchController {
+
+    private final SearchService searchService;
 
 //    @RequestMapping(value ="search", method = RequestMethod.GET)
 //    public ModelAndView search(){
@@ -49,7 +53,21 @@ public class SearchController {
     }
     //content 비동기 갱신용 컨트롤러
 
+    @GetMapping("{str}")
+    public List<ProductDTO> selectByURLVariable(@PathVariable String str){
+
+        List<ProductDTO> rtn_ProdDTO = searchService
+                .selectByURLName(str);
+
+        return rtn_ProdDTO;
+    }
+
 }
+
+
+
+
+
 
 // https://febdy.tistory.com/65
 // vue 파일을 spring boot 서버로 확인하기 위해서는 npm run build로 늘 빌드해줘야 한다.
