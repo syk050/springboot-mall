@@ -1,3 +1,5 @@
+INSERT INTO test_item_list (name) values ('테스트용 아이템1');
+INSERT INTO test_item_list (name) values ('테스트용 아이템2');
 INSERT INTO test_item_list (name) values ('테스트용 아이템3');
 INSERT INTO test_item_list (name) values ('테스트용 아이템4');
 INSERT INTO test_item_list (name) values ('테스트용 아이템5');

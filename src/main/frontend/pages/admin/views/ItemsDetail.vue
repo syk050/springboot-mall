@@ -1,23 +1,79 @@
 <template>
-<!--  <div class="board-contents">-->
-<!--    <h3>{{ title }}</h3>-->
-<!--    <div>-->
-<!--      <strong class="w3-large">{{ author }}</strong>-->
-<!--      <br>-->
-<!--      <span>{{ createdat }}</span>-->
-<!--    </div>-->
-<!--  </div>-->
+  <!-- Sidebar/menu -->
+  <adminSideNav/>
 
-<!--  <div class="board-contents">-->
-<!--    <span>{{ contents }}</span>-->
-<!--  </div>-->
-  <h1>Items Detail</h1>
+  <!-- Overlay effect when opening sidebar on small screens -->
+  <div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
 
+  <!-- !PAGE CONTENT! -->
+  <div class="w3-main" style="margin-left:300px">
+
+    <!-- Header -->
+    <header id="portfolio">
+      <a href="#"><img src="../../../src/assets/logo.png" style="width:65px;" class="w3-circle w3-right w3-margin w3-hide-large w3-hover-opacity"></a>
+      <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i class="fa fa-bars"></i></span>
+      <div class="w3-container">
+        <h1><b>상품 정보</b></h1>
+        <div class="w3-section w3-bottombar w3-padding-16">
+
+        </div>
+      </div>
+    </header>
+    <!-- Header -->
+
+    <!-- First Photo Grid-->
+    <div class="w3-row-padding">
+      <div class="w3-third w3-container w3-margin-bottom">
+        <img src="../../../src/assets/logo.png" alt="Temp Logo" style="width:100%" class="w3-hover-opacity">
+        <div class="w3-container w3-white">
+          <p><b>{{ id }}</b></p>
+          <p><b>{{ name }}</b></p>
+          <p class="">
+            <span class="w3-tag w3-blue-grey">Travel</span> <span class="w3-tag w3-blue-grey">New York</span>
+            <span class="w3-tag w3-blue-grey">London</span> <span class="w3-tag w3-blue-grey">IKEA</span>
+            <span class="w3-tag w3-blue-grey">NORWAY</span> <span class="w3-tag w3-blue-grey">DIY</span>
+          </p>
+        </div>
+      </div>
+    </div>
+    <!-- First Photo Grid-->
+
+  </div>
+  <!-- !PAGE CONTENT! -->
 </template>
 
 <script>
+import adminSideNav from "./components/AdminSideNav";
+
 export default {
-  name: "ItemsList"
+  name: "ItemsList",
+  components: {
+    adminSideNav
+  },
+  data() {
+    return {
+      requestBody: this.$route.query,
+      idx: this.$route.query.idx,
+
+      id: '',
+      name: '',
+    }
+  },
+  mounted() {
+    this.fnGetView()
+  },
+  methods: {
+    fnGetView() {
+      this.$axios.get('/kgd/items/' + this.idx).then(res =>{
+        this.id = res.data.id
+        this.name = res.data.name
+      }).catch(err => {
+        if (err.message.indexOf('Network Error') > -1) {
+          alert('네트워크가 원활하지 않습니다.\n잠시 후 다시 시도해주세요.')
+        }
+      })
+    }
+  }
 }
 </script>
 
