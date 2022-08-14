@@ -1,29 +1,5 @@
 <template>
-  <!-- Sidebar/menu -->
-  <nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
-    <div class="w3-container">
-      <a href="#" onclick="w3_close()" class="w3-hide-large w3-right w3-jumbo w3-padding w3-hover-grey" title="close menu">
-        <i class="fa fa-remove"></i>
-      </a>
-      <img src="/w3images/avatar_g2.jpg" style="width:45%;" class="w3-round"><br><br>
-      <h4><b>안녕하세요 admin님</b></h4>
-      <p class="w3-text-grey">Template by W3.CSS</p>
-    </div>
-    <div class="w3-bar-block">
-      <a href="#portfolio" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-teal"><i class="fa fa-th-large fa-fw w3-margin-right"></i>PORTFOLIO</a>
-      <a href="#about" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-user fa-fw w3-margin-right"></i>ABOUT</a>
-      <a href="#contact" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-envelope fa-fw w3-margin-right"></i>CONTACT</a>
-    </div>
-    <div class="w3-panel w3-large">
-      <i class="fa fa-facebook-official w3-hover-opacity"></i>
-      <i class="fa fa-instagram w3-hover-opacity"></i>
-      <i class="fa fa-snapchat w3-hover-opacity"></i>
-      <i class="fa fa-pinterest-p w3-hover-opacity"></i>
-      <i class="fa fa-twitter w3-hover-opacity"></i>
-      <i class="fa fa-linkedin w3-hover-opacity"></i>
-    </div>
-  </nav>
-
+  <adminSideNav/>
   <!-- Overlay effect when opening sidebar on small screens -->
   <div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
 
@@ -32,7 +8,7 @@
 
     <!-- Header -->
     <header id="portfolio">
-      <a href="#"><img src="/w3images/avatar_g2.jpg" style="width:65px;" class="w3-circle w3-right w3-margin w3-hide-large w3-hover-opacity"></a>
+      <a href="#"><img src="../../../src/assets/logo.png" style="width:65px;" class="w3-circle w3-right w3-margin w3-hide-large w3-hover-opacity"></a>
       <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i class="fa fa-bars"></i></span>
       <div class="w3-container">
         <h1><b>상품 리스트</b></h1>
@@ -76,6 +52,8 @@
 </template>
 
 <script>
+import adminSideNav from "./components/AdminSideNav";
+
 export default {
   name: "AdminHome",
   data() { //변수 생성
@@ -91,6 +69,7 @@ export default {
     fnGetList() {
       this.$axios.get( "/kgd/items").then((res) => {
         this.list = res.data
+        console.log(res.data)
       }).catch((err) => {
         if (err.message.indexOf('Network Error') > -1) {
           alert('네트워크가 원활하지 않습니다.\n잠시 후 다시 시도해주세요.')
@@ -109,6 +88,9 @@ export default {
         path: '/kgd/items/add'
       })
     }
+  },
+  components: {
+    adminSideNav
   }
 }
 </script>
