@@ -1,6 +1,8 @@
 package com.kgd.springbootmall.controller;
 
 import com.kgd.springbootmall.dto.Item;
+import com.kgd.springbootmall.dto.TestDto;
+import com.kgd.springbootmall.entity.Tests;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,8 +40,12 @@ public class SearchController {
     
     @RequestMapping(value ="content", method = RequestMethod.GET)
     @ResponseBody
-    public String returnContent(){
-        return "dd";
+    public List<TestDto> returnContent(){
+
+        List<TestDto> list = new ArrayList<>();
+        TestDto testDto = new TestDto(1312, "Hello world");
+        list.add(testDto);
+        return list;
     }
     //content 비동기 갱신용 컨트롤러
 
