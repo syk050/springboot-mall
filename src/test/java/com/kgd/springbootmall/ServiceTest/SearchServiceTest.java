@@ -1,7 +1,6 @@
 package com.kgd.springbootmall.ServiceTest;
 
 
-import com.kgd.springbootmall.repository.TestRepository;
 import com.kgd.springbootmall.service.SearchService;
 import org.junit.Before;
 import org.junit.Test;

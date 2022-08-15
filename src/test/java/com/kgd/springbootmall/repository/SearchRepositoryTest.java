@@ -22,6 +22,7 @@ public class SearchRepositoryTest {
     @Autowired
     private SearchRepository searchRepository;
 
+    List<Products> prodList;
     Products prod1;
 
     @Before
@@ -29,17 +30,42 @@ public class SearchRepositoryTest {
         searchRepository.deleteAll();
         searchRepository.resetAuto();
 
-        prod1 = new Products(
-                "제품명", "카테고리", 10000, 10, "설명", false, 2, "셀러"
-        );
+        String name = "제품명";
+        String category = "카테고리";
+        int price = 10000;
+        int dc_rate = 10;
+        String clarif = "설명";
+        boolean deli = true;
+        int color = 2;
+        String seller = "셀러";
 
 
+//        prod1 = new Products(
+//                "제품명", "카테고리", 10000, 10, "설명", true, 2, "셀러"
+//        );        // 낱개 추가 테스트 코드
+        
+        
+        prodList = new ArrayList<>();
+
+        for (int i=0; i<6; i++)
+        {
+            prod1 = new Products(name+i, category+i, price, dc_rate, clarif+i, deli, color, seller);
+            prodList.add(prod1);
+        }
     }
 
     @Test
-    public void insertTest(){
+    public void insertTest(){                                               // 낱개 추가 테스트 코드
         Products rtn_prods = searchRepository.save(prod1);
 
         assert(prod1.getName().equals(rtn_prods.getName()));
+    }
+
+
+    @Test
+    public void insetListTest(){                                            // 리스트 추가 테스트 코드
+        List<Products> list = searchRepository.saveAll(prodList);
+
+        assert(prodList.get(0).getName().equals(list.get(0).getName()));
     }
 }

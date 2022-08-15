@@ -1,15 +1,9 @@
 package com.kgd.springbootmall.controller;
 
-import com.kgd.springbootmall.dto.Item;
 import com.kgd.springbootmall.dto.ProductDTO;
-import com.kgd.springbootmall.dto.TestDto;
-import com.kgd.springbootmall.entity.Tests;
 import com.kgd.springbootmall.service.SearchService;
-import com.kgd.springbootmall.service.TestService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,25 +36,27 @@ public class SearchController {
     // 현재는 vue가 이 기능을 하고 있어 필요 없음
 
     
-    @RequestMapping(value ="content", method = RequestMethod.GET)
+    
+    @RequestMapping(value ="/content", method = RequestMethod.GET)
     @ResponseBody
-    public List<TestDto> returnContent(){
+    public List<ProductDTO> returnContent(){
 
-        List<TestDto> list = new ArrayList<>();
-        TestDto testDto = new TestDto(1312, "Hello world");
-        list.add(testDto);
+        List<ProductDTO> list = searchService.getContents();
+
         return list;
     }
-    //content 비동기 갱신용 컨트롤러
+    //content 비동기 갱신용 컨트롤러(페이지 내 재 검색 시, 검색결과를 가져오는 메서드)
 
-    @GetMapping("{str}")
+    
+    
+    @GetMapping("/name/{str}")
     public List<ProductDTO> selectByURLVariable(@PathVariable String str){
 
-        List<ProductDTO> rtn_ProdDTO = searchService
-                .selectByURLName(str);
+        List<ProductDTO> rtn_ProdDTO = searchService.selectByURLName(str);
 
         return rtn_ProdDTO;
     }
+    // 이름 매개변수로 1개만 가져오는 메소드( List로 반환하는 이유는 vue에서 변수로 매핑할 때 v-for을 쓰면 속성 개수만큼 반복하기 때문, list로 반환하면 속성이 아닌 return값의 개수만큼 반복)
 
 }
 

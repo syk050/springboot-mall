@@ -1,8 +1,6 @@
 package com.kgd.springbootmall.repository;
 
-import com.kgd.springbootmall.dto.TestDto;
 import com.kgd.springbootmall.entity.Products;
-import com.kgd.springbootmall.entity.Tests;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -15,9 +13,15 @@ public interface SearchRepository extends JpaRepository<Products, Long> {
     @Query("select p from Products p where p.name = :name")
     List<Products> findByName(@Param("name") String name);
 
+    @Query("select p from Products p where p.id < 7 order by p.id desc")
+    List<Products> getFewProduct();
+
+
     @Override
     <S extends Products> S save(S entity);
 
+    @Override
+    <S extends Products> List<S> saveAll(Iterable<S> entities);
 
     @Modifying
     @Query(                                                                 // nativeQuery 옵션을 사용하면 JPQL이 아닌 SQL로 작성가능하다.

@@ -1,17 +1,13 @@
 package com.kgd.springbootmall.service;
 
 import com.kgd.springbootmall.dto.ProductDTO;
-import com.kgd.springbootmall.dto.TestDto;
 import com.kgd.springbootmall.entity.Products;
-import com.kgd.springbootmall.entity.Tests;
 import com.kgd.springbootmall.repository.SearchRepository;
-import com.kgd.springbootmall.repository.TestRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -27,6 +23,13 @@ public class SearchService {
 
         return rtn_ProdDTO;
 
+    }
+
+
+    public List<ProductDTO> getContents(){
+        List<Products> rtn_prod = searchRepository.getFewProduct();
+        List<ProductDTO> rtn_ProdDTO = ListEntitytoDTO(rtn_prod);
+        return rtn_ProdDTO;
     }
 
     public List<ProductDTO> ListEntitytoDTO(List<Products> prods){
