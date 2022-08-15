@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import AdminHome from '../views/AdminHome'
 import ItemsDetail from '../views/ItemsDetail'
+import ItemModify from "../views/ItemModify";
 
 
 const routes = [
@@ -10,9 +11,14 @@ const routes = [
         component: AdminHome
     },
     {
-        path: '/admin-item',
+        path: '/admin/item',
         name: 'ItemsDetail',
         component: ItemsDetail
+    },
+    {
+        path: '/admin/item-modify',
+        name: 'ItemModify',
+        component: ItemModify
     }
 
 ]
