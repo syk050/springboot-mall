@@ -8,8 +8,8 @@
 
     <!-- Header -->
     <header id="portfolio">
-      <a href="#"><img src="../../../src/assets/logo.png" style="width:65px;" class="w3-circle w3-right w3-margin w3-hide-large w3-hover-opacity"></a>
-      <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i class="fa fa-bars"></i></span>
+<!--      <a href="#"><img src="../../../src/assets/logo.png" style="width:65px;" class="w3-circle w3-right w3-margin w3-hide-large w3-hover-opacity"></a>-->
+<!--      <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i class="fa fa-bars"></i></span>-->
       <div class="w3-container">
         <h1><b>상품 리스트</b></h1>
         <div class="w3-section w3-bottombar w3-padding-16">
@@ -69,7 +69,6 @@ export default {
     fnGetList() {
       this.$axios.get( "/kgd/items").then((res) => {
         this.list = res.data
-        console.log(res.data)
       }).catch((err) => {
         if (err.message.indexOf('Network Error') > -1) {
           alert('네트워크가 원활하지 않습니다.\n잠시 후 다시 시도해주세요.')
