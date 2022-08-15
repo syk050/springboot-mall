@@ -11,11 +11,8 @@
       <div class="w3-container">
         <h1><b>상품 정보</b></h1>
         <div class="w3-section w3-container w3-bottombar">
-<!--          <span class="w3-left w3-xxlarge" v-on:click="fnPre(idx)">«</span>-->
-<!--          <span class="w3-right w3-xxlarge" v-on:click="fnNext(idx)">»</span>-->
-
-          <a href="/admin" class="w3-button w3-round-large w3-right w3-dark-gray" role="button">목록</a>
-          <a class="w3-button w3-round-large w3-right w3-indigo" role="button">수정</a>
+          <a class="w3-button w3-round-large w3-right w3-dark-gray" role="button" v-on:click="fnList">목록</a>
+          <a class="w3-button w3-round-large w3-right w3-indigo" role="button" v-on:click="fnModify">수정</a>
         </div>
       </div>
     </header>
@@ -73,17 +70,16 @@ export default {
         }
       })
     },
-    fnPre(idx) {
-      this.requestBody.idx = idx - 1
+    fnList() {
+      delete this.requestBody.idx
       this.$router.push({
-        path: this.$itemDetail,
+        path: '/admin',
         query: this.requestBody
       })
     },
-    fnNext(idx) {
-      this.requestBody.idx = idx + 1
+    fnModify() {
       this.$router.push({
-        path: this.$itemDetail,
+        path: this.$itemModify,
         query: this.requestBody
       })
     }
