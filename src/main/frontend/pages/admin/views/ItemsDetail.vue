@@ -40,12 +40,6 @@
           <span class="w3-tag w3-blue-grey">London</span> <span class="w3-tag w3-blue-grey">IKEA</span>
           <span class="w3-tag w3-blue-grey">NORWAY</span> <span class="w3-tag w3-blue-grey">DIY</span>
         </div>
-        <div class="w3-container w3-padding-16">
-<!--          추가 가능한 태그 -->
-          <span class="w3-tag w3-deep-orange">Travel</span> <span class="w3-tag w3-deep-orange">New York</span>
-          <span class="w3-tag w3-deep-orange">London</span> <span class="w3-tag w3-deep-orange">IKEA</span>
-          <span class="w3-tag w3-deep-orange">NORWAY</span> <span class="w3-tag w3-deep-orange">DIY</span>
-        </div>
       </div>
     </div>
     <!-- Content -->
@@ -82,14 +76,14 @@ export default {
     fnPre(idx) {
       this.requestBody.idx = idx - 1
       this.$router.push({
-        path: '/admin-item',
+        path: this.$itemDetail,
         query: this.requestBody
       })
     },
     fnNext(idx) {
       this.requestBody.idx = idx + 1
       this.$router.push({
-        path: '/admin-item',
+        path: this.$itemDetail,
         query: this.requestBody
       })
     }
