@@ -1,8 +1,6 @@
 <template>
   <common-header/>
-  <button v-on:click="fadeIn">fadeIn</button>
-  <button v-on:click="fadeOut">fadeOut</button>
-  <button v-on:click="reSearch">reSearch</button>
+  <button v-on:click="reSearch">재검색</button>
   <div id="content">
     <div id="search_value_div">
       <h1 class="search_value">'{{search_value}}'</h1>
@@ -12,17 +10,14 @@
 
 <!--  DB에서 날마다 추천 상품 받아서 전송 -->
     <div class="search_item_list">
-      <div class="items" v-for="(item,i) in items" :key="i">
+      <div class="items" v-for="(m,i) in menu" :key="i">
         <img class="items_img" alt="pancakes" src="../../src/assets/pancakes.jpg">
-        <h4 class="items_name">[성명이네] 맛동산 팬케이크 </h4>
-        <h3 class="items_price">8,000원</h3>
+        <h3 class="name">{{ m.name }} </h3>
+        <h4 class="price">가격 : {{ m.price }}</h4>
+        <h4 class="dc_rate">{{ m.dc_rate }}%</h4>
+        <h4 v-if=m.deli>무료배송</h4>
+        <h4 v-else>배송비</h4>
       </div>
-    </div>
-
-    <div v-for="(menu,i) in menu" :key="i">
-      <h1>spring 서버에서 받아온 데이터</h1>
-      <h2>ID : {{menu.testId}}</h2>
-      <h3>Contents : {{menu.testContents}}</h3>
     </div>
   </div>>
   <common-footer/>
@@ -45,36 +40,22 @@ export default {
   data(){                                                 // data에는 변수를 저장
     return{
       search_value : "성명이네 맛동산",
-      server_query : "이게 나오면 성공",
+      server_query : "content",
       menu:[],
-      items:{
-        name : '',
-        price : '',
-        disc_price : '',
-        desc : '',
-        delivery : ''
-      },
     };
   },
-  created() {                                               // Dom Element가 생성되기 전 호출되는 라이프사이클 훅
-    this.$nextTick(() => {
-      console.log("-----------> Netick callback ")
-
-
-      console.log('-----------> 수정 전')
-      console.log('-----------> 수정완료')
-    })
+  created() {                                                                       // Dom Element가 생성되기 전 호출되는 라이프사이클 훅
     loadMenu(this.server_query)
-        .then(response => (this.menu = response.data, console.log(this.menu)))      // spring 서버에서 가져온 response 데이터를 변수에 저장
+        .then(response => (this.menu = response.data, console.log(this.menu)))       // spring 서버에서 가져온 response 데이터를 변수에 저장(페이지 첫 로드)
         .catch(e => console.log(e))
   },
   methods: {
-    reSearch(){
-      // 여기서 spring boot 서버에서 데이터 받아오고 화면 갱신 알고리즘 적용
+    reSearch(){                                                                      // 여기서 spring boot 서버에서 데이터 받아오고 화면 갱신 알고리즘 적용(페이지 내 재 검색을 통한 갱신)
+
       this.fadeIn();
       loadMenu("content")
           .then(response => (this.menu = response.data), this.fadeOut())
-          .catch(console.log(this.menu))
+          .catch(e => console.log(e))
 
     },
     fadeIn(){

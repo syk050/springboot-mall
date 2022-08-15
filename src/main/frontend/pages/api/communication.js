@@ -1,7 +1,7 @@
 import axios from 'axios';      // 통신 전용 자바스크립트
 
 function loadMenu(value){
-    let BASE_URL = 'kgd/test/';
+    let BASE_URL = 'kgd/name/';
     if(value == "content")
         BASE_URL = 'kgd/'
     return axios.get(BASE_URL + value);
