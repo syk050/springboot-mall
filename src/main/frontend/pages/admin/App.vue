@@ -1,19 +1,15 @@
 <template>
-<!--  <commonHeader/> &lt;!&ndash; 헤더 컴포넌트 &ndash;&gt;-->
+  <!-- Sidebar/menu -->
+  <adminSideNav/>
   <router-view/>  <!-- 페이지 이동이 표시될 곳 -->
-<!--  <commonFooter/> &lt;!&ndash; 푸터 컴포넌트 &ndash;&gt;-->
 </template>
 
 <script>
-// import commonHeader from "../layout/common-header";
-// import commonFooter from "../layout/common-footer";
-
-
+import adminSideNav from "./views/components/AdminSideNav";
 export default {
   name: 'App',
   components: {
-    // commonHeader,
-    // commonFooter
+    adminSideNav
   }
 }
 
