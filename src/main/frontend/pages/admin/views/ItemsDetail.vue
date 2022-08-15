@@ -7,37 +7,49 @@
 
   <!-- !PAGE CONTENT! -->
   <div class="w3-main" style="margin-left:300px">
-
     <!-- Header -->
-    <header id="portfolio">
-      <a href="#"><img src="../../../src/assets/logo.png" style="width:65px;" class="w3-circle w3-right w3-margin w3-hide-large w3-hover-opacity"></a>
-      <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i class="fa fa-bars"></i></span>
+    <header id="">
+<!--      <a href="#"><img src="../../../src/assets/logo.png" style="width:65px;" class="w3-circle w3-right w3-margin w3-hide-large w3-hover-opacity"></a>-->
+<!--      <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i class="fa fa-bars"></i></span>-->
       <div class="w3-container">
         <h1><b>상품 정보</b></h1>
-        <div class="w3-section w3-bottombar w3-padding-16">
-
+        <div class="w3-section w3-container w3-bottombar">
+          <span class="w3-left w3-xxlarge" v-on:click="fnPre(idx)">«</span>
+          <span class="w3-right w3-xxlarge" v-on:click="fnNext(idx)">»</span>
         </div>
       </div>
     </header>
     <!-- Header -->
 
-    <!-- First Photo Grid-->
-    <div class="w3-row-padding">
-      <div class="w3-third w3-container w3-margin-bottom">
-        <img src="../../../src/assets/logo.png" alt="Temp Logo" style="width:100%" class="w3-hover-opacity">
-        <div class="w3-container w3-white">
-          <p><b>{{ id }}</b></p>
-          <p><b>{{ name }}</b></p>
-          <p class="">
-            <span class="w3-tag w3-blue-grey">Travel</span> <span class="w3-tag w3-blue-grey">New York</span>
-            <span class="w3-tag w3-blue-grey">London</span> <span class="w3-tag w3-blue-grey">IKEA</span>
-            <span class="w3-tag w3-blue-grey">NORWAY</span> <span class="w3-tag w3-blue-grey">DIY</span>
-          </p>
+    <!-- Content -->
+    <div class="w3-row-padding ">
+      <div class="w3-twothird">
+        <img src="../../../src/assets/logo.png" style="width:60%">
+        <table class="w3-table w3-striped w3-bordered w3-border">
+          <thead class="w3-teal"><th style="width:30%">구분</th><th>내용</th></thead>
+          <tr><td style="width:30%">ID</td><td>{{ id }}</td></tr>
+          <tr><td>name</td><td>{{ name }}</td></tr>
+        </table>
+      </div>
+
+      <div class="w3-third w3-container">
+        <h1>Tag</h1>
+        <div class="w3-container w3-bottombar pading-bottom">
+<!--          현재 태그 -->
+          <span class="w3-tag w3-blue-grey">Travel</span> <span class="w3-tag w3-blue-grey">New York</span>
+          <span class="w3-tag w3-blue-grey">London</span> <span class="w3-tag w3-blue-grey">IKEA</span>
+          <span class="w3-tag w3-blue-grey">NORWAY</span> <span class="w3-tag w3-blue-grey">DIY</span>
+
+        </div>
+        <div class="w3-container w3-padding-16">
+<!--          추가 가능한 태그 -->
+          <span class="w3-tag w3-blue-grey">Travel</span> <span class="w3-tag w3-blue-grey">New York</span>
+          <span class="w3-tag w3-blue-grey">London</span> <span class="w3-tag w3-blue-grey">IKEA</span>
+          <span class="w3-tag w3-blue-grey">NORWAY</span> <span class="w3-tag w3-blue-grey">DIY</span>
         </div>
       </div>
     </div>
-    <!-- First Photo Grid-->
-
+    <!-- Content -->
   </div>
   <!-- !PAGE CONTENT! -->
 </template>
@@ -72,11 +84,28 @@ export default {
           alert('네트워크가 원활하지 않습니다.\n잠시 후 다시 시도해주세요.')
         }
       })
+    },
+    fnPre(idx) {
+      this.requestBody.idx = idx - 1
+      this.$router.push({
+        path: '/admin-item',
+        query: this.requestBody
+      })
+    },
+    fnNext(idx) {
+      this.requestBody.idx = idx + 1
+      this.$router.push({
+        path: '/admin-item',
+        query: this.requestBody
+      })
     }
   }
 }
 </script>
 
 <style scoped>
+.pading-bottom {
+  padding-bottom: 16px;
+}
 
 </style>
