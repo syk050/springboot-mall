@@ -88,8 +88,6 @@ export default {
 </script>
 
 <style scoped>
-.pading-bottom {
-  padding-bottom: 16px;
-}
+
 
 </style>
