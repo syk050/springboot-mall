@@ -11,11 +11,8 @@
       <div class="w3-container">
         <h1><b>상품 정보</b></h1>
         <div class="w3-section w3-container w3-bottombar">
-          <!--          <span class="w3-left w3-xxlarge" v-on:click="fnPre(idx)">«</span>-->
-          <!--          <span class="w3-right w3-xxlarge" v-on:click="fnNext(idx)">»</span>-->
-
-          <a href="/admin" class="w3-button w3-round-large w3-right w3-dark-gray" role="button">취소</a>
-          <a class="w3-button w3-round-large w3-right w3-indigo" role="button">저장</a>
+          <a class="w3-button w3-round-large w3-right w3-dark-gray" role="button" v-on:click="fnCancel">취소</a>
+          <a class="w3-button w3-round-large w3-right w3-indigo" role="button" v-on:click="fnSave">저장</a>
         </div>
       </div>
     </header>
@@ -28,7 +25,7 @@
         <table class="w3-table w3-striped w3-bordered w3-border">
           <thead class="w3-teal"><th style="width:30%">구분</th><th>내용</th></thead>
           <tr><td style="width:30%">ID</td><td>{{ id }}</td></tr>
-          <tr><td>name</td><td>{{ name }}</td></tr>
+          <tr><td>name</td><td><input type="text" v-model="name" class="w3-input w3-border"></td></tr>
         </table>
       </div>
 
@@ -57,6 +54,51 @@
 
 export default {
   name: "ItemModify",
+  data() {
+    return {
+      requestBody: this.$route.query,
+      idx: this.$route.query.idx,
+
+      id: '',
+      name: '',
+    }
+  },
+  mounted() {
+    this.fnGetView()
+  },
+  methods: {
+    fnGetView() {
+      this.$axios.get('/kgd/items/' + this.idx).then(res =>{
+        this.id = res.data.id
+        this.name = res.data.name
+      }).catch(err => {
+        if (err.message.indexOf('Network Error') > -1) {
+          alert('네트워크가 원활하지 않습니다.\n잠시 후 다시 시도해주세요.')
+        }
+      })
+    },
+    fnCancel() {
+      this.$router.push({
+        path: this.$itemDetail,
+        query: this.requestBody
+      })
+    },
+    fnSave() {
+      const apiUrl = '/kgd/items/' + this.idx
+
+      this.form = {
+        "name": this.name
+      }
+      this.$axios.put(apiUrl, this.form)
+          .then(() => {
+            this.fnCancel()
+          }).catch(err => {
+            if (err.message.indexOf('Network Error') > -1) {
+              alert('네트워크가 원활하지 않습니다.\n잠시 후 다시 시도해주세요.')
+            }
+      })
+    }
+  }
 }
 </script>
 
