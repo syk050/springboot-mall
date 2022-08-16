@@ -31,7 +31,7 @@
 
       <div class="w3-third w3-container">
         <h1>Tag</h1>
-        <div class="w3-container w3-bottombar pading-bottom" ondrop="drop(event)" ondragover="allowDrop(event)">
+        <div class="w3-container w3-bottombar padding-bottom" ondrop="drop(event)" ondragover="allowDrop(event)">
           <!--          현재 태그 -->
           <span id="travel" class="w3-tag w3-blue-grey" draggable="true" ondragstart="drag(event)">Travel</span>
           <span id="newyork" class="w3-tag w3-blue-grey" draggable="true" ondragstart="drag(event)">New York</span>
