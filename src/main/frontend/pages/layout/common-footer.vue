@@ -1,6 +1,6 @@
 <template>
   <div id="footer">
-    <h4> Footer Area </h4>
+    <h2 id="footer_name"> Footer Area </h2>
   </div>
 
 </template>
@@ -13,7 +13,14 @@ export default {
 
 <style scoped>
   #footer{
+    height: 200px;
     background-color: antiquewhite;
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  #footer_name{
+    padding-top: 100px;
   }
 
 </style>

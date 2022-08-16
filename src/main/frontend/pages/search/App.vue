@@ -15,11 +15,14 @@
         <h3 class="name">{{ m.name }} </h3>
         <h4 class="price">가격 : {{ m.price }}</h4>
         <h4 class="dc_rate">{{ m.dc_rate }}%</h4>
-        <h4 v-if=m.deli>무료배송</h4>
-        <h4 v-else>배송비</h4>
+        <h4 class="deli" v-if=m.deli>무료배송</h4>
+        <h4 class="deli" v-else>배송비</h4>
       </div>
     </div>
-  </div>>
+    <div class="items_index_div">                                                  <!-- 아이템 페이지 수, 동적으로 관리해야 함(검색된 물품 개수 / 한 페이지에 보여 줄 물품 개수 + 1) -->
+    </div>                                                                         <!-- 총 index수를 가져온 다음, 페이지 첫 로드 시 <a>태그 자동 생성(10 단위로), ">>"태그나 index가 10이 넘어가면, 11에서 20까지 또는 11에서 최대 인덱스까지-->
+  </div>
+
   <common-footer/>
 </template>
 
@@ -41,20 +44,23 @@ export default {
     return{
       search_value : "성명이네 맛동산",
       server_query : "content",
+      page_item_count : 6,
       menu:[],
     };
   },
   created() {                                                                       // Dom Element가 생성되기 전 호출되는 라이프사이클 훅
     loadMenu(this.server_query)
-        .then(response => (this.menu = response.data, console.log(this.menu)))       // spring 서버에서 가져온 response 데이터를 변수에 저장(페이지 첫 로드)
+        .then(response => (this.menu = response.data,
+            console.log(this.menu),
+            this.setting_index(this.menu.length))
+        )                                                                           // spring 서버에서 가져온 response 데이터를 변수에 저장(페이지 첫 로드)
         .catch(e => console.log(e))
   },
   methods: {
     reSearch(){                                                                      // 여기서 spring boot 서버에서 데이터 받아오고 화면 갱신 알고리즘 적용(페이지 내 재 검색을 통한 갱신)
-
       this.fadeIn();
       loadMenu("content")
-          .then(response => (this.menu = response.data), this.fadeOut())
+          .then(response => (this.menu = response.data, this.fadeOut()))
           .catch(e => console.log(e))
 
     },
@@ -65,6 +71,26 @@ export default {
     fadeOut(){
       const dom = document.getElementById('content')
       $(dom).animate({'opacity':'1'},1000)
+    },
+    setting_index(length){
+      let tmp = 1;
+
+      if(length % this.page_item_count == 0)
+        tmp = length / this.page_item_count
+      else
+        tmp = length / this.page_item_count + 1
+
+      if(tmp > 9)
+        tmp = 10
+
+      let aheadTag = document.getElementsByClassName('items_index_div')
+      for(let i=1; i <= tmp; i++){
+        let tag = document.createElement('a')
+        tag.setAttribute('class', 'items_index')
+        tag.innerHTML = i
+        aheadTag[0].appendChild(tag)                                                    // appendchild는 nodelist와의 문제 때문에 [0]으로 접근해야 에러가 나지 않는다.
+      }
+
     }
 
   }
@@ -89,7 +115,7 @@ export default {
   margin: 0 auto;         /* content 화면 정 가운데 고정 */
 }
 #search_value_div{
-  margin : 50px 0 35px 0;
+  margin : 80px 0 50px 0;
   /* 매개변수 개수에 따른 변화
   1개 : 4면,  2개 : 세로/가로,  3개 : 위/가로/아래,  4개 : 위/오른쪽/아래/왼쪽
   */
@@ -103,6 +129,10 @@ h1.search_value{
   display: inline;        /* h태그 줄넘김 없애기 */
 }
 
+.search_item_list{
+  margin-top: 70px;
+}
+
 
 .items{
   display: inline-block;
@@ -114,9 +144,25 @@ h1.search_value{
   width: 240px;
   height: 320px
 }
-.items_name{
+.name, .price, .dc_rate, .deli{
   margin: 10px 0;
 }
+
+.items_index_div{
+  display: table;
+  margin: 0 auto;
+  padding: 40px 0;
+
+}
+
+.items_index{
+  display: table-cell;
+  border: 1px gray solid;
+  border-collapse: collapse;
+  padding: 4px 8px;
+  font-size: 20px;
+}
+
 </style>
 
 
