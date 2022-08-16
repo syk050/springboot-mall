@@ -6,3 +6,21 @@
     margin-right: 5px;
     margin-bottom: 5px;
 }
+
+.r-tag .w3-tag {
+    color:#fff!important;
+    background-color:#607d8b!important;
+}
+
+.n-tag .w3-tag {
+    color:#fff!important;
+    background-color:#ff5722!important;
+}
+
+.over {
+    border: 3px dotted #666;
+}
+
+.t-header {
+    margin-bottom: 0px;
+}
