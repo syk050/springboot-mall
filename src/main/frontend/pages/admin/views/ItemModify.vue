@@ -31,17 +31,17 @@
 
       <div class="w3-third w3-container">
         <h1>Tag</h1>
-        <div class="w3-container w3-bottombar pading-bottom">
+        <div class="w3-container w3-bottombar pading-bottom" ondrop="drop(event)" ondragover="allowDrop(event)">
           <!--          현재 태그 -->
-          <span class="w3-tag w3-blue-grey">Travel</span> <span class="w3-tag w3-blue-grey">New York</span>
-          <span class="w3-tag w3-blue-grey">London</span> <span class="w3-tag w3-blue-grey">IKEA</span>
-          <span class="w3-tag w3-blue-grey">NORWAY</span> <span class="w3-tag w3-blue-grey">DIY</span>
+          <span id="travel" class="w3-tag w3-blue-grey" draggable="true" ondragstart="drag(event)">Travel</span>
+          <span id="newyork" class="w3-tag w3-blue-grey" draggable="true" ondragstart="drag(event)">New York</span>
         </div>
-        <div class="w3-container w3-padding-16">
+        <div class="w3-container w3-padding-16" ondrop="drop(event)" ondragover="allowDrop(event)">
           <!--          추가 가능한 태그 -->
-          <span class="w3-tag w3-deep-orange">Travel</span> <span class="w3-tag w3-deep-orange">New York</span>
-          <span class="w3-tag w3-deep-orange">London</span> <span class="w3-tag w3-deep-orange">IKEA</span>
-          <span class="w3-tag w3-deep-orange">NORWAY</span> <span class="w3-tag w3-deep-orange">DIY</span>
+          <span id="london" class="w3-tag w3-deep-orange" draggable="true" ondragstart="drag(event)">London</span>
+          <span id="ikea" class="w3-tag w3-deep-orange" draggable="true" ondragstart="drag(event)">IKEA</span>
+          <span id="norway" class="w3-tag w3-deep-orange" draggable="true" ondragstart="drag(event)">NORWAY</span>
+          <span id="diy" class="w3-tag w3-deep-orange" draggable="true" ondragstart="drag(event)">DIY</span>
         </div>
       </div>
     </div>
