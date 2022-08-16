@@ -3,11 +3,16 @@ function allowDrop(ev) {
 }
 
 function drag(ev) {
-    ev.dataTransfer.setData("text", ev.target.id);
+    ev.dataTransfer.setData("dragElement", ev.target.id);
 }
 
 function drop(ev) {
     ev.preventDefault();
-    const data = ev.dataTransfer.getData("text");
-    ev.target.appendChild(document.getElementById(data));
+
+    const data = ev.dataTransfer.getData("dragElement");
+    if (ev.target.classList.contains("w3-tag")){
+        ev.target.parentNode.appendChild(document.getElementById(data));
+    }else{
+        ev.target.appendChild(document.getElementById(data));
+    }
 }
