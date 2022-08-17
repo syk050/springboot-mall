@@ -1,10 +1,15 @@
 package com.kgd.springbootmall.controller;
 
 import com.kgd.springbootmall.dto.ProductDTO;
+import com.kgd.springbootmall.entity.Products;
 import com.kgd.springbootmall.service.SearchService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
+import java.awt.print.Pageable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,6 +62,17 @@ public class SearchController {
         return rtn_ProdDTO;
     }
     // 이름 매개변수로 1개만 가져오는 메소드( List로 반환하는 이유는 vue에서 변수로 매핑할 때 v-for을 쓰면 속성 개수만큼 반복하기 때문, list로 반환하면 속성이 아닌 return값의 개수만큼 반복)
+
+    @GetMapping("/name")
+    public Page<Products> selectByPage(@PageableDefault(size=10, sort="id", direction = Sort.Direction.DESC)Pageable pageable) {
+
+        Page<Products> rtn_ProdDTO = searchService.getPageable("제품명", pageable);
+
+        return rtn_ProdDTO;
+    }
+
+
+
 
 }
 

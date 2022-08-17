@@ -1,17 +1,27 @@
 package com.kgd.springbootmall.repository;
 
 import com.kgd.springbootmall.entity.Products;
+import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
+import java.awt.print.Pageable;
 import java.util.List;
 
+
+@Repository
 public interface SearchRepository extends JpaRepository<Products, Long> {
 
-    @Query("select p from Products p where p.name = :name")
+    @Query("select p from Products p where p.name = :name order by p.id desc")
     List<Products> findByName(@Param("name") String name);
+
+
+    @Query("select p from Products p where p.name LIKE %:name%")
+    Page<Products> findByNamePage(@Param("name") String name, Pageable pageable);
+
 
     @Query("select p from Products p where p.id < 7 order by p.id desc")
     List<Products> getFewProduct();
