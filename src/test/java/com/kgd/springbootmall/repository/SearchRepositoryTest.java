@@ -17,6 +17,7 @@ import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@Transactional
 @Rollback(value = false)
 public class SearchRepositoryTest {
 
