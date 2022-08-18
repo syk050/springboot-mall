@@ -13,9 +13,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
+// repository 테스트 JSQL 코드를 직접 테스트 시, 사용한다.(search 페이지는 insert 문이 필요 없기에 여기서 추가 기능을 담당한다.)
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@Transactional
 @Rollback(value = false)
 public class SearchRepositoryTest {
 
@@ -40,9 +41,9 @@ public class SearchRepositoryTest {
         String seller = "셀러";
 
 
-//        prod1 = new Products(
+//        prod1 = new Products(                                             // 낱개 추가 테스트 코드
 //                "제품명", "카테고리", 10000, 10, "설명", true, 2, "셀러"
-//        );        // 낱개 추가 테스트 코드
+//        );
         
         
         prodList = new ArrayList<>();

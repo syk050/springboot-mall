@@ -22,25 +22,27 @@ public interface SearchRepository extends JpaRepository<Products, Long> {
 
 
     @Query("select p from Products p")
-    List<Products> getFewProduct(Pageable pageable);
+    List<Products> getAll(Pageable pageable);
 
 
     @Override
     <S extends Products> S save(S entity);
 
+
     @Override
     <S extends Products> List<S> saveAll(Iterable<S> entities);
 
+
     @Modifying
     @Query(                                                                 // nativeQuery 옵션을 사용하면 JPQL이 아닌 SQL로 작성가능하다.
-            value="alter table products auto_increment=1;",
+            value="alter table products auto_increment=1;",                 // id auto_increment 초기화
             nativeQuery = true
     )
     void resetAuto();
 
 
     @Modifying
-    @Query("delete from Products ")
+    @Query("delete from Products")                                         // 테이블 내용 초기화
     void deleteAll();
 
 }

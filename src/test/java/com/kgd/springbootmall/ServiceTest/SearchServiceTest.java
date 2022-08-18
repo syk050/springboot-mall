@@ -11,6 +11,8 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+// Service Test 코드, Repository와 Service의 연동 및 이후의 DB 코드로의 연결을 확인한다.
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Transactional

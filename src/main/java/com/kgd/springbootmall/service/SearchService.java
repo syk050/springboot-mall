@@ -13,37 +13,35 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
-@Slf4j
+@Slf4j                                                      // lombok 어노테이션으로 log4j를 편하게 import 하여 사용할 수 있게 한다.
 @Service
 @Component
 @RequiredArgsConstructor
 public class SearchService {
     private final SearchRepository searchRepository;
 
-    private final int max_result_count = 6;                                 // 페이지에서 최대한 보여줄 수 있는 아이템 의 개수(즉, 한 페이지에 보여줄 수 있는 물품 개수)
-
     @Transactional
-    public List<ProductDTO> selectByURLName(String str, Pageable pageable){
+    public List<ProductDTO> selectByURLName(String str, Pageable pageable){                     // url로 query를 받아 검색하는 service 코드
 
         List<Products> rtn_Prod = searchRepository.findByName(str, pageable);
-
         log.info("rtn_Prod", rtn_Prod);
 
         List<ProductDTO> rtn_ProdDTO = ListEntitytoDTO(rtn_Prod);
-
         return rtn_ProdDTO;
 
     }
 
 
+    public List<ProductDTO> getContents(Pageable pageable){                                     // 첫 페이지 로딩할 때 임시로 전체를 가져와서 보여주는 service 코드(임시)
+        List<Products> rtn_Prod = searchRepository.getAll(pageable);
+        log.info("rtn_Prod", rtn_Prod);
 
-    public List<ProductDTO> getContents(Pageable pageable){
-        List<Products> rtn_prod = searchRepository.getFewProduct(pageable);
-        List<ProductDTO> rtn_ProdDTO = ListEntitytoDTO(rtn_prod);
+        List<ProductDTO> rtn_ProdDTO = ListEntitytoDTO(rtn_Prod);
         return rtn_ProdDTO;
     }
 
-    public List<ProductDTO> ListEntitytoDTO(List<Products> prods){
+
+    public List<ProductDTO> ListEntitytoDTO(List<Products> prods){                              // Entity(DB) 에서 DTO(트랜잭션)으로 변환하는 코드(Controller나 Service 코드로 작성한다.)
 
         List<ProductDTO> prodDTOList = new ArrayList<>() {};
         ProductDTO tmp;
@@ -62,7 +60,7 @@ public class SearchService {
         return prodDTOList;
     }
 
-    public List<Products> ListDTOtoEntity(List<ProductDTO> prodDTO){
+    public List<Products> ListDTOtoEntity(List<ProductDTO> prodDTO){                            // DTO(트랜잭션)에서 Entity(DB)로의 변환코드(검색 페이지에서는 사용할 필요가 없다)
 
         List<Products> prodList = new ArrayList<>() {};
         Products tmp;
@@ -82,7 +80,7 @@ public class SearchService {
     }
 
 
-    public void resetDB(){
+    public void resetDB(){                                                                      // Test 코드에 필요한 Products 테이블 reset service 코드(id속성의 auto_increment를 초기화하고, 테이블 내용을 전체 삭제 한다)
         searchRepository.deleteAll();
         searchRepository.resetAuto();
     }
