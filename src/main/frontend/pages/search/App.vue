@@ -20,6 +20,8 @@
       </div>
     </div>
     <div class="items_index_div">                                                  <!-- 아이템 페이지 수, 동적으로 관리해야 함(검색된 물품 개수 / 한 페이지에 보여 줄 물품 개수 + 1) -->
+      <a class="items_index" id="arrow">&lt;</a>
+      <a class="items_index" id="arrow_next">&gt;</a>
     </div>                                                                         <!-- 총 index수를 가져온 다음, 페이지 첫 로드 시 <a>태그 자동 생성(10 단위로), ">>"태그나 index가 10이 넘어가면, 11에서 20까지 또는 11에서 최대 인덱스까지-->
   </div>
 
@@ -54,20 +56,22 @@ export default {
             console.log(this.menu),
             this.setting_index(this.menu.length))
         )                                                                           // spring 서버에서 가져온 response 데이터를 변수에 저장(페이지 첫 로드)
-        .catch(e => console.log(e))
+        .catch(e => console.log("서버에서 DB 관련 데이터를 가져오는 데, 실패하였습니다.",e))
   },
   methods: {
     reSearch(){                                                                      // 여기서 spring boot 서버에서 데이터 받아오고 화면 갱신 알고리즘 적용(페이지 내 재 검색을 통한 갱신)
       this.fadeIn();
       loadMenu("content")
           .then(response => (this.menu = response.data, this.fadeOut()))
-          .catch(e => console.log(e))
+          .catch(e => console.log("content를 reload 하는 데, 실패하였습니다.", e))
 
     },
+
     fadeIn(){
       const dom = document.getElementById('content')
       $(dom).animate({'opacity':'0'},1000)
     },
+
     fadeOut(){
       const dom = document.getElementById('content')
       $(dom).animate({'opacity':'1'},1000)
@@ -83,12 +87,12 @@ export default {
       if(tmp > 9)
         tmp = 10
 
-      let aheadTag = document.getElementsByClassName('items_index_div')
+      let aheadTag = document.getElementById('arrow')
       for(let i=1; i <= tmp; i++){
         let tag = document.createElement('a')
         tag.setAttribute('class', 'items_index')
         tag.innerHTML = i
-        aheadTag[0].appendChild(tag)                                                    // appendchild는 nodelist와의 문제 때문에 [0]으로 접근해야 에러가 나지 않는다.
+        aheadTag.after(tag)                                                    // appendchild는 nodelist와의 문제 때문에 [0]으로 접근해야 에러가 나지 않는다.
       }
 
     }
@@ -114,15 +118,24 @@ export default {
   width: 1020px;
   margin: 0 auto;         /* content 화면 정 가운데 고정 */
 }
+
+a:hover{
+  color : white;
+  background-color: grey;
+  transition: background-color 0.2s ease-in-out,
+              color 0.2s ease-in-out;
+
+}
+
 #search_value_div{
-  margin : 80px 0 50px 0;
+  margin : 80px 0 40px 0;
   /* 매개변수 개수에 따른 변화
   1개 : 4면,  2개 : 세로/가로,  3개 : 위/가로/아래,  4개 : 위/오른쪽/아래/왼쪽
   */
 }
 
 h1.search_value{
-  color: darkblue;
+  color:#595965;
 }
 
 .search_value{
@@ -131,6 +144,10 @@ h1.search_value{
 
 .search_item_list{
   margin-top: 70px;
+}
+
+br{
+  line-height: 170%;
 }
 
 
@@ -142,7 +159,8 @@ h1.search_value{
 }
 .items_img{
   width: 240px;
-  height: 320px
+  height: 320px;
+  border-radius: 8px;
 }
 .name, .price, .dc_rate, .deli{
   margin: 10px 0;
@@ -155,12 +173,55 @@ h1.search_value{
 
 }
 
+/*#arrow, #arrow_next{*/
+/*  position: relative;*/
+/*  float:left;*/
+/*  margin-left: 5px;*/
+/*  margin-right: 5px;*/
+/*}*/
+/*#arrow::after{*/
+/*  position: absolute;*/
+/*  left: 12px;*/
+/*  top: 8px;*/
+/*  content: '';*/
+/*  width: 12px; !* 사이즈 *!*/
+/*  height: 12px; !* 사이즈 *!*/
+/*  border-top: 1.5px solid #000; !* 선 두께 *!*/
+/*  border-right: 1.5px solid #000; !* 선 두께 *!*/
+/*  transform: rotate(225deg); !* 각도 *!*/
+/*}*/
+
+/*#arrow_next::after{*/
+/*  position: absolute;*/
+/*  left: 5px;*/
+/*  top: 8px;*/
+/*  content: '';*/
+/*  width: 12px; !* 사이즈 *!*/
+/*  height: 12px; !* 사이즈 *!*/
+/*  border-top: 1.5px solid #000; !* 선 두께 *!*/
+/*  border-right: 1.5px solid #000; !* 선 두께 *!*/
+/*  transform: rotate(45deg); !* 각도 *!*/
+/*}*/
+
+#arrow, #arrow_next{
+  position: relative;
+  float: left;
+  padding-bottom: 3px;
+  font-size: 30px;
+  margin: 0 5px;
+
+}
+
+
 .items_index{
   display: table-cell;
+  vertical-align: middle;
   border: 1px gray solid;
   border-collapse: collapse;
-  padding: 4px 8px;
+  width:30px;
+  height:30px;
   font-size: 20px;
+  border-radius: 8px;
 }
 
 </style>

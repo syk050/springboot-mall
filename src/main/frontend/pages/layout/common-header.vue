@@ -1,7 +1,7 @@
 <template>
   <div id="header">
     <div id="header_content">
-      <div id="img_div">
+      <div id="img_div" onclick="location.reload()">
         <img id="header_img" alt="Vue logo" src="../../src/assets/logo.png">
       </div>
       <input class="search_input" placeholder="검색어를 입력해주세요" maxlength="20"  />
@@ -24,6 +24,10 @@ export default {
 </script>
 
 <style scoped>
+  input:focus{
+    outline : none;
+  }
+
   #header{
     height: 200px;
     background-color: antiquewhite;
@@ -62,7 +66,7 @@ export default {
     font-size: 25px;
     border: 0px;
     border-bottom: 3px solid;
-    border-radius: 8px;
+    border-radius: 40px;
     border-color : #6e656a;
     background: transparent;
     color: #6e656a;
