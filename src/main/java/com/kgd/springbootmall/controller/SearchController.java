@@ -5,12 +5,11 @@ import com.kgd.springbootmall.entity.Products;
 import com.kgd.springbootmall.service.SearchService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
-import java.awt.print.Pageable;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -44,47 +43,26 @@ public class SearchController {
     
     @RequestMapping(value ="/content", method = RequestMethod.GET)
     @ResponseBody
-    public List<ProductDTO> returnContent(){
+    public List<ProductDTO> returnContent(@PageableDefault(size=6, sort="id", direction = Sort.Direction.ASC) Pageable pageable){
 
-        List<ProductDTO> list = searchService.getContents();
+        List<ProductDTO> list = searchService.getContents(pageable);
 
         return list;
     }
-    //content 비동기 갱신용 컨트롤러(페이지 내 재 검색 시, 검색결과를 가져오는 메서드)
+    // 페이지 초기화 및 content 비동기 갱신용 컨트롤러(페이지 내 재 검색 시, 검색결과를 가져오는 메서드)
 
     
     
-    @GetMapping("/name/{str}")
-    public List<ProductDTO> selectByURLVariable(@PathVariable String str){
+    @GetMapping("/name")
+    public List<ProductDTO> selectByURLVariable(@RequestParam String query, @PageableDefault(size=2, sort="id", direction = Sort.Direction.ASC) Pageable pageable){
 
-        List<ProductDTO> rtn_ProdDTO = searchService.selectByURLName(str);
+        List<ProductDTO> rtn_ProdDTO = searchService.selectByURLName(query, pageable);
 
         return rtn_ProdDTO;
     }
     // 이름 매개변수로 1개만 가져오는 메소드( List로 반환하는 이유는 vue에서 변수로 매핑할 때 v-for을 쓰면 속성 개수만큼 반복하기 때문, list로 반환하면 속성이 아닌 return값의 개수만큼 반복)
-
-    @GetMapping("/name")
-    public Page<Products> selectByPage(@PageableDefault(size=10, sort="id", direction = Sort.Direction.DESC)Pageable pageable) {
-
-        Page<Products> rtn_ProdDTO = searchService.getPageable("제품명", pageable);
-
-        return rtn_ProdDTO;
-    }
-
-
+    // url로 가져오는 매개변수를 보고 싶다면, 아래의 url 검색
+    // http://localhost:8081/kgd/name?query=제품명
 
 
 }
-
-
-
-
-
-
-// https://febdy.tistory.com/65
-// vue 파일을 spring boot 서버로 확인하기 위해서는 npm run build로 늘 빌드해줘야 한다.
-// 하지만 바로 확인가능한 방법도 존재한다.
-
-
-//현재 localhost:8080/kgd/search 접속 시, 빌드 경로에 있는 파일을 볼 수 있게 되었지만
-// vue 서버(8081) -> spring 서버(8080) 으로 접속 시, css 및 javascrpt 파일은 404에러가 나는 버그가 있다(현재 수정 중)

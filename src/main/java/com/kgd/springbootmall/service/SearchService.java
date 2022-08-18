@@ -4,15 +4,16 @@ import com.kgd.springbootmall.dto.ProductDTO;
 import com.kgd.springbootmall.entity.Products;
 import com.kgd.springbootmall.repository.SearchRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.awt.print.Pageable;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Service
 @Component
 @RequiredArgsConstructor
@@ -21,27 +22,23 @@ public class SearchService {
 
     private final int max_result_count = 6;                                 // 페이지에서 최대한 보여줄 수 있는 아이템 의 개수(즉, 한 페이지에 보여줄 수 있는 물품 개수)
 
-    public List<ProductDTO> selectByURLName(String str){
+    @Transactional
+    public List<ProductDTO> selectByURLName(String str, Pageable pageable){
 
-        List<Products> rtn_Prod = searchRepository.findByName(str);
+        List<Products> rtn_Prod = searchRepository.findByName(str, pageable);
+
+        log.info("rtn_Prod", rtn_Prod);
+
         List<ProductDTO> rtn_ProdDTO = ListEntitytoDTO(rtn_Prod);
 
         return rtn_ProdDTO;
 
     }
 
-    @Transactional
-    public Page<Products> getPageable(String str, Pageable pageable){
-
-        Page<Products> rtn_Prod = searchRepository.findByNamePage(str, pageable);
-
-        return rtn_Prod;
-
-    }
 
 
-    public List<ProductDTO> getContents(){
-        List<Products> rtn_prod = searchRepository.getFewProduct();
+    public List<ProductDTO> getContents(Pageable pageable){
+        List<Products> rtn_prod = searchRepository.getFewProduct(pageable);
         List<ProductDTO> rtn_ProdDTO = ListEntitytoDTO(rtn_prod);
         return rtn_ProdDTO;
     }

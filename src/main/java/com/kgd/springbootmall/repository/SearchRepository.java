@@ -2,29 +2,27 @@ package com.kgd.springbootmall.repository;
 
 import com.kgd.springbootmall.entity.Products;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
 
-import java.awt.print.Pageable;
 import java.util.List;
 
 
-@Repository
 public interface SearchRepository extends JpaRepository<Products, Long> {
 
-    @Query("select p from Products p where p.name = :name order by p.id desc")
-    List<Products> findByName(@Param("name") String name);
+    @Query(value = "SELECT * FROM products WHERE name LIKE %?1%",
+    nativeQuery = true)
+    List<Products> findByName(@Param("name") String name, Pageable pageable);
+    // name으로 가져오는 쿼리
+    // 현재 Pageable 변수로 가져오는 query 결과의 양을 조절했다.
+    // JpaRepository가 기본 제공하는 query가 존재하지만, 사용할 것이라면 List<>가 아닌 Page<> 형식으로 받아야 한다는 것을 명심해야 한다.
 
 
-    @Query("select p from Products p where p.name LIKE %:name%")
-    Page<Products> findByNamePage(@Param("name") String name, Pageable pageable);
-
-
-    @Query("select p from Products p where p.id < 7 order by p.id desc")
-    List<Products> getFewProduct();
+    @Query("select p from Products p")
+    List<Products> getFewProduct(Pageable pageable);
 
 
     @Override
