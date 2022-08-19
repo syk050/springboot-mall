@@ -17,6 +17,7 @@
           <button class="w3-button w3-white"><i class="fa fa-diamond w3-margin-right"></i>Design</button>
           <button class="w3-button w3-white w3-hide-small"><i class="fa fa-photo w3-margin-right"></i>Photos</button>
           <button class="w3-button w3-white w3-hide-small"><i class="fa fa-map-pin w3-margin-right"></i>Art</button>
+          <button class="w3-button w3-indigo w3-right" v-on:click="fnAdd">추가</button>
         </div>
       </div>
     </header>
@@ -81,7 +82,7 @@ export default {
     },
     fnAdd() {
       this.$router.push({
-        path: '/kgd/items/add'
+        path: this.$itemAdd
       })
     }
   },
