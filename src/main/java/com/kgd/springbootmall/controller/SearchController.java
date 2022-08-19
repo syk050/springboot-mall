@@ -54,15 +54,16 @@ public class SearchController {
     
     
     @GetMapping("/name")
-    public List<ProductDTO> selectByURLVariable(@RequestParam String query, @PageableDefault(size=2, sort="id", direction = Sort.Direction.ASC) Pageable pageable){
+    public List<ProductDTO> selectByURLVariable(@RequestParam String query, @PageableDefault(page = 0, size=2, sort="id", direction = Sort.Direction.ASC) Pageable pageable){
 
         List<ProductDTO> rtn_ProdDTO = searchService.selectByURLName(query, pageable);
+
 
         return rtn_ProdDTO;
     }
     // 이름 매개변수로 1개만 가져오는 메소드( List로 반환하는 이유는 vue에서 변수로 매핑할 때 v-for을 쓰면 속성 개수만큼 반복하기 때문, list로 반환하면 속성이 아닌 return값의 개수만큼 반복)
     // url로 가져오는 매개변수를 보고 싶다면, 아래의 url 검색
-    // http://localhost:8081/kgd/name?query=제품명
+    // http://127.0.0.1:8081/kgd/name?query=제품명&page=1
 
 
 }

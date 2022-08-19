@@ -49,7 +49,7 @@ public class SearchRepositoryTest {
         
         prodList = new ArrayList<>();
 
-        for (int i=0; i<6; i++)
+        for (int i=0; i<24; i++)
         {
             prod1 = new Products(name+i, category+i, price, dc_rate, clarif+i, deli, color, seller);
             prodList.add(prod1);

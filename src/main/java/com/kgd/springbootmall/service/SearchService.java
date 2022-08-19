@@ -19,14 +19,19 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SearchService {
     private final SearchRepository searchRepository;
+    private Boolean isEmptyBoolean;
 
     @Transactional
     public List<ProductDTO> selectByURLName(String str, Pageable pageable){                     // url로 query를 받아 검색하는 service 코드
 
         List<Products> rtn_Prod = searchRepository.findByName(str, pageable);
-        log.info("rtn_Prod", rtn_Prod);
+        isListEmpty(rtn_Prod);
 
-        List<ProductDTO> rtn_ProdDTO = ListEntitytoDTO(rtn_Prod);
+        List<ProductDTO> rtn_ProdDTO = new ArrayList<>();
+
+        if(!isEmptyBoolean)                                     // 데이터 있으면 넣고
+            rtn_ProdDTO = ListEntitytoDTO(rtn_Prod);
+
         return rtn_ProdDTO;
 
     }
@@ -34,10 +39,18 @@ public class SearchService {
 
     public List<ProductDTO> getContents(Pageable pageable){                                     // 첫 페이지 로딩할 때 임시로 전체를 가져와서 보여주는 service 코드(임시)
         List<Products> rtn_Prod = searchRepository.getAll(pageable);
-        log.info("rtn_Prod", rtn_Prod);
+        isListEmpty(rtn_Prod);
 
         List<ProductDTO> rtn_ProdDTO = ListEntitytoDTO(rtn_Prod);
         return rtn_ProdDTO;
+    }
+
+    public void isListEmpty(List<Products> prods){                                           // 리턴 값 비어 있는 지 확인, List로 받으면 nulll 이 안들어가고, 비어있는 배열이 들어간다.
+        isEmptyBoolean = prods.isEmpty();
+
+        if(!isEmptyBoolean)
+            log.info("rtn_Prod", prods);
+
     }
 
 

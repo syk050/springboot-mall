@@ -1,6 +1,6 @@
 <template>
   <common-header/>
-  <button v-on:click="reSearch">재검색</button>
+  <button v-on:click="reSearch('')">재검색</button>
   <div id="content">
     <div id="search_value_div">
       <h1 class="search_value">'{{search_value}}'</h1>
@@ -51,7 +51,7 @@ export default {
     };
   },
   created() {                                                                       // Dom Element가 생성되기 전 호출되는 라이프사이클 훅
-    loadMenu(this.server_query)
+    loadMenu("")
         .then(response => (this.menu = response.data,
             console.log(this.menu),
             this.setting_index(this.menu.length))
@@ -59,9 +59,10 @@ export default {
         .catch(e => console.log("서버에서 DB 관련 데이터를 가져오는 데, 실패하였습니다.",e))
   },
   methods: {
-    reSearch(){                                                                      // 여기서 spring boot 서버에서 데이터 받아오고 화면 갱신 알고리즘 적용(페이지 내 재 검색을 통한 갱신)
+    reSearch(str){                                                                      // 여기서 spring boot 서버에서 데이터 받아오고 화면 갱신 알고리즘 적용(페이지 내 재 검색을 통한 갱신)
+
       this.fadeIn();
-      loadMenu("content")
+      loadMenu(str)
           .then(response => (this.menu = response.data, this.fadeOut()))
           .catch(e => console.log("content를 reload 하는 데, 실패하였습니다.", e))
 
@@ -77,24 +78,16 @@ export default {
       $(dom).animate({'opacity':'1'},1000)
     },
     setting_index(length){
-      let tmp = 1;
 
-      if(length % this.page_item_count == 0)
-        tmp = length / this.page_item_count
-      else
-        tmp = length / this.page_item_count + 1
-
-      if(tmp > 9)
-        tmp = 10
-
-      let aheadTag = document.getElementById('arrow')
-      for(let i=1; i <= tmp; i++){
+      let aheadTag = document.getElementById('arrow_next')
+      for(let i=0; i < length; i++){
         let tag = document.createElement('a')
         tag.setAttribute('class', 'items_index')
-        tag.innerHTML = i
-        aheadTag.after(tag)                                                    // appendchild는 nodelist와의 문제 때문에 [0]으로 접근해야 에러가 나지 않는다.
-      }
-
+        tag.addEventListener("click", ()=>{this.reSearch("?query=제품명&page=" + i)})             // 매개변수를 보내면 자동 실행된다???   !!!!! 이벤트 리스너를 추가할 때, 매개변수를 주면 페이지 render()시 강제 실행된다, 이를 막기 위한 방법으로는 람다식 () => {}으로 감싸주면 매개변수도 주면서 동시에 render 시 실행도 막을 수 있다.
+        tag.innerHTML = i+1
+        aheadTag.before(tag)                                                                                    // appendchild는 nodelist와의 문제 때문에 [0]으로 접근해야 에러가 나지 않는다.
+      }                                                                                                         // but,, after하고 before는 단일 객체를 넣는 구문이기에 [0]을 추가하지 않아도 된다.
+    //this.reSearch("?query=제품명&page=" + i)}
     }
 
   }
@@ -170,6 +163,7 @@ br{
   display: table;
   margin: 0 auto;
   padding: 40px 0;
+  border-spacing: 5px;                          /* 셀 간의 간격 */
 
 }
 
