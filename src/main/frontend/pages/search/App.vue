@@ -50,6 +50,7 @@ export default {
       menu:[],
     };
   },
+
   created() {                                                                       // Dom Element가 생성되기 전 호출되는 라이프사이클 훅
     loadMenu("")
         .then(response => (this.menu = response.data,
@@ -58,14 +59,13 @@ export default {
         )                                                                           // spring 서버에서 가져온 response 데이터를 변수에 저장(페이지 첫 로드)
         .catch(e => console.log("서버에서 DB 관련 데이터를 가져오는 데, 실패하였습니다.",e))
   },
+
   methods: {
     reSearch(str){                                                                      // 여기서 spring boot 서버에서 데이터 받아오고 화면 갱신 알고리즘 적용(페이지 내 재 검색을 통한 갱신)
-
       this.fadeIn();
       loadMenu(str)
           .then(response => (this.menu = response.data, this.fadeOut()))
           .catch(e => console.log("content를 reload 하는 데, 실패하였습니다.", e))
-
     },
 
     fadeIn(){
@@ -78,7 +78,6 @@ export default {
       $(dom).animate({'opacity':'1'},1000)
     },
     setting_index(length){
-
       let aheadTag = document.getElementById('arrow_next')
       for(let i=0; i < length; i++){
         let tag = document.createElement('a')
@@ -87,11 +86,8 @@ export default {
         tag.innerHTML = i+1
         aheadTag.before(tag)                                                                                    // appendchild는 nodelist와의 문제 때문에 [0]으로 접근해야 에러가 나지 않는다.
       }                                                                                                         // but,, after하고 before는 단일 객체를 넣는 구문이기에 [0]을 추가하지 않아도 된다.
-    //this.reSearch("?query=제품명&page=" + i)}
     }
-
   }
-
 }
 </script>
 
@@ -159,43 +155,13 @@ br{
   margin: 10px 0;
 }
 
-.items_index_div{
+.items_index_div {
   display: table;
   margin: 0 auto;
   padding: 40px 0;
-  border-spacing: 5px;                          /* 셀 간의 간격 */
+  border-spacing: 5px;                                                                                                  /* diplay가 table일 때의 margin이라고 생각하면 편하다.(테이블 셀 간의 간격) */
 
 }
-
-/*#arrow, #arrow_next{*/
-/*  position: relative;*/
-/*  float:left;*/
-/*  margin-left: 5px;*/
-/*  margin-right: 5px;*/
-/*}*/
-/*#arrow::after{*/
-/*  position: absolute;*/
-/*  left: 12px;*/
-/*  top: 8px;*/
-/*  content: '';*/
-/*  width: 12px; !* 사이즈 *!*/
-/*  height: 12px; !* 사이즈 *!*/
-/*  border-top: 1.5px solid #000; !* 선 두께 *!*/
-/*  border-right: 1.5px solid #000; !* 선 두께 *!*/
-/*  transform: rotate(225deg); !* 각도 *!*/
-/*}*/
-
-/*#arrow_next::after{*/
-/*  position: absolute;*/
-/*  left: 5px;*/
-/*  top: 8px;*/
-/*  content: '';*/
-/*  width: 12px; !* 사이즈 *!*/
-/*  height: 12px; !* 사이즈 *!*/
-/*  border-top: 1.5px solid #000; !* 선 두께 *!*/
-/*  border-right: 1.5px solid #000; !* 선 두께 *!*/
-/*  transform: rotate(45deg); !* 각도 *!*/
-/*}*/
 
 #arrow, #arrow_next{
   position: relative;
@@ -236,7 +202,7 @@ style : CSS 작성부분
 export 문은 JS 모듈에서 함수, 객체, 원시 값을 내보낼 때 사용한다. -->
 
 <!--
-https://ko.javascript.info/import-export#ref-4122
+    https://ko.javascript.info/import-export#ref-4122
 -->
 
 <!-- css에서의 let / var / const 의 역할
