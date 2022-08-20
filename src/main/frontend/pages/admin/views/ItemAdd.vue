@@ -30,7 +30,7 @@
         <form class="w3-container w3-light-grey">
           <p>
             <label>내용</label>
-            <textarea class="w3-input w3-border w3-round-large" style="resize:none; height: 300px" type="text"></textarea>
+            <textarea class="w3-input w3-border w3-round-large" style="resize:none; height: 300px" type="text" v-model="name"></textarea>
           </p>
         </form>
       </div>
@@ -39,11 +39,12 @@
         <h1 class="t-header">Tag</h1>
         <div class="w3-container w3-bottombar w3-padding-16 dnd-box r-tag">
           <!--          현재 태그 -->
-          <span id="travel" class="w3-tag">Travel</span>
-          <span id="newyork" class="w3-tag">New York</span>
+
         </div>
         <div class="w3-container w3-padding-16 dnd-box n-tag">
           <!--          추가 가능한 태그 -->
+          <span id="travel" class="w3-tag">Travel</span>
+          <span id="newyork" class="w3-tag">New York</span>
           <span id="london" class="w3-tag">London</span>
           <span id="ikea" class="w3-tag">IKEA</span>
           <span id="norway" class="w3-tag">NORWAY</span>
@@ -58,7 +59,34 @@
 
 <script>
 export default {
-  name: "ItemAdd"
+  name: "ItemAdd",
+  data() {
+    return {
+      name: '',
+    }
+  },
+  methods: {
+    fnList() {
+      this.$router.push({
+        path: '/admin',
+      })
+    },
+    fnSave() {
+      const apiUrl = '/kgd/items/'
+
+      this.form = {
+        "name": this.name
+      }
+      this.$axios.post(apiUrl, this.form)
+          .then(() => {
+            this.fnList()
+          }).catch(err => {
+        if (err.message.indexOf('Network Error') > -1) {
+          alert('네트워크가 원활하지 않습니다.\n잠시 후 다시 시도해주세요.')
+        }
+      })
+    }
+  }
 }
 </script>
 
