@@ -11,6 +11,7 @@ app.config.globalProperties.$axios = axios;
 app.config.globalProperties.$serverUrl = "http://localhost:8080/KGD";
 app.config.globalProperties.$itemDetail = "/admin/item";
 app.config.globalProperties.$itemModify = "/admin/item-modify";
+app.config.globalProperties.$itemAdd = "/admin/item-add";
 
 app.use(router).mount('#app')
 
