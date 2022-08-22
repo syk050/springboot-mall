@@ -13,6 +13,7 @@
         <div class="w3-section w3-container w3-bottombar">
           <a class="w3-button w3-right w3-dark-gray" role="button" v-on:click="fnList">목록</a>
           <a class="w3-button w3-right w3-indigo" role="button" v-on:click="fnModify">수정</a>
+          <a class="w3-button w3-right w3-purple" role="button" v-on:click="fnDelete">삭제</a>
         </div>
       </div>
     </header>
@@ -81,6 +82,16 @@ export default {
       this.$router.push({
         path: this.$itemModify,
         query: this.requestBody
+      })
+    },
+    fnDelete() {
+      if (!confirm("삭제하시겠습니까?")) return
+
+      this.$axios.delete('/kgd/items/' + this.idx).then(() => {
+        alert('삭제되었습니다');
+        this.fnList();
+      }).catch(err => {
+        console.log(err);
       })
     }
   }
