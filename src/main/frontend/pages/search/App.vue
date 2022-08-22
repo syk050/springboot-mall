@@ -1,6 +1,5 @@
 <template>
   <common-header/>
-  <button v-on:click="reSearch('')">재검색</button>
   <div id="content">
     <div id="search_value_div">
       <h1 class="search_value">'{{search_value}}'</h1>
@@ -44,18 +43,21 @@ export default {
   },
   data(){                                                 // data에는 변수를 저장
     return{
-      search_value : "성명이네 맛동산",
-      server_query : "content",
+      search_value : "제품명",
       page_item_count : 6,
+      total_page : 0,
       menu:[],
     };
   },
 
   created() {                                                                       // Dom Element가 생성되기 전 호출되는 라이프사이클 훅
-    loadMenu("")
-        .then(response => (this.menu = response.data,
+    loadMenu("query=" + this.search_value)
+        .then(response => (this.menu = response.data.content,
+            this.total_page = response.data.totalPages,
+            console.log(response),
             console.log(this.menu),
-            this.setting_index(this.menu.length))
+            console.log(this.total_page),
+            this.setting_index(this.total_page))
         )                                                                           // spring 서버에서 가져온 response 데이터를 변수에 저장(페이지 첫 로드)
         .catch(e => console.log("서버에서 DB 관련 데이터를 가져오는 데, 실패하였습니다.",e))
   },
@@ -64,7 +66,9 @@ export default {
     reSearch(str){                                                                      // 여기서 spring boot 서버에서 데이터 받아오고 화면 갱신 알고리즘 적용(페이지 내 재 검색을 통한 갱신)
       this.fadeIn();
       loadMenu(str)
-          .then(response => (this.menu = response.data, this.fadeOut()))
+          .then(response => (this.menu = response.data.content,
+              this.total_page = response.data.totalPages,
+              this.fadeOut()))
           .catch(e => console.log("content를 reload 하는 데, 실패하였습니다.", e))
     },
 
@@ -82,7 +86,7 @@ export default {
       for(let i=0; i < length; i++){
         let tag = document.createElement('a')
         tag.setAttribute('class', 'items_index')
-        tag.addEventListener("click", ()=>{this.reSearch("?query=제품명&page=" + i)})             // 매개변수를 보내면 자동 실행된다???   !!!!! 이벤트 리스너를 추가할 때, 매개변수를 주면 페이지 render()시 강제 실행된다, 이를 막기 위한 방법으로는 람다식 () => {}으로 감싸주면 매개변수도 주면서 동시에 render 시 실행도 막을 수 있다.
+        tag.addEventListener("click", ()=>{this.reSearch("query=제품명&page=" + i)})             // 매개변수를 보내면 자동 실행된다???   !!!!! 이벤트 리스너를 추가할 때, 매개변수를 주면 페이지 render()시 강제 실행된다, 이를 막기 위한 방법으로는 람다식 () => {}으로 감싸주면 매개변수도 주면서 동시에 render 시 실행도 막을 수 있다.
         tag.innerHTML = i+1
         aheadTag.before(tag)                                                                                    // appendchild는 nodelist와의 문제 때문에 [0]으로 접근해야 에러가 나지 않는다.
       }                                                                                                         // but,, after하고 before는 단일 객체를 넣는 구문이기에 [0]을 추가하지 않아도 된다.

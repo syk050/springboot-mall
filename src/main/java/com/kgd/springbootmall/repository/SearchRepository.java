@@ -15,7 +15,7 @@ public interface SearchRepository extends JpaRepository<Products, Long> {
 
     @Query(value = "SELECT * FROM products WHERE name LIKE %?1%",
     nativeQuery = true)
-    List<Products> findByName(@Param("name") String name, Pageable pageable);
+    Page<Products> findByName(@Param("name") String name, Pageable pageable);
     // name으로 가져오는 쿼리
     // 현재 Pageable 변수로 가져오는 query 결과의 양을 조절했다.
     // JpaRepository가 기본 제공하는 query가 존재하지만, 사용할 것이라면 List<>가 아닌 Page<> 형식으로 받아야 한다는 것을 명심해야 한다.

@@ -5,6 +5,7 @@ import com.kgd.springbootmall.entity.Products;
 import com.kgd.springbootmall.repository.SearchRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -22,17 +23,18 @@ public class SearchService {
     private Boolean isEmptyBoolean;
 
     @Transactional
-    public List<ProductDTO> selectByURLName(String str, Pageable pageable){                     // url로 query를 받아 검색하는 service 코드
+    public Page<Products> selectByURLName(String str, Pageable pageable){                     // url로 query를 받아 검색하는 service 코드
 
-        List<Products> rtn_Prod = searchRepository.findByName(str, pageable);
-        isListEmpty(rtn_Prod);
 
-        List<ProductDTO> rtn_ProdDTO = new ArrayList<>();
+        Page<Products> rtn_Prod = searchRepository.findByName(str, pageable);
+//        isListEmpty(rtn_Prod);
 
-        if(!isEmptyBoolean)                                     // 데이터 있으면 넣고
-            rtn_ProdDTO = ListEntitytoDTO(rtn_Prod);
+//        List<ProductDTO> rtn_ProdDTO = new ArrayList<>();
+//
+//        if(!isEmptyBoolean)                                     // 데이터 있으면 넣고
+//            rtn_ProdDTO = ListEntitytoDTO(rtn_Prod);
 
-        return rtn_ProdDTO;
+        return rtn_Prod;
 
     }
 

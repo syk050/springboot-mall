@@ -4,6 +4,8 @@ import com.kgd.springbootmall.dto.ProductDTO;
 import com.kgd.springbootmall.entity.Products;
 import com.kgd.springbootmall.service.SearchService;
 import lombok.RequiredArgsConstructor;
+import org.json.simple.JSONObject;
+import org.springframework.boot.jackson.JsonObjectSerializer;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -43,7 +45,7 @@ public class SearchController {
     
     @RequestMapping(value ="/content", method = RequestMethod.GET)
     @ResponseBody
-    public List<ProductDTO> returnContent(@PageableDefault(size=6, sort="id", direction = Sort.Direction.ASC) Pageable pageable){
+    public List<ProductDTO> returnContent(@PageableDefault(size=2, sort="id", value = 6, direction = Sort.Direction.ASC) Pageable pageable){
 
         List<ProductDTO> list = searchService.getContents(pageable);
 
@@ -54,10 +56,9 @@ public class SearchController {
     
     
     @GetMapping("/name")
-    public List<ProductDTO> selectByURLVariable(@RequestParam String query, @PageableDefault(page = 0, size=2, sort="id", direction = Sort.Direction.ASC) Pageable pageable){
+    public Page<Products> selectByURLVariable(@RequestParam String query, @PageableDefault(page = 0, size=6, sort="id", direction = Sort.Direction.ASC) Pageable pageable){
 
-        List<ProductDTO> rtn_ProdDTO = searchService.selectByURLName(query, pageable);
-
+        Page<Products> rtn_ProdDTO = searchService.selectByURLName(query, pageable);
 
         return rtn_ProdDTO;
     }
