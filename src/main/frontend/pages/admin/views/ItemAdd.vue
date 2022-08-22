@@ -27,12 +27,10 @@
             <p><button class="w3-button w3-small w3-round w3-green">이미지 등록</button></p>
           </div>
         </div>
-        <form class="w3-container w3-light-grey">
-          <p>
-            <label>내용</label>
-            <textarea class="w3-input w3-border w3-round-large" style="resize:none; height: 300px" type="text" v-model="name"></textarea>
-          </p>
-        </form>
+
+        <div id="ckeditor">
+          <ckeditor :editor="editor" v-model="editorData" :config="editorConfig"></ckeditor>
+        </div>
       </div>
 
       <div class="w3-third w3-container">
@@ -58,10 +56,18 @@
 </template>
 
 <script>
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+
 export default {
   name: "ItemAdd",
   data() {
     return {
+      editor: ClassicEditor,
+      editorData: '',
+      editorConfig: {
+        // The configuration of the editor.
+      },
+
       name: '',
     }
   },
@@ -75,7 +81,7 @@ export default {
       const apiUrl = '/kgd/items/'
 
       this.form = {
-        "name": this.name
+        "name": this.editorData
       }
       this.$axios.post(apiUrl, this.form)
           .then(() => {
