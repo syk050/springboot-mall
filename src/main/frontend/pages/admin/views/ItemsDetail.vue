@@ -59,7 +59,7 @@ export default {
   mounted() {
     this.fnGetView()
   },
-  methods: {
+  methods: {      // 여기!!!!!!!!!!!!!!!
     fnGetView() {
       this.$axios.get('/kgd/items/' + this.idx).then(res =>{
         this.id = res.data.id

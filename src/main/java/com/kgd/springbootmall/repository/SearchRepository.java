@@ -22,7 +22,7 @@ public interface SearchRepository extends JpaRepository<Products, Long> {
 
 
     @Query("select p from Products p")
-    List<Products> getAll(Pageable pageable);
+    Page<Products> getAll(Pageable pageable);
 
 
     @Override

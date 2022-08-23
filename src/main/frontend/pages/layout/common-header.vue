@@ -4,7 +4,9 @@
       <div id="img_div" onclick="location.reload()">
         <img id="header_img" alt="Vue logo" src="../../src/assets/logo.png">
       </div>
-      <input class="search_input" placeholder="검색어를 입력해주세요" maxlength="20"  />
+      <form class="search_input_form" onsubmit="return tmp_func()">
+        <input id="search_input" placeholder="검색어를 입력해주세요" maxlength="20"/>
+      </form>
 
     </div>
     <div class="category">카테고리</div>
@@ -56,7 +58,10 @@ export default {
     height: 100px;
     align: left;
   }
-  .search_input{
+  .search_input_form{
+    display: inline;
+  }
+  #search_input{
     margin-top: +32px;
     margin-left: 150px;
     padding-left: 40px;
@@ -74,6 +79,5 @@ export default {
   .menu{
     display: flex;
     list-style: none;
-
   }
 </style>
