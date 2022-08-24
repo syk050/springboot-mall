@@ -4,7 +4,7 @@ import com.kgd.springbootmall.dto.ProductDTO;
 import com.kgd.springbootmall.entity.Products;
 import com.kgd.springbootmall.service.SearchService;
 import lombok.RequiredArgsConstructor;
-import org.json.simple.JSONObject;
+//import org.json.simple.JSONObject;
 import org.springframework.boot.jackson.JsonObjectSerializer;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
