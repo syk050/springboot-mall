@@ -57,6 +57,7 @@
 
 <script>
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import CustomCkeditor from "../assets/CustomCkeditor";
 
 export default {
   name: "ItemAdd",
@@ -70,6 +71,9 @@ export default {
 
       name: '',
     }
+  },
+  mounted() {
+    new CustomCkeditor("#editor").create();
   },
   methods: {
     fnList() {
