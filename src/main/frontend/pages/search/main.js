@@ -1,14 +1,24 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import axios from 'axios'                           // aios 모듈 가져오기(이전에 npm install axios 로 설치해야 함)
-import router from "./router";
+import router from "./router/index.js";
 import store from '@/store'
+
+
 
 
 const app = createApp(App)
 app.config.globalProperties.axios = axios;          //axios 모듈 장작
-createApp(App).use(store).use(router).mount('#app')
+createApp(App).use(router).use(store).mount('#app')
 
+router.beforeEach((to, from, next) => {
+    console.log(from.path + ' -> ' + to.path);
+    next();
+})
+
+// router를 vue에 등록하게 되면 $route와 $router를 사용할 수 있게 된다.
+// $route는 일반적으로 url로 넘어오는 값이나, 상태를 가집니다.
+// $router는 주로 페이지 이동에 대한 함수(push,go 등등)이나, $route가 가지고 있는 전체값을 가집니다.
 
 // 가장 먼저 실행되는 자바스크립트 파일,  vue 인스턴스를 생성하는 역할
 
