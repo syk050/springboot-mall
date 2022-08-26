@@ -1,4 +1,4 @@
-import MyUploadAdapter from "../../../public/js/MyUploadAdapter";
+import MyUploadAdapter from "./MyUploadAdapter";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 function SimpleUploadAdapterPlugin(editor) {

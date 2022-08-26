@@ -1,3 +1,5 @@
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+
 class MyUploadAdapter {
     constructor( loader ) {
         // The file loader instance to use during the upload.
@@ -91,6 +93,14 @@ class MyUploadAdapter {
         // Send the request.
         this.xhr.send( data );
     }
+}
+
+
+function MyCustomUploadAdapterPlugin( editor ) {
+    editor.plugins.get( 'FileRepository' ).createUploadAdapter = ( loader ) => {
+        // Configure the URL to the upload script in your back-end here!
+        return new MyUploadAdapter( loader );
+    };
 }
 
 export default MyUploadAdapter
