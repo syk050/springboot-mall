@@ -45,9 +45,9 @@ public class SearchController {
     
     @RequestMapping(value ="/content", method = RequestMethod.GET)
     @ResponseBody
-    public List<ProductDTO> returnContent(@PageableDefault(size=2, sort="id", value = 6, direction = Sort.Direction.ASC) Pageable pageable){
+    public Page<Products> returnContent(@PageableDefault(size=2, sort="id", value = 6, direction = Sort.Direction.ASC) Pageable pageable){
 
-        List<ProductDTO> list = searchService.getContents(pageable);
+        Page<Products> list = searchService.getContents(pageable);
 
         return list;
     }
