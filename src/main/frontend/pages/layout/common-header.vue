@@ -4,7 +4,7 @@
       <div id="img_div" onclick="location.reload()">
         <img id="header_img" alt="Vue logo" src="../../src/assets/logo.png">
       </div>
-      <form class="search_input_form" onsubmit="return tmp_func()">
+      <form class="search_input_form" @submit.prevent="submit_form" >     <!-- onsubmit은 form에서 enter를 눌렀을 때, 작용하는 이벤트이다. 우선순위로 1. onsubmit 기능, 2. action에 있는 url로 이동한다. 이 때 submit이 return 한 것이 false 라면 url이동은 하지 않는다. -->
         <input id="search_input" placeholder="검색어를 입력해주세요" maxlength="20"/>
       </form>
 
@@ -21,7 +21,23 @@
 
 <script>
 export default {
-  name: "common-header"
+  name: "common-header",
+  methods:{
+
+
+    submit_form(){
+      let search = document.getElementById('search_input').value;                                             // javascript 에서 값을 가져올 때는 value 속성을, 값을 넣을 때에는 innerText 속성을 사용한다.
+      console.log("지금부터 헤더의 검색창 내용" + search + "을 submit합니다.");
+      this.$router.push({
+                          // test 해 보니 , push의 우선순위는 path 보다는 name에 우선되어 있다.(name이 없다면 path로 우선순위가 이동)
+        path: "/search/page2",
+        query: {text : search}
+      })
+
+    },
+
+  }
+
 }
 </script>
 
