@@ -2,13 +2,13 @@
   <common-header/>
   <div id="content">
     <div id="search_value_div">
-      <h1 class="search_value">'{{$route.query.text}}' </h1>
+      <h1 class="search_value">'{{ search_value }}' </h1>
       <h2 class="search_value">  에 대한 상품 검색 결과입니다.</h2>
     </div>
       <hr/>
 
 <!--  DB에서 날마다 추천 상품 받아서 전송 -->
-    <div class="search_item_list">
+    <div id="search_item_list">
       <div class="items" v-for="(m,i) in menu" :key="i">
         <img class="items_img" alt="pancakes" src="../../../src/assets/pancakes.jpg">
         <h3 class="name">{{ m.name }} </h3>
@@ -43,7 +43,7 @@ export default {
   },
   data(){                                                 // data에는 변수를 저장
     return{
-      search_value : "제품명",
+      search_value : this.$route.query.text,
       page_item_count : 6,
       total_page : 0,
       menu:[],
@@ -56,18 +56,13 @@ export default {
 
 
   mounted(){            // 인스턴스가 마운트 된 직후 호출된다.
-    console.log("url에서 가져온 파라미터 : ",JSON.parse(JSON.stringify(this.$route)));
-    // 현재 $router에 담겨오는 타이밍이 맞지 않는 오류가 발생 중이다.
-    // 따라서 http://localhost:8081/search?text=제품명 이라고 검색하면 {{}}로 감싼 곳에는 데이터가 뜨고
-    // this.$route.query에는 데이터가 뜨지 않는다.
 
 
     loadMenu("query=" + this.search_value)
         .then(response => (this.menu = response.data.content,
             this.total_page = response.data.totalPages,
-            console.log(response),
-            console.log(this.menu),
-            console.log(this.total_page),
+            console.log("spring에서 받아온 품목 : ",this.menu),
+            console.log(" 총 페이지 수 : " + this.total_page),
             this.setting_index(this.total_page))
         )                                                                                                               // spring 서버에서 가져온 response 데이터를 변수에 저장(페이지 첫 로드)
         .catch(e => console.log("서버에서 DB 관련 데이터를 가져오는 데, 실패하였습니다.",e))
@@ -75,28 +70,41 @@ export default {
 
 
   },
+  updated() {
+
+
+  },
+
   computed:{                 // computed와 method의 차이점은 computed는 종속된 대상이 변하지 않는 이상 다시 계산을 하지 않는다.
   },
   watch : {
-
     // search_value : function (){
+    //   console.log("watch에서 실행(search_value) : " + this.search_value)
     //     this.reSearch()
-    //     console.log("watch에서 실행(search_value) : " + this.search_value)
     // }
+
+    $route(to, from){
+      if(to.path == from.path)
+        this.reSearch();
+    }
   },
 
   methods: {
 
     reSearch(){
+      console.log("------------재검색이 활성화되었습니다.---------------");
       this.fadeIn();
       let search_input_str = document.getElementById('search_input').innerText
       loadMenu("query=" + search_input_str)
           .then(response => (this.menu = response.data.content,
               this.total_page = response.data.totalPages,
+              this.search_value = this.$route.query.text,
               console.log(response),
               console.log(this.menu),
               console.log(this.total_page),
-              this.setting_index(this.total_page))
+              this.setting_index(this.total_page),
+              this.fadeOut()
+              )
           )
           .catch(e => console.log("서버에서 DB 관련 데이터를 가져오는 데, 실패하였습니다.",e))
     },
@@ -113,13 +121,13 @@ export default {
 
 
     fadeIn(){
-      const dom = document.getElementById('content')
+      const dom = document.getElementById('search_item_list')
       $(dom).animate({'opacity':'0'},1000)
     },
 
 
     fadeOut(){
-      const dom = document.getElementById('content')
+      const dom = document.getElementById('search_item_list')
       $(dom).animate({'opacity':'1'},1000)
     },
 
@@ -183,7 +191,7 @@ h1.search_value{
   display: inline;        /* h태그 줄넘김 없애기 */
 }
 
-.search_item_list{
+#search_item_list{
   margin-top: 70px;
 }
 

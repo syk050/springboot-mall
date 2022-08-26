@@ -26,13 +26,13 @@ export default {
 
 
     submit_form(){
-      let search = document.getElementById('search_input').value;                                             // javascript 에서 값을 가져올 때는 value 속성을, 값을 넣을 때에는 innerText 속성을 사용한다.
-      console.log("지금부터 헤더의 검색창 내용" + search + "을 submit합니다.");
+      let search = document.getElementById('search_input').value;                                              // javascript 에서 값을 가져올 때는 value 속성을, 값을 넣을 때에는 innerText 속성을 사용한다.
       this.$router.push({
-                          // test 해 보니 , push의 우선순위는 path 보다는 name에 우선되어 있다.(name이 없다면 path로 우선순위가 이동)
-        path: "/search/page2",
+        name : "search",                                                                                                  // test 해 보니 , push의 우선순위는 path 보다는 name에 우선되어 있다.(name이 없다면 path로 우선순위가 이동)
+        path: "/search",
         query: {text : search}
       })
+
 
     },
 
