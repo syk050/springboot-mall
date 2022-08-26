@@ -57,7 +57,7 @@
 
 <script>
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import CustomCkeditor from "../assets/CustomCkeditor";
+import CustomCkeditor from "../assets/js/CustomCkeditor";
 
 export default {
   name: "ItemAdd",
