@@ -17,10 +17,9 @@
         <h4 class="deli" v-if=m.deli>무료배송</h4>
         <h4 class="deli" v-else>배송비</h4>
       </div>
+      <div id="empty_notice_banner"></div>
     </div>
-    <div class="items_index_div">                                                  <!-- 아이템 페이지 수, 동적으로 관리해야 함(검색된 물품 개수 / 한 페이지에 보여 줄 물품 개수 + 1) -->
-      <a class="items_index" id="arrow">&lt;</a>
-      <a class="items_index" id="arrow_next">&gt;</a>
+    <div class="items_index_div" id="items_index_div">                                                  <!-- 아이템 페이지 수, 동적으로 관리해야 함(검색된 물품 개수 / 한 페이지에 보여 줄 물품 개수 + 1) -->
     </div>                                                                         <!-- 총 index수를 가져온 다음, 페이지 첫 로드 시 <a>태그 자동 생성(10 단위로), ">>"태그나 index가 10이 넘어가면, 11에서 20까지 또는 11에서 최대 인덱스까지-->
   </div>
 
@@ -43,10 +42,10 @@ export default {
   },
   data(){                                                 // data에는 변수를 저장
     return{
-      search_value : this.$route.query.text,
-      page_item_count : 6,
-      total_page : 0,
-      menu:[],
+      search_value : this.$route.query.text,    // 검색어
+      page_item_count : 6,                      // 한 페이지 당 보여줄 item 개수
+      total_page : 0,                           // was에서 가져온 총 페이지 개수
+      menu:[],                                  // 한 상품의 제원
     };
   },
 
@@ -57,16 +56,7 @@ export default {
 
   mounted(){            // 인스턴스가 마운트 된 직후 호출된다.
 
-
-    loadMenu("query=" + this.search_value)
-        .then(response => (this.menu = response.data.content,
-            this.total_page = response.data.totalPages,
-            console.log("spring에서 받아온 품목 : ",this.menu),
-            console.log(" 총 페이지 수 : " + this.total_page),
-            this.setting_index(this.total_page))
-        )                                                                                                               // spring 서버에서 가져온 response 데이터를 변수에 저장(페이지 첫 로드)
-        .catch(e => console.log("서버에서 DB 관련 데이터를 가져오는 데, 실패하였습니다.",e))
-
+    this.get_WAS();
 
 
   },
@@ -78,47 +68,38 @@ export default {
   computed:{                 // computed와 method의 차이점은 computed는 종속된 대상이 변하지 않는 이상 다시 계산을 하지 않는다.
   },
   watch : {
-    // search_value : function (){
-    //   console.log("watch에서 실행(search_value) : " + this.search_value)
-    //     this.reSearch()
-    // }
 
-    $route(to, from){
-      if(to.path == from.path)
+    $route(to, from){                           // 라우팅 값이 변했을 때 실행
+      if(to.path == from.path)                        // 라우팅 값이 같은 경우, 재검색 함수 실행
         this.reSearch();
     }
   },
 
   methods: {
 
-    reSearch(){
-      console.log("------------재검색이 활성화되었습니다.---------------");
+    get_WAS(){                                                                           // was에서 DB값 get                                                             // 여기서 spring boot 서버에서 데이터 받아오고 화면 갱신 알고리즘 적용(페이지 내 재 검색을 통한 갱신)
+      this.search_value = this.$route.query.text,
       this.fadeIn();
-      let search_input_str = document.getElementById('search_input').innerText
-      loadMenu("query=" + search_input_str)
+      loadMenu("query=" + this.search_value)
           .then(response => (this.menu = response.data.content,
               this.total_page = response.data.totalPages,
-              this.search_value = this.$route.query.text,
-              console.log(response),
-              console.log(this.menu),
-              console.log(this.total_page),
-              this.setting_index(this.total_page),
+              console.log("spring에서 받아온 품목 : ",this.menu),
+              console.log(" 총 페이지 수 : " + this.total_page),
+              this.is_empty_page(),
               this.fadeOut()
               )
-          )
+          )                                                                                                               // spring 서버에서 가져온 response 데이터를 변수에 저장(페이지 첫 로드)
           .catch(e => console.log("서버에서 DB 관련 데이터를 가져오는 데, 실패하였습니다.",e))
+
     },
 
 
-    pageRevert(str){                                                                      // 여기서 spring boot 서버에서 데이터 받아오고 화면 갱신 알고리즘 적용(페이지 내 재 검색을 통한 갱신)
+    reSearch(){                                                                       // 재검색 실행 함수
+      console.log("------------재검색이 활성화되었습니다.---------------");
       this.fadeIn();
-      loadMenu(str)
-          .then(response => (this.menu = response.data.content,
-              this.total_page = response.data.totalPages,
-              this.fadeOut()))
-          .catch(e => console.log("content를 reload 하는 데, 실패하였습니다.", e))
+      this.get_WAS();
+      this.fadeOut();
     },
-
 
     fadeIn(){
       const dom = document.getElementById('search_item_list')
@@ -132,16 +113,57 @@ export default {
     },
 
 
-    setting_index(length){                                                                                      // 페이지 index, 생성 함수
-      let aheadTag = document.getElementById('arrow_next')
-      for(let i=0; i < length; i++){
+    setting_index(length){                                                                                          // 페이지 index, 생성 함수
+      this.reset_index();                                                                                      // index 검색 시, 초기화
+
+      let parentTag = document.getElementById('items_index_div')
+
+      let arrowTag;
+      let tmp_id;
+      let tmp_txt;
+      for(let i=0; i < 2; i++){
+        arrowTag = document.createElement('a');                                                                         // 화살표 index 제작
+        arrowTag.setAttribute('class', 'items_index');
+        tmp_id = (i == 0) ? 'arrow' : 'arrow_next';
+        tmp_txt = (i == 0) ? '<' : '>';                                                                                 // 조건부 연산자 "?"를 활용
+        arrowTag.setAttribute('id', tmp_id);
+        arrowTag.innerText = tmp_txt;
+        parentTag.appendChild(arrowTag);
+      }
+
+      for(let i=0; i < length; i++){                                                                                    // 숫자 index 제작
         let tag = document.createElement('a')
         tag.setAttribute('class', 'items_index')
-        tag.addEventListener("click", ()=>{this.pageRevert("query=제품명&page=" + i)})             // 매개변수를 보내면 자동 실행된다???   !!!!! 이벤트 리스너를 추가할 때, 매개변수를 주면 페이지 render()시 강제 실행된다, 이를 막기 위한 방법으로는 람다식 () => {}으로 감싸주면 매개변수도 주면서 동시에 render 시 실행도 막을 수 있다.
+        tag.addEventListener("click", ()=>{this.get_WAS("query=제품명&page=" + i)})                            // 매개변수를 보내면 자동 실행된다???   !!!!! 이벤트 리스너를 추가할 때, 매개변수를 주면 페이지 render()시 강제 실행된다, 이를 막기 위한 방법으로는 람다식 () => {}으로 감싸주면 매개변수도 주면서 동시에 render 시 실행도 막을 수 있다.
         tag.innerHTML = i+1
-        aheadTag.before(tag)                                                                                    // appendchild는 nodelist와의 문제 때문에 [0]으로 접근해야 에러가 나지 않는다.
+        arrowTag.before(tag)                                                                                    // appendchild는 nodelist와의 문제 때문에 [0]으로 접근해야 에러가 나지 않는다.
       }                                                                                                         // but,, after하고 before는 단일 객체를 넣는 구문이기에 [0]을 추가하지 않아도 된다.
+    },
+
+    is_empty_page(){
+      if(this.total_page == 0){
+        this.reset_index();
+        let page = document.getElementById('empty_notice_banner');
+        page.innerHTML = "";
+
+        let tag = document.createElement('h2');
+        tag.setAttribute('id', 'empty_h2');
+        tag.innerHTML = "관련 상품이 존재하지 않습니다."
+        page.appendChild(tag);
+
+      }
+      else{
+        document.getElementById('empty_notice_banner').innerHTML = "";
+        this.setting_index(this.total_page);
+      }
+    },
+
+    reset_index(){
+      let parentTag = document.getElementById('items_index_div')
+      parentTag.innerHTML = "";
     }
+
+
   }
 }
 </script>
@@ -165,6 +187,7 @@ export default {
 
 #content{
   width: 1020px;
+  height: 1340px;
   margin: 0 auto;         /* content 화면 정 가운데 고정 */
 }
 

@@ -23,8 +23,6 @@
 export default {
   name: "common-header",
   methods:{
-
-
     submit_form(){
       let search = document.getElementById('search_input').value;                                              // javascript 에서 값을 가져올 때는 value 속성을, 값을 넣을 때에는 innerText 속성을 사용한다.
       this.$router.push({
@@ -32,8 +30,6 @@ export default {
         path: "/search",
         query: {text : search}
       })
-
-
     },
 
   }
