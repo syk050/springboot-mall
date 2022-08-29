@@ -20,6 +20,7 @@
 
     <!-- Content -->
     <div class="w3-row-padding">
+      <!-- 내용 -->
       <div class="w3-twothird ">
         <div class="container">
           <img src="../../../src/assets/logo.png" style="width:60%" alt="상품 이미지">
@@ -28,11 +29,17 @@
           </div>
         </div>
 
-        <div id="ckeditor">
-          <ckeditor :editor="editor" v-model="editorData" :config="editorConfig"></ckeditor>
+        <div class="content">
+          <table class="w3-table w3-striped w3-bordered w3-border">
+            <tr><td>name</td><td><input type="text" v-model="name" class="w3-input w3-border"></td></tr>
+          </table>
+          <div id="ckeditor">
+            <ckeditor :editor="editor" v-model="editorData" :config="editorConfig"></ckeditor>
+          </div>
         </div>
       </div>
 
+      <!-- 태그 -->
       <div class="w3-third w3-container">
         <h1 class="t-header">Tag</h1>
         <div class="w3-container w3-bottombar w3-padding-16 dnd-box r-tag">
@@ -65,21 +72,17 @@ export default {
   data() {
     return {
       editor: ClassicEditor,
-      editorData: '',
       editorConfig: {
         // The configuration of the editor.
+        extraPlugins: [ MyCustomUploadAdapterPlugin ],
       },
 
       name: '',
+      editorData: '',
     }
   },
   mounted() {
     dnd.init()
-    ClassicEditor.create( document.querySelector( '#ckeditor' ), {
-          extraPlugins: [ MyCustomUploadAdapterPlugin ],
-    }).catch( error => {
-      console.log(error);
-    });
   },
   methods: {
     fnList() {
@@ -91,7 +94,8 @@ export default {
       const apiUrl = '/kgd/items/'
 
       this.form = {
-        "name": this.editorData
+        "name": this.name,
+        "content": this.editorData
       }
       this.$axios.post(apiUrl, this.form)
           .then(() => {
