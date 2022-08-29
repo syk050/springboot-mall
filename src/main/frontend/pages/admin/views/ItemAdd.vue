@@ -57,7 +57,8 @@
 
 <script>
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import CustomCkeditor from "../assets/CustomCkeditor";
+import MyCustomUploadAdapterPlugin from "../assets/js/MyUploadAdapter";
+import { dnd } from "../assets/js/dnd"
 
 export default {
   name: "ItemAdd",
@@ -73,7 +74,12 @@ export default {
     }
   },
   mounted() {
-    new CustomCkeditor("#editor").create();
+    dnd.init()
+    ClassicEditor.create( document.querySelector( '#ckeditor' ), {
+          extraPlugins: [ MyCustomUploadAdapterPlugin ],
+    }).catch( error => {
+      console.log(error);
+    });
   },
   methods: {
     fnList() {
