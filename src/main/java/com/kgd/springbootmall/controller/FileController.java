@@ -1,22 +1,31 @@
 package com.kgd.springbootmall.controller;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.FileCopyUtils;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.List;
 import java.util.UUID;
+
+import org.json.simple.JSONObject;
 
 @RestController
 @CrossOrigin
 public class FileController {
 
     @PostMapping("/kgd/img")
-    public boolean requestUploadFile(@RequestParam("fileList") List<MultipartFile> fileList) {
+    public JSONObject requestUploadFile(@RequestParam("fileList") List<MultipartFile> fileList) {
+        JSONObject path;
         try {
+            path = new JSONObject();
+
             for (MultipartFile multipartFile : fileList) {
                 /* uuid
                  * 파일에 고유한 이름을 가지도록 하기 위해
@@ -28,13 +37,15 @@ public class FileController {
                 FileOutputStream writer = new FileOutputStream("./images/" + fileName);
                 writer.write(multipartFile.getBytes());
                 writer.close();
+
+                path.put("url", "/kgd/img/" + fileName);
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
 //            return "upload fail";
-            return false;
+            return new JSONObject();
         }
 //        return "upload success";
-        return true;
+        return path;
     }
 }
