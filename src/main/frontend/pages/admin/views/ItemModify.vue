@@ -51,6 +51,7 @@
 </template>
 
 <script>
+import { dnd } from "../assets/js/dnd"
 
 export default {
   name: "ItemModify",
@@ -65,6 +66,7 @@ export default {
   },
   mounted() {
     this.fnGetView()
+    dnd.init()
   },
   methods: {
     fnGetView() {
