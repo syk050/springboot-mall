@@ -37,6 +37,8 @@ dependencies {
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
 
+    implementation group:'com.googlecode.json-simple', name: 'json-simple', version: '1.1'
+
     // implementation 과 compile의 차이
     // compile은 연결된 API 모두가 프로젝트에 의해 노출되고, implementation은 노출되지 않는다.(gradle 3.0 이상부터는 compile 사용을 권장X)
 
