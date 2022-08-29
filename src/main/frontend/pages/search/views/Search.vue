@@ -45,6 +45,7 @@ export default {
       search_value : this.$route.query.text,    // 검색어
       page_item_count : 6,                      // 한 페이지 당 보여줄 item 개수
       total_page : 0,                           // was에서 가져온 총 페이지 개수
+      cur_page : 0,
       menu:[],                                  // 한 상품의 제원
     };
   },
@@ -77,10 +78,14 @@ export default {
 
   methods: {
 
-    get_WAS(){                                                                           // was에서 DB값 get                                                             // 여기서 spring boot 서버에서 데이터 받아오고 화면 갱신 알고리즘 적용(페이지 내 재 검색을 통한 갱신)
-      this.search_value = this.$route.query.text,
+    get_WAS(str){                                                                           // was에서 DB값 get                                                             // 여기서 spring boot 서버에서 데이터 받아오고 화면 갱신 알고리즘 적용(페이지 내 재 검색을 통한 갱신)
+      this.total_page = 0;
+      if( typeof str == "undefined")
+        str = ""
+      else
+        this.search_value = this.$route.query.text;
       this.fadeIn();
-      loadMenu("query=" + this.search_value)
+      loadMenu("query=" + this.search_value + str)
           .then(response => (this.menu = response.data.content,
               this.total_page = response.data.totalPages,
               console.log("spring에서 받아온 품목 : ",this.menu),
@@ -103,13 +108,13 @@ export default {
 
     fadeIn(){
       const dom = document.getElementById('search_item_list')
-      $(dom).animate({'opacity':'0'},1000)
+      $(dom).animate({'opacity':'0'},800)
     },
 
 
     fadeOut(){
       const dom = document.getElementById('search_item_list')
-      $(dom).animate({'opacity':'1'},1000)
+      $(dom).animate({'opacity':'1'},800)
     },
 
 
@@ -127,6 +132,12 @@ export default {
         tmp_id = (i == 0) ? 'arrow' : 'arrow_next';
         tmp_txt = (i == 0) ? '<' : '>';                                                                                 // 조건부 연산자 "?"를 활용
         arrowTag.setAttribute('id', tmp_id);
+        if(i == 0)
+          arrowTag.addEventListener("click", () => this.go_prev_page());
+        else
+          arrowTag.addEventListener("click", () => this.go_next_page());
+
+
         arrowTag.innerText = tmp_txt;
         parentTag.appendChild(arrowTag);
       }
@@ -134,7 +145,11 @@ export default {
       for(let i=0; i < length; i++){                                                                                    // 숫자 index 제작
         let tag = document.createElement('a')
         tag.setAttribute('class', 'items_index')
-        tag.addEventListener("click", ()=>{this.get_WAS("query=제품명&page=" + i)})                            // 매개변수를 보내면 자동 실행된다???   !!!!! 이벤트 리스너를 추가할 때, 매개변수를 주면 페이지 render()시 강제 실행된다, 이를 막기 위한 방법으로는 람다식 () => {}으로 감싸주면 매개변수도 주면서 동시에 render 시 실행도 막을 수 있다.
+        tag.addEventListener("click",
+            ()=>{
+          this.get_WAS("&page=" + i);
+              this.cur_page = i;
+        })                                                                                                         // 매개변수를 보내면 자동 실행된다???   !!!!! 이벤트 리스너를 추가할 때, 매개변수를 주면 페이지 render()시 강제 실행된다, 이를 막기 위한 방법으로는 람다식 () => {}으로 감싸주면 매개변수도 주면서 동시에 render 시 실행도 막을 수 있다.
         tag.innerHTML = i+1
         arrowTag.before(tag)                                                                                    // appendchild는 nodelist와의 문제 때문에 [0]으로 접근해야 에러가 나지 않는다.
       }                                                                                                         // but,, after하고 before는 단일 객체를 넣는 구문이기에 [0]을 추가하지 않아도 된다.
@@ -161,6 +176,21 @@ export default {
     reset_index(){
       let parentTag = document.getElementById('items_index_div')
       parentTag.innerHTML = "";
+    },
+
+    go_prev_page(){
+      if(this.cur_page == 0)
+        return
+      this.cur_page--;
+      this.get_WAS("&page=" + this.cur_page);
+    },
+
+    go_next_page(){
+      if(this.cur_page == this.total_page - 1)
+        return
+      this.cur_page++;
+      this.get_WAS("&page=" + this.cur_page);
+
     }
 
 
