@@ -10,15 +10,18 @@ import lombok.NoArgsConstructor;
 public class ItemsSaveRequestDto {
 
     private String name;
+    private String content;
 
     @Builder
-    public ItemsSaveRequestDto(String name) {
+    public ItemsSaveRequestDto(String name, String content) {
         this.name = name;
+        this.content = content;
     }
 
     public Items toEntity() {
         return Items.builder()
                 .name(name)
+                .content(content)
                 .build();
     }
 }
