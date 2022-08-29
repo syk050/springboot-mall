@@ -1,4 +1,4 @@
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+// import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 class MyUploadAdapter {
     constructor( loader ) {
@@ -83,7 +83,7 @@ class MyUploadAdapter {
         // Prepare the form data.
         const data = new FormData();
 
-        data.append( 'upload', file );
+        data.append( 'fileList', file );
 
         // Important note: This is the right place to implement security mechanisms
         // like authentication and CSRF protection. For instance, you can use
@@ -103,4 +103,4 @@ function MyCustomUploadAdapterPlugin( editor ) {
     };
 }
 
-export default MyUploadAdapter
+export default MyCustomUploadAdapterPlugin

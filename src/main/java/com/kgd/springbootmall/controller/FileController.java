@@ -14,7 +14,7 @@ import java.util.List;
 public class FileController {
 
     @PostMapping("/kgd/img")
-    public String requestUploadFile(@RequestParam("fileList") List<MultipartFile> fileList) {
+    public boolean requestUploadFile(@RequestParam("fileList") List<MultipartFile> fileList) {
         try {
             for (MultipartFile multipartFile : fileList) {
                 FileOutputStream writer = new FileOutputStream("./images/" + multipartFile.getOriginalFilename());
@@ -23,8 +23,10 @@ public class FileController {
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            return "upload fail";
+//            return "upload fail";
+            return false;
         }
-        return "upload success";
+//        return "upload success";
+        return true;
     }
 }
