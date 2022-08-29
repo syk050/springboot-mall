@@ -61,6 +61,7 @@ class MyUploadAdapter {
             // This URL will be used to display the image in the content. Learn more in the
             // UploadAdapter#upload documentation.
             resolve( {
+                // 업로드된 파일 주소
                 default: response.url
             } );
         } );
