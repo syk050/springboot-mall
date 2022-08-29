@@ -104,7 +104,7 @@ const dnd = {
     handleDragEnd() {
         this.style.opacity = '1';
 
-        _this.dndBox.forEach(function (box) {
+        this.dndBox.forEach(function (box) {
             box.classList.remove('over');
         });
     },
@@ -139,4 +139,4 @@ const dnd = {
     }
 }
 
-dnd.init();
+export {dnd}
