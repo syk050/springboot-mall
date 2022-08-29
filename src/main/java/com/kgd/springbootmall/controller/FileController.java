@@ -48,4 +48,24 @@ public class FileController {
 //        return "upload success";
         return path;
     }
+
+    @GetMapping("/kgd/img/{filename}")
+    public ResponseEntity<byte[]> getImage(@PathVariable String filename){
+
+        File file = new File("D:\\IntelliJProjects\\springboot-mall\\images\\" + filename);
+        ResponseEntity<byte[]> result = null;
+        try {
+
+            HttpHeaders header = new HttpHeaders();
+
+            header.add("Content-type", Files.probeContentType(file.toPath()));
+
+            result = new ResponseEntity<>(FileCopyUtils.copyToByteArray(file), header, HttpStatus.OK);
+
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
 }
