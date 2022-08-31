@@ -82,8 +82,10 @@ export default {
       this.total_page = 0;
       if( typeof str == "undefined")
         str = ""
-      else
+      else {
         this.search_value = this.$route.query.text;
+        console.log(this.search_value)
+      }
       this.fadeIn();
       loadMenu("query=" + this.search_value + str)
           .then(response => (this.menu = response.data.content,
@@ -101,9 +103,8 @@ export default {
 
     reSearch(){                                                                       // 재검색 실행 함수
       console.log("------------재검색이 활성화되었습니다.---------------");
-      this.fadeIn();
+      this.search_value = this.$route.query.text;
       this.get_WAS();
-      this.fadeOut();
     },
 
     fadeIn(){

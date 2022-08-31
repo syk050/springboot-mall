@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import search from '../views/Search'
+import detail from "../views/Detail";
 
 // vue 라우터란? : 뷰 라이브러리를 이용하여 싱글 페이지 애플리케이션을 구현하거나 페이지 간의 이동할 대 사용하는 라이브러리
 //                페이지 이동 시 마다 서버에 요청하여 갱신하는 것이 아닌 미리 해당 페이지를 받아놓고 바로바로 이동할 수 있게 한다.
@@ -9,7 +10,12 @@ const routes = [
     {
         path: '/search',                // router 접근 경로
         name: 'search',                 // 경로의 이름
-        component: search,              // 실제로 보여줄 페이지
+        component: search              // 실제로 보여줄 페이지
+    },
+    {
+        path: '/search/detail',
+        name: 'detail',
+        component: detail
     }
 ]
 
