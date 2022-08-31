@@ -22,13 +22,16 @@ public class Items {
 
     @Column
     private String name;
+    private String content;
 
     @Builder
-    public Items(String name) {
+    public Items(String name, String content) {
         this.name = name;
+        this.content = content;
     }
 
-    public void update(String name) {
+    public void update(String name, String content) {
         this.name = name;
+        this.content = content;
     }
 }

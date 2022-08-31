@@ -2,7 +2,7 @@ const { defineConfig } = require('@vue/cli-service')
 module.exports = defineConfig({
   outputDir: "../resources/static",
   // vue 빌드 타겟 디렉토리(빌드하면 위의 경로로 생성된다.)
-  pages:{
+  pages: {
     main:{
       entry: './pages/main/main.js',
       template: './public/main-page.html',
@@ -29,6 +29,11 @@ module.exports = defineConfig({
       // 본래 빌드를 하고 테스트를 하는 방식이었으나
       // vue 서버를 기동시키고 해당 코드를 저장시키면, 즉시 서버 웹에 반영되는 이점이 있어서 vue를 사용한다.
 
+    },
+    pay:{
+      entry: 'pages/payment/main.js',
+      template: 'public/pay-page.html',
+      filename: 'pay-page.out.html'
     }
   },
   devServer : {

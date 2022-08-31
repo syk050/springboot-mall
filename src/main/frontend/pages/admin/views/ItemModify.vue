@@ -20,15 +20,23 @@
 
     <!-- Content -->
     <div class="w3-row-padding ">
+      <!-- 내용 -->
       <div class="w3-twothird">
         <img src="../../../src/assets/logo.png" style="width:60%" alt="상품 이미지">
-        <table class="w3-table w3-striped w3-bordered w3-border">
-          <thead class="w3-teal"><th style="width:30%">구분</th><th>내용</th></thead>
-          <tr><td style="width:30%">ID</td><td>{{ id }}</td></tr>
-          <tr><td>name</td><td><input type="text" v-model="name" class="w3-input w3-border"></td></tr>
-        </table>
+        <div>
+          <table class="w3-table w3-striped w3-bordered w3-border">
+            <thead class="w3-teal"><th style="width:30%">구분</th><th>내용</th></thead>
+            <tr><td style="width:30%">ID</td><td>{{ id }}</td></tr>
+            <tr><td>name</td><td><input type="text" v-model="name" class="w3-input w3-border"></td></tr>
+          </table>
+          <div id="ckeditor">
+            <ckeditor :editor="editor" v-model="editorData" :config="editorConfig"></ckeditor>
+          </div>
+        </div>
+
       </div>
 
+      <!-- 태그 -->
       <div class="w3-third w3-container">
         <h1 class="t-header">Tag</h1>
         <div class="w3-container w3-bottombar w3-padding-16 dnd-box r-tag">
@@ -51,26 +59,38 @@
 </template>
 
 <script>
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import MyCustomUploadAdapterPlugin from "../assets/js/MyUploadAdapter";
+import { dnd } from "../assets/js/dnd"
 
 export default {
   name: "ItemModify",
   data() {
     return {
+      editor: ClassicEditor,
+      editorConfig: {
+        // The configuration of the editor.
+        extraPlugins: [ MyCustomUploadAdapterPlugin ],
+      },
+
       requestBody: this.$route.query,
       idx: this.$route.query.idx,
 
       id: '',
       name: '',
+      editorData: ''
     }
   },
   mounted() {
     this.fnGetView()
+    dnd.init()
   },
   methods: {
     fnGetView() {
       this.$axios.get('/kgd/items/' + this.idx).then(res =>{
         this.id = res.data.id
         this.name = res.data.name
+        this.editorData = res.data.content
       }).catch(err => {
         if (err.message.indexOf('Network Error') > -1) {
           alert('네트워크가 원활하지 않습니다.\n잠시 후 다시 시도해주세요.')
@@ -87,7 +107,8 @@ export default {
       const apiUrl = '/kgd/items/' + this.idx
 
       this.form = {
-        "name": this.name
+        "name": this.name,
+        "content": this.editorData
       }
       this.$axios.put(apiUrl, this.form)
           .then(() => {

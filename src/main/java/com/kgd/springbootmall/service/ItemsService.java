@@ -10,12 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.Entity;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -54,7 +49,7 @@ public class ItemsService {
         Items items = itemsRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 아이템이 없습니다. id=" + id));
 
-        items.update(requestDto.getName());
+        items.update(requestDto.getName(), requestDto.getContent());
 
         return id;
     }

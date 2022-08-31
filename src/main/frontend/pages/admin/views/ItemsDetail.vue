@@ -23,11 +23,16 @@
     <div class="w3-row-padding ">
       <div class="w3-twothird">
         <img src="../../../src/assets/logo.png" style="width:60%" alt="상품 이미지">
-        <table class="w3-table w3-striped w3-bordered w3-border">
-          <thead class="w3-teal"><th style="width:30%">구분</th><th>내용</th></thead>
-          <tr><td style="width:30%">ID</td><td>{{ id }}</td></tr>
-          <tr><td>name</td><td>{{ name }}</td></tr>
-        </table>
+        <div>
+          <table class="w3-table w3-striped w3-bordered w3-border">
+            <thead class="w3-teal"><th style="width:30%">구분</th><th>내용</th></thead>
+            <tr><td style="width:30%">ID</td><td>{{ id }}</td></tr>
+            <tr><td>name</td><td>{{ name }}</td></tr>
+          </table>
+          <div id="content">
+
+          </div>
+        </div>
       </div>
 
       <div class="w3-third w3-container">
@@ -65,6 +70,7 @@ export default {
       this.$axios.get('/kgd/items/' + this.idx).then(res =>{
         this.id = res.data.id
         this.name = res.data.name
+        document.getElementById("content").innerHTML = res.data.content
       }).catch(err => {
         if (err.message.indexOf('Network Error') > -1) {
           alert('네트워크가 원활하지 않습니다.\n잠시 후 다시 시도해주세요.')
