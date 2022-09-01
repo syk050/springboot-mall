@@ -4,10 +4,14 @@
     <div id="up_detail">
         <img id="itm_img" alt="pancakes" src="../../../src/assets/pancakes.jpg">
       <div id="right_detail">
-        <h3>제품명</h3>
-        <h5> 제품 설명</h5>
-        <h3> 제품가격 </h3>
+        <h3> &lt;제품명&gt;</h3>
+        <h5> &lt;제품 설명&gt;</h5>
+        <h3> &lt;제품가격&gt; </h3>
+
+        <items_view_card/>
       </div>
+
+
     </div>
   </div>
   <common-footer/>
@@ -18,11 +22,13 @@
 <script>
 import commonHeader from "../../layout/common-header";       // header 파일
 import commonFooter from "../../layout/common-footer";       // footer 파일
+import Items_view_card from "./items_view_card";
 export default {
   name: 'App',
   components: {
     'common-header' : commonHeader,
-    'common-footer' : commonFooter
+    'common-footer' : commonFooter,
+    'items_view_card' : Items_view_card
   },
   data(){                                                 // data에는 변수를 저장
     return{
@@ -79,6 +85,7 @@ export default {
   text-align: left;
   margin: 100px auto 0;
   width: 1000px;
+  white-space: nowrap;
 }
 
 #itm_img{
@@ -88,9 +95,18 @@ export default {
 }
 
 #right_detail{
-  float : right;
+  display: inline-block;
+  vertical-align: top;
+  margin : 40px 50px;
+  width: 300px;
+  height: 400px;
   white-space: nowrap;
 }
+
+
+
+
+
 
 </style>
 
