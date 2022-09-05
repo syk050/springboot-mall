@@ -5,13 +5,13 @@
     </div>
     <ul id="items_card_list">
       <li>
-        <button>
+        <button class="items_card">
           <img class="items_card_img" src="../../../src/assets/pancakes.jpg">
           first
         </button>
       </li>
       <li>
-        <button>
+        <button class="items_card">
           <img class="items_card_img" src="../../../src/assets/pancakes.jpg">
           second
         </button>
@@ -56,9 +56,14 @@ button{
 }
 
 #items_card_list{
-  width: 200px;
+  width: 300px;
   display: inline-block;
   text-align: center;
+  visibility: hidden;
+  list-style: none;
+  margin: 0px;
+  padding: 0px;
+  border: none;
 
 }
 
@@ -66,25 +71,23 @@ button{
 
 }
 
-
-ul#items_card_list{
-  visibility: hidden;
-  list-style: none;
-  margin: 0px;
-  padding: 0px;
-  border: none;
+.items_card{
+  width: 300px;
+  height : 150px;
+  text-align: left;
+  margin-top: 5px;
 }
 
 
-
 .items_card_img{
-
   width: 70px;
   height: 80px;
   margin: 10px;
   border: 0.5px solid grey;
   border-radius: 6px;
 }
+
+
 
 
 </style>
