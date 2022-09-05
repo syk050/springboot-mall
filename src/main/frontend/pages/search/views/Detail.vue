@@ -12,6 +12,15 @@
       </div>
 
 
+      </div>
+    <div id="down_detail">          <!--버튼 클릭 시마다 해당하는 내용으로 down_detail_area 내용 변경-->
+      <button> 상세 설명</button>
+      <button> 구매 후기</button>
+      <button> 상품 문의</button>
+      <button> 교환 및 반품</button>
+      <div id="down_detail_area">
+
+      </div>
     </div>
   </div>
   <common-footer/>
@@ -32,6 +41,7 @@ export default {
   },
   data(){                                                 // data에는 변수를 저장
     return{
+
 
     };
   },

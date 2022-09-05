@@ -18,18 +18,29 @@
       </li>
     </ul>
   </div>
-
 </template>
 
 <script>
 export default {
   name: "items_view_card",
+  data(){
+    return{
+      is_menu_clicked : false,
+    }
+  },
   mounted() {
-    document.getElementById("item_btn").addEventListener("click", ()=> this.show_items_list())
+      document.getElementById("item_btn").addEventListener("click", ()=> this.show_items_list())
   },
   methods:{
     show_items_list(){
-      document.getElementById("items_card_list").style.visibility = "visible";
+      if(!this.is_menu_clicked){
+        this.is_menu_clicked = true;
+        document.getElementById("items_card_list").style.visibility = "visible";
+      }
+      else{
+        this.is_menu_clicked = false;
+        document.getElementById("items_card_list").style.visibility = "hidden";
+      }
     }
   }
 }
