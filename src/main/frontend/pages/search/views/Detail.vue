@@ -10,16 +10,36 @@
 
         <items_view_card/>
       </div>
+    </div>
+
+<!--    v-if와 v-show
+        v-if : 실제 조건부 렌더링으로 전환 도중 조건부 블록 내부의 이벤트 리스너 및 자식 컴포넌트들이 올바르게 제거되고 다시 생성된다.(lazy 렌더링을 지키는 명령, 조건이 거짓(false)이면 아무 작업도 수행하지 않는다)
+        v-show : css 기반 전환으로, 초기 조건과 관계 없이 항상 렌더링된다.(DOM에 우선 렌더링하고 조건에 따라 display를 전환한다.)
+        자주 전환 시 show를, 런타임 시 자주 변경되지 않는다면 if를 사용하는 것이 좋다
+        *** if와 for를 함께 쓰는 것은 vue 권장사항에 해당하지 않는다.
 
 
-      </div>
+        == 과 ===
+        '=='은 값만 비교하지만 '==='은 값과 타입을 같이 비교한다.
+-->
+
+
     <div id="down_detail">          <!--버튼 클릭 시마다 해당하는 내용으로 down_detail_area 내용 변경-->
-      <button> 상세 설명</button>
-      <button> 구매 후기</button>
-      <button> 상품 문의</button>
-      <button> 교환 및 반품</button>
-      <div id="down_detail_area">
-
+      <button class="down_detail_btn"> 상세설명</button>
+      <button class="down_detail_btn"> 구매후기</button>
+      <button class="down_detail_btn"> 상품문의</button>
+      <button class="down_detail_btn"> 교환 및 반품</button>
+      <div v-show="down_detail_cnt === 0" class="down_detail_area" id="down_detail_area_desc">
+          안녕하세요 임시 "상세설명" 페이지입니다.
+      </div>
+      <div v-show="down_detail_cnt === 1" class="down_detail_area" id="down_detail_area_review">
+        안녕하세요 임시 "구매후기" 페이지입니다.
+      </div>
+      <div v-show="down_detail_cnt === 2" class="down_detail_area" id="down_detail_area_question">
+        안녕하세요 임시 "상품문의" 페이지입니다.
+      </div>
+      <div v-show="down_detail_cnt === 3" class="down_detail_area" id="down_detail_area_exchange">
+        안녕하세요 임시 "교환 및 반품" 페이지입니다.
       </div>
     </div>
   </div>
@@ -41,6 +61,7 @@ export default {
   },
   data(){                                                 // data에는 변수를 저장
     return{
+      down_detail_cnt : 0
 
 
     };
@@ -48,11 +69,16 @@ export default {
 
 
   created() {                                              // Dom Element가 생성되기 전 호출되는 라이프사이클 훅
+
+
+
   },
 
 
   mounted(){            // 인스턴스가 마운트 된 직후 호출된다.
-
+    for(let i=0; i<4; i++){
+      document.getElementsByClassName("down_detail_btn")[i].addEventListener("click", () => this.down_detail_cnt = i)
+    }
 
   },
   updated() {
@@ -68,6 +94,9 @@ export default {
 
   methods: {
 
+    down_detail_cnt_switch(){
+
+    }
 
 
   }
@@ -113,7 +142,10 @@ export default {
   white-space: nowrap;
 }
 
-
+#down_detail{
+  height: 500px;
+  margin-top: 70px;
+}
 
 
 
