@@ -1,5 +1,5 @@
 <template>
-  <div class="items_card_list">
+  <div class="items_div">
     <div class="first_item">
       <button id="item_btn"> 아이템을 선택해주세요 </button>
     </div>
@@ -14,6 +14,12 @@
         <button class="items_card">
           <img class="items_card_img" src="../../../src/assets/pancakes.jpg">
           second
+        </button>
+      </li>
+      <li>
+        <button class="items_card">
+          <img class="items_card_img" src="../../../src/assets/pancakes.jpg">
+          third
         </button>
       </li>
     </ul>
@@ -33,15 +39,20 @@ export default {
   },
   methods:{
     show_items_list(){
+      const dom = document.getElementById("items_card_list")
       if(!this.is_menu_clicked){
         this.is_menu_clicked = true;
-        document.getElementById("items_card_list").style.visibility = "visible";
+        dom.style.visibility = "visible";
+
       }
       else{
         this.is_menu_clicked = false;
-        document.getElementById("items_card_list").style.visibility = "hidden";
+        dom.style.visibility = "hidden";
       }
     }
+
+
+
   }
 }
 </script>
@@ -56,15 +67,20 @@ button{
 }
 
 #items_card_list{
-  width: 300px;
+  width: 400px;
+  height : 300px;
   display: inline-block;
   text-align: center;
   visibility: hidden;
   list-style: none;
-  margin: 0px;
-  padding: 0px;
+  margin: 10px 0px 10px;
+  padding: 10px 0px;
   border: none;
-
+  overflow: scroll;
+  -ms-overflow-style: none; /* IE */
+}
+#items_card_list::-webkit-scrollbar{
+  display: none;
 }
 
 #item_btn{
@@ -75,7 +91,8 @@ button{
   width: 300px;
   height : 150px;
   text-align: left;
-  margin-top: 5px;
+  margin: 5px 0px;
+  border-radius: 10px;
 }
 
 

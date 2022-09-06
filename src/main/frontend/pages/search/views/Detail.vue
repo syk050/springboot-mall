@@ -59,7 +59,7 @@ export default {
     'common-footer' : commonFooter,
     'items_view_card' : Items_view_card
   },
-  data(){                                                 // data에는 변수를 저장
+  data(){                                                                                                               // data : 변수를 저장하는 공간
     return{
       down_detail_cnt : 0
 
@@ -68,14 +68,14 @@ export default {
   },
 
 
-  created() {                                              // Dom Element가 생성되기 전 호출되는 라이프사이클 훅
+  created() {                                                                                                           // created : Dom Element가 생성되기 전 호출되는 라이프사이클 훅(data에 직접 접근이 가능하기 때문에, 초기에 받아온 값들로 data를 세팅하거나 이벤트 리스너를 설정할 때 사용한다.
 
 
 
   },
 
 
-  mounted(){            // 인스턴스가 마운트 된 직후 호출된다.
+  mounted(){                                                                                                            // mount : 인스턴스가 DOM에 마운트 된 직후 호출된다.(import로 부모 자식 간의 mount 훅 순서는 자식 -> 부모 순으로 실행된다)
     for(let i=0; i<4; i++){
       document.getElementsByClassName("down_detail_btn")[i].addEventListener("click", () => this.down_detail_cnt = i)
     }
@@ -86,7 +86,7 @@ export default {
 
   },
 
-  computed:{                 // computed와 method의 차이점은 computed는 종속된 대상이 변하지 않는 이상 다시 계산을 하지 않는다.
+  computed:{                                                                                                            // computed와 method의 차이점은 computed는 종속된 대상이 변하지 않는 이상 다시 계산을 하지 않는다.(lazy)
   },
   watch : {
 
@@ -138,7 +138,6 @@ export default {
   vertical-align: top;
   margin : 40px 50px;
   width: 300px;
-  height: 400px;
   white-space: nowrap;
 }
 
