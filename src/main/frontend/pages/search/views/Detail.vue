@@ -52,7 +52,7 @@
 import commonHeader from "../../layout/common-header";       // header 파일
 import commonFooter from "../../layout/common-footer";       // footer 파일
 import Items_view_card from "./items_view_card";
-import {LoadMenu} from "../../api/communication"
+// import {LoadMenu} from "../../api/communication"
 export default {
   name: 'App',
   components: {

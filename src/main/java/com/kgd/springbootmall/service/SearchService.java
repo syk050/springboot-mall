@@ -38,14 +38,21 @@ public class SearchService {
 
     }
 
+    public ProductDTO getProductDetail(String s){                                     // 첫 페이지 로딩할 때 임시로 전체를 가져와서 보여주는 service 코드(임시)
+        Products prod = searchRepository.getProductDetail(s);
 
-    public Page<Products> getContents(Pageable pageable){                                     // 첫 페이지 로딩할 때 임시로 전체를 가져와서 보여주는 service 코드(임시)
-        Page<Products> rtn_Prod = searchRepository.getAll(pageable);
-//        isListEmpty(rtn_Prod);
-//
-//        List<ProductDTO> rtn_ProdDTO = ListEntitytoDTO(rtn_Prod);
-        return rtn_Prod;
+        ProductDTO prodDto = entitytoDTO(prod);
+        return prodDto;
     }
+
+
+//    public Page<Products> getContents(Pageable pageable){                                     // 첫 페이지 로딩할 때 임시로 전체를 가져와서 보여주는 service 코드(임시)
+//        Page<Products> rtn_Prod = searchRepository.getAll(pageable);
+////        isListEmpty(rtn_Prod);
+////
+////        List<ProductDTO> rtn_ProdDTO = ListEntitytoDTO(rtn_Prod);
+//        return rtn_Prod;
+//    }
 
     public void isListEmpty(List<Products> prods){                                           // 리턴 값 비어 있는 지 확인, List로 받으면 nulll 이 안들어가고, 비어있는 배열이 들어간다.
         isEmptyBoolean = prods.isEmpty();
@@ -55,6 +62,21 @@ public class SearchService {
 
     }
 
+
+    public ProductDTO entitytoDTO(Products prod){                              // Entity(DB) 에서 DTO(트랜잭션)으로 변환하는 코드(Controller나 Service 코드로 작성한다.)
+
+        ProductDTO prodDTO = new ProductDTO(prod.getId(),
+                prod.getName(),
+                prod.getCategory(),
+                prod.getPrice(),
+                prod.getDc_rate(),
+                prod.getClarif(),
+                prod.isDeli(),
+                prod.getColor(),
+                prod.getSeller());
+
+        return prodDTO;
+    }
 
     public List<ProductDTO> ListEntitytoDTO(List<Products> prods){                              // Entity(DB) 에서 DTO(트랜잭션)으로 변환하는 코드(Controller나 Service 코드로 작성한다.)
 
@@ -74,6 +96,7 @@ public class SearchService {
         }
         return prodDTOList;
     }
+
 
     public List<Products> ListDTOtoEntity(List<ProductDTO> prodDTO){                            // DTO(트랜잭션)에서 Entity(DB)로의 변환코드(검색 페이지에서는 사용할 필요가 없다)
 
