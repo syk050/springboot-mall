@@ -9,7 +9,7 @@
 
 <!--  DB에서 날마다 추천 상품 받아서 전송 -->
     <div id="search_item_list">
-      <div class="items" v-for="(m,i) in menu" :key="i">
+      <div class="items" v-for="(m,i) in menu" :key="i" @click="this.route_detail(m.name)">
         <img class="items_img" alt="pancakes" src="../../../src/assets/pancakes.jpg">
         <h3 class="name">{{ m.name }} </h3>
         <h4 class="price">가격 : {{ m.price }}</h4>
@@ -59,7 +59,6 @@ export default {
 
     this.get_WAS();
 
-
   },
   updated() {
 
@@ -87,7 +86,7 @@ export default {
         console.log(this.search_value)
       }
       this.fadeIn();
-      loadMenu("query=" + this.search_value + str)
+      loadMenu(0, "query=" + this.search_value + str)
           .then(response => (this.menu = response.data.content,
               this.total_page = response.data.totalPages,
               console.log("spring에서 받아온 품목 : ",this.menu),
@@ -192,6 +191,15 @@ export default {
       this.cur_page++;
       this.get_WAS("&page=" + this.cur_page);
 
+    },
+
+    route_detail(value){
+      console.log("div clicked")
+      this.$router.push({
+        name : "detail",                                                                                                  // test 해 보니 , push의 우선순위는 path 보다는 name에 우선되어 있다.(name이 없다면 path로 우선순위가 이동)
+        path: "/search/detail",
+        query: {text : value}
+      })
     }
 
 

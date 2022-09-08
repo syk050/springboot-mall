@@ -52,7 +52,7 @@
 import commonHeader from "../../layout/common-header";       // header 파일
 import commonFooter from "../../layout/common-footer";       // footer 파일
 import Items_view_card from "./items_view_card";
-// import {LoadMenu} from "../../api/communication"
+import {loadMenu} from "../../api/communication";
 export default {
   name: 'App',
   components: {
@@ -63,8 +63,8 @@ export default {
   data(){                                                                                                               // data : 변수를 저장하는 공간
     return{
       down_detail_cnt : 0,
-      search_value : this.$route.query.text
-
+      search_value : this.$route.query.text,
+      item_detail : []
 
     };
   },
@@ -82,7 +82,11 @@ export default {
       document.getElementsByClassName("down_detail_btn")[i].addEventListener("click", () => this.down_detail_cnt = i)
     }
 
-    // LoadMenu("query=" + this.search_value + str)
+    loadMenu(1, "query=" + this.search_value)
+        .then(response => (this.item_detail = response.data,
+                console.log(this.item_detail)
+        ))
+        .catch(e => console.log("서버에서 DB 관련 데이터를 가져오는 데, 실패하였습니다.",e))
 
   },
   updated() {

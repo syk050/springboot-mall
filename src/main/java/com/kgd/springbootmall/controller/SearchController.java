@@ -68,7 +68,7 @@ public class SearchController {
 
 
 
-    @GetMapping("/name")
+    @GetMapping("/detail")
     public ProductDTO selectProductDetail(@RequestParam String query){
 
         ProductDTO prodDetail = searchService.getProductDetail(query);
