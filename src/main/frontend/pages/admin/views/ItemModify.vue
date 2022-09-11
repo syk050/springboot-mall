@@ -104,6 +104,11 @@ export default {
       })
     },
     fnSave() {
+      let nodeList = document.getElementById("current-tag").childNodes;
+      for (let i = 0; i < nodeList.length; i++) {
+        console.log(nodeList[i].innerText)
+      }
+
       const apiUrl = '/kgd/items/' + this.idx
 
       this.form = {
