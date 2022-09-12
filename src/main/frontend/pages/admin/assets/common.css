@@ -3,12 +3,12 @@
     margin-bottom: 5px;
 }
 
-#current-tag.w3-tag {
+#current-tag .w3-tag {
     color:#fff!important;
     background-color:#607d8b!important;
 }
 
-#not-tag.w3-tag {
+#not-tag .w3-tag {
     color:#fff!important;
     background-color:#ff5722!important;
 }
