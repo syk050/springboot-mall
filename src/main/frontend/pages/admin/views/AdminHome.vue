@@ -6,8 +6,8 @@
   <div class="w3-main" style="margin-left:300px">
 
     <!-- Header -->
-    <header id="portfolio">
-      <a href="/admin"><img src="../../../src/assets/logo.png" style="width:65px;" class="w3-circle w3-right w3-margin w3-hide-large w3-hover-opacity"></a>
+    <header id="header">
+      <a href="/admin"><img src="../../../src/assets/logo.png" alt="아이콘" style="width:65px;" class="w3-circle w3-right w3-margin w3-hide-large w3-hover-opacity"></a>
       <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i class="fa fa-bars"></i></span>
       <div class="w3-container">
         <h1><b>상품 리스트</b></h1>
