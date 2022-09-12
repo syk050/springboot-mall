@@ -25,7 +25,8 @@
         <div class="container">
           <img src="../../../src/assets/logo.png" style="width:60%" alt="상품 이미지">
           <div class="text-block">
-            <p><button class="w3-button w3-small w3-round w3-green">이미지 등록</button></p>
+            <label class="w3-button w3-small w3-round w3-green" for="input-file">이미지 등록</label> <!-- label의 for 속성을 이용해 input file 태그와 연결 -->
+            <input type="file" accept="image/*" id="input-file"  style="display: none"/> <!-- 기존의 input file 태그 숨김 -->
           </div>
         </div>
 
