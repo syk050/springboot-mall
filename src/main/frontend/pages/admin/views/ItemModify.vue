@@ -39,12 +39,12 @@
       <!-- 태그 -->
       <div class="w3-third w3-container">
         <h1 class="t-header">Tag</h1>
-        <div class="w3-container w3-bottombar w3-padding-16 dnd-box r-tag">
+        <div id="current-tag" class="w3-container w3-bottombar w3-padding-16 dnd-box">
           <!--          현재 태그 -->
           <span id="travel" class="w3-tag">Travel</span>
           <span id="newyork" class="w3-tag">New York</span>
         </div>
-        <div class="w3-container w3-padding-16 dnd-box n-tag">
+        <div id="not-tag" class="w3-container w3-padding-16 dnd-box">
           <!--          추가 가능한 태그 -->
           <span id="london" class="w3-tag">London</span>
           <span id="ikea" class="w3-tag">IKEA</span>

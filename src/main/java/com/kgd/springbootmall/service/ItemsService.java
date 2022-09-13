@@ -49,7 +49,7 @@ public class ItemsService {
         Items items = itemsRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 아이템이 없습니다. id=" + id));
 
-        items.update(requestDto.getName(), requestDto.getContent());
+        items.update(requestDto.getName(), requestDto.getContent(), requestDto.getImgPath());
 
         return id;
     }

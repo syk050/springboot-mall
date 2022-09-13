@@ -23,15 +23,18 @@ public class Items {
     @Column
     private String name;
     private String content;
+    private String imgPath;
 
     @Builder
-    public Items(String name, String content) {
+    public Items(String name, String content, String imgPath) {
         this.name = name;
         this.content = content;
+        this.imgPath = imgPath;
     }
 
-    public void update(String name, String content) {
+    public void update(String name, String content, String imgPath) {
         this.name = name;
         this.content = content;
+        this.imgPath = imgPath;
     }
 }
