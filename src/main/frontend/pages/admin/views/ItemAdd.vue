@@ -23,7 +23,7 @@
       <!-- 내용 -->
       <div class="w3-twothird ">
         <div class="container">
-          <img src="../../../src/assets/logo.png" style="width:60%" alt="상품 이미지">
+          <img id="previewImg" src="../../../src/assets/logo.png" style="width:60%" alt="상품 이미지">
           <div class="text-block">
             <label class="w3-button w3-small w3-round w3-green" for="input-file">이미지 등록</label> <!-- label의 for 속성을 이용해 input file 태그와 연결 -->
             <input type="file" accept="image/*" id="input-file"  style="display: none"/> <!-- 기존의 input file 태그 숨김 -->
@@ -84,6 +84,7 @@ export default {
   },
   mounted() {
     dnd.init()
+    this.fileTest()
   },
   methods: {
     fnList() {
@@ -111,6 +112,22 @@ export default {
           alert('네트워크가 원활하지 않습니다.\n잠시 후 다시 시도해주세요.')
         }
       })
+    },
+    fileTest() {
+      const fileInput = document.getElementById("input-file");
+
+      fileInput.onchange = () => {
+        const selectFile = fileInput.files[0];
+        //const selectedFile = [...fileInput.files]; // 여러개 파일을 선택할 경우
+        console.log(selectFile);
+
+        const fileReader = new FileReader();
+        fileReader.readAsDataURL(selectFile);
+
+        fileReader.onload = () => {
+          document.getElementById("previewImg").src = fileReader.result;
+        }
+      }
     }
   }
 }
