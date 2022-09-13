@@ -46,14 +46,6 @@ public class SearchService {
     }
 
 
-//    public Page<Products> getContents(Pageable pageable){                                     // 첫 페이지 로딩할 때 임시로 전체를 가져와서 보여주는 service 코드(임시)
-//        Page<Products> rtn_Prod = searchRepository.getAll(pageable);
-////        isListEmpty(rtn_Prod);
-////
-////        List<ProductDTO> rtn_ProdDTO = ListEntitytoDTO(rtn_Prod);
-//        return rtn_Prod;
-//    }
-
     public void isListEmpty(List<Products> prods){                                           // 리턴 값 비어 있는 지 확인, List로 받으면 nulll 이 안들어가고, 비어있는 배열이 들어간다.
         isEmptyBoolean = prods.isEmpty();
 
