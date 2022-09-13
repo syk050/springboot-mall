@@ -42,19 +42,6 @@ public class SearchController {
     // 현재는 vue가 이 기능을 하고 있어 필요 없음
 
     
-    
-//    @RequestMapping(value ="/content", method = RequestMethod.GET)
-//    @ResponseBody
-//    public Page<Products> returnContent(@PageableDefault(size=2, sort="id", value = 6, direction = Sort.Direction.ASC) Pageable pageable){
-//
-//        Page<Products> list = searchService.getContents(pageable);
-//
-//        return list;
-//    }
-//    // 페이지 초기화 및 content 비동기 갱신용 컨트롤러(페이지 내 재 검색 시, 검색결과를 가져오는 메서드)
-
-    
-    
     @GetMapping("/name")
     public Page<Products> selectProducts(@RequestParam String query, @PageableDefault(page = 0, size=6, sort="id", direction = Sort.Direction.ASC) Pageable pageable){
 

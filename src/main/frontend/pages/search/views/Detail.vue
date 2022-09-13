@@ -4,9 +4,9 @@
     <div id="up_detail">
         <img id="itm_img" alt="pancakes" src="../../../src/assets/pancakes.jpg">
       <div id="right_detail">
-        <h3> &lt;제품명&gt;</h3>
-        <h5> &lt;제품 설명&gt;</h5>
-        <h3> &lt;제품가격&gt; </h3>
+        <h3>{{item_detail.name}}</h3>
+        <h5>{{item_detail.clarif}}</h5>
+        <h3>{{item_detail.price}}</h3>
 
         <items_view_card/>
       </div>

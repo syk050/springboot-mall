@@ -35,7 +35,11 @@ export default {
     }
   },
   mounted() {
-      document.getElementById("item_btn").addEventListener("click", ()=> this.show_items_list())
+      document.getElementById("item_btn").addEventListener("click", ()=> this.show_items_list());
+      for(let i=0; i<3; i++){
+        document.getElementsByClassName("items_card")[i].addEventListener("click", ()=> (this.item_clicked()));
+      }
+
   },
   methods:{
     show_items_list(){
@@ -49,6 +53,17 @@ export default {
         this.is_menu_clicked = false;
         dom.style.visibility = "hidden";
       }
+    },
+
+    item_clicked(){
+      console.log("aa")
+      let point_tag = document.getElementById("items_card_list");
+      let insert_tag = document.createElement('a'); // 제품 추가 div 설계 전 임시 태그
+      insert_tag.innerText = "추가됨";
+
+      point_tag.after(insert_tag);
+      point_tag.after(document.createElement('br'))
+
     }
 
 
