@@ -53,6 +53,7 @@ import commonHeader from "../../layout/common-header";       // header 파일
 import commonFooter from "../../layout/common-footer";       // footer 파일
 import Items_view_card from "./items_view_card";
 import {loadMenu} from "../../api/communication";
+
 export default {
   name: 'App',
   components: {
@@ -152,6 +153,24 @@ export default {
 #down_detail{
   height: 500px;
   margin-top: 70px;
+}
+
+.result_div{
+  border : 1px solid black;
+  border-radius: 12px;
+  width: 300px;
+}
+
+.result_name{
+  display: inline;
+
+  margin-left: 10px;
+}
+
+.result_delbtn{
+  float : right;
+  margin-right: 5px;
+  margin-top : 5px
 }
 
 

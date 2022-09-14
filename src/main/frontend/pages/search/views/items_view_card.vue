@@ -28,6 +28,7 @@
 
 <script>
 export default {
+
   name: "items_view_card",
   data(){
     return{
@@ -56,14 +57,26 @@ export default {
     },
 
     item_clicked(){
-      console.log("aa")
+      this.create_result_item();
+
+    },
+    create_result_item(){     // 제품 추가 시, 결과 다이얼로그
       let point_tag = document.getElementById("items_card_list");
-      let insert_tag = document.createElement('a'); // 제품 추가 div 설계 전 임시 태그
-      insert_tag.innerText = "추가됨";
+      let tag_div = document.createElement('div');
+      let tag_name = document.createElement('h2');
+      let tag_delbtn = document.createElement('button');
 
-      point_tag.after(insert_tag);
-      point_tag.after(document.createElement('br'))
+      tag_div.setAttribute('class', 'result_div');
+      tag_name.setAttribute('class', 'result_name');
+      tag_delbtn.setAttribute('class', 'result_delbtn');
 
+      tag_name.innerText = "제품명";
+      tag_delbtn.innerText = "X"
+
+      tag_div.appendChild(tag_name);
+      tag_div.appendChild(tag_delbtn);
+      point_tag.after(tag_div);
+      point_tag.after(document.createElement('br'));
     }
 
 
@@ -118,6 +131,8 @@ button{
   border: 0.5px solid grey;
   border-radius: 6px;
 }
+
+
 
 
 
