@@ -23,8 +23,8 @@
       <!-- 내용 -->
       <div class="w3-twothird">
         <div id="item-img">
-          <img v-show="imgPath" v-bind:src="imgPath" alt="item img" style="width:60%" class="w3-hover-opacity">
-          <img v-show="!imgPath" src="../../../src/assets/logo.png" style="width:60%" alt="상품 이미지">
+          <img id="previewImg" v-show="imgPath" v-bind:src="imgPath" alt="item img" style="width:60%" class="w3-hover-opacity">
+          <img id="previewImg" v-show="!imgPath" src="../../../src/assets/logo.png" style="width:60%" alt="상품 이미지">
           <div class="text-block">
             <label class="w3-button w3-small w3-round w3-green" for="input-file">이미지 등록</label> <!-- label의 for 속성을 이용해 input file 태그와 연결 -->
             <input type="file" accept="image/*" id="input-file"  style="display: none"/> <!-- 기존의 input file 태그 숨김 -->
@@ -91,6 +91,7 @@ export default {
   },
   mounted() {
     this.fnGetView()
+    this.previewImg()
     dnd.init()
   },
   methods: {
@@ -113,6 +114,8 @@ export default {
       })
     },
     fnSave() {
+      const inputFile = document.getElementById("input-file");
+
       // let nodeList = document.getElementById("current-tag").childNodes;
       // for (let i = 0; i < nodeList.length; i++) {
       //   console.log(nodeList[i].innerText)
@@ -132,6 +135,30 @@ export default {
               alert('네트워크가 원활하지 않습니다.\n잠시 후 다시 시도해주세요.')
             }
       })
+      if (inputFile.value) {
+        this.imgSave()
+            .then(path => {
+              // this.form.append("imgPath", path);
+              this.form["imgPath"] = path;
+              this.$axios.put(apiUrl, this.form)
+                  .then(() => {
+                    this.fnCancel()
+                  }).catch(err => {
+                if (err.message.indexOf('Network Error') > -1) {
+                  alert('네트워크가 원활하지 않습니다.\n잠시 후 다시 시도해주세요.')
+                }
+              })
+            })
+      }else{
+        this.$axios.put(apiUrl, this.form)
+            .then(() => {
+              this.fnCancel()
+            }).catch(err => {
+          if (err.message.indexOf('Network Error') > -1) {
+            alert('네트워크가 원활하지 않습니다.\n잠시 후 다시 시도해주세요.')
+          }
+        })
+      }
     },
     previewImg() {
       const inputFile = document.getElementById("input-file");
@@ -149,6 +176,23 @@ export default {
         }
       }
     },
+    async imgSave() {
+      const formData = new FormData();
+
+      const inputFile = document.getElementById("input-file");
+      const selectFile = inputFile.files[0];
+      formData.append("fileList", selectFile)
+
+      let imgPath = ''
+      await this.$axios.post('/kgd/img', formData)
+          .then((path) => {
+            imgPath = path.data.url
+            // console.log(path.data.url)
+          }).catch(err => {
+            console.error(err);
+          })
+      return imgPath
+    }
   }
 }
 </script>
