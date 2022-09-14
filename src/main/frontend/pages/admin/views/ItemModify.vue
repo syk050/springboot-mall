@@ -22,8 +22,16 @@
     <div class="w3-row-padding ">
       <!-- 내용 -->
       <div class="w3-twothird">
-        <img src="../../../src/assets/logo.png" style="width:60%" alt="상품 이미지">
-        <div>
+        <div id="item-img">
+          <img v-show="imgPath" v-bind:src="imgPath" alt="item img" style="width:60%" class="w3-hover-opacity">
+          <img v-show="!imgPath" src="../../../src/assets/logo.png" style="width:60%" alt="상품 이미지">
+          <div class="text-block">
+            <label class="w3-button w3-small w3-round w3-green" for="input-file">이미지 등록</label> <!-- label의 for 속성을 이용해 input file 태그와 연결 -->
+            <input type="file" accept="image/*" id="input-file"  style="display: none"/> <!-- 기존의 input file 태그 숨김 -->
+          </div>
+        </div>
+
+        <div id="item-content">
           <table class="w3-table w3-striped w3-bordered w3-border">
             <thead class="w3-teal"><th style="width:30%">구분</th><th>내용</th></thead>
             <tr><td style="width:30%">ID</td><td>{{ id }}</td></tr>
@@ -33,7 +41,6 @@
             <ckeditor :editor="editor" v-model="editorData" :config="editorConfig"></ckeditor>
           </div>
         </div>
-
       </div>
 
       <!-- 태그 -->
@@ -78,7 +85,8 @@ export default {
 
       id: '',
       name: '',
-      editorData: ''
+      editorData: '',
+      imgPath: ''
     }
   },
   mounted() {
@@ -91,6 +99,7 @@ export default {
         this.id = res.data.id
         this.name = res.data.name
         this.editorData = res.data.content
+        this.imgPath = res.data.imgPath
       }).catch(err => {
         if (err.message.indexOf('Network Error') > -1) {
           alert('네트워크가 원활하지 않습니다.\n잠시 후 다시 시도해주세요.')
@@ -104,10 +113,10 @@ export default {
       })
     },
     fnSave() {
-      let nodeList = document.getElementById("current-tag").childNodes;
-      for (let i = 0; i < nodeList.length; i++) {
-        console.log(nodeList[i].innerText)
-      }
+      // let nodeList = document.getElementById("current-tag").childNodes;
+      // for (let i = 0; i < nodeList.length; i++) {
+      //   console.log(nodeList[i].innerText)
+      // }
 
       const apiUrl = '/kgd/items/' + this.idx
 
@@ -123,11 +132,37 @@ export default {
               alert('네트워크가 원활하지 않습니다.\n잠시 후 다시 시도해주세요.')
             }
       })
-    }
+    },
+    previewImg() {
+      const inputFile = document.getElementById("input-file");
+
+      inputFile.onchange = () => {
+        const selectFile = inputFile.files[0];
+        //const selectedFile = [...fileInput.files]; // 여러개 파일을 선택할 경우
+        // console.log(selectFile);
+
+        const fileReader = new FileReader();
+        fileReader.readAsDataURL(selectFile);
+
+        fileReader.onload = () => {
+          document.getElementById("previewImg").src = fileReader.result;
+        }
+      }
+    },
   }
 }
 </script>
 
 <style scoped>
+#item-img {
+  position: relative;
+}
 
+.text-block {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
 </style>
