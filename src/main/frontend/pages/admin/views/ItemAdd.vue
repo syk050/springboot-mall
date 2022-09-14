@@ -22,7 +22,7 @@
     <div class="w3-row-padding">
       <!-- 내용 -->
       <div class="w3-twothird ">
-        <div class="container">
+        <div id="item-img">
           <img id="previewImg" src="../../../src/assets/logo.png" style="width:60%" alt="상품 이미지">
           <div class="text-block">
             <label class="w3-button w3-small w3-round w3-green" for="input-file">이미지 등록</label> <!-- label의 for 속성을 이용해 input file 태그와 연결 -->
@@ -30,7 +30,7 @@
           </div>
         </div>
 
-        <div class="content">
+        <div id="item-content">
           <table class="w3-table w3-striped w3-bordered w3-border">
             <tr><td>name</td><td><input type="text" v-model="name" class="w3-input w3-border"></td></tr>
           </table>
@@ -170,7 +170,7 @@ export default {
 </script>
 
 <style scoped>
-.container {
+#item-img {
   position: relative;
 }
 
