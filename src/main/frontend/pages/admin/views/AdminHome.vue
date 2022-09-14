@@ -25,8 +25,8 @@
     <!-- First Photo Grid-->
     <div class="w3-row-padding">
       <div class="w3-third w3-container w3-margin-bottom" v-for="(item, idx) in list" :key="idx"  v-on:click="fnView(`${item.id}`)">
-        <img v-show="item.imgPath" v-bind:src="item.imgPath" alt="item img" style="width:100%" class="w3-hover-opacity">
-        <img v-show="!item.imgPath" src="../../../src/assets/logo.png" alt="Temp Logo" style="width:100%" class="w3-hover-opacity">
+        <img id="previewImg" v-show="item.imgPath" v-bind:src="item.imgPath" alt="item img" style="width:100%" class="w3-hover-opacity">
+        <img id="previewImg" v-show="!item.imgPath" src="../../../src/assets/logo.png" alt="Temp Logo" style="width:100%" class="w3-hover-opacity">
         <div class="w3-container w3-white">
           <p><b>{{ item.name }}</b></p>
           <p class="">

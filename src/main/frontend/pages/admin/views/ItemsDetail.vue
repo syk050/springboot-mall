@@ -22,8 +22,8 @@
     <!-- Content -->
     <div class="w3-row-padding ">
       <div class="w3-twothird">
-        <img v-show="imgPath" v-bind:src="imgPath" alt="item img" style="width:60%" class="w3-hover-opacity">
-        <img v-show="!imgPath" src="../../../src/assets/logo.png" alt="Temp Logo" style="width:60%" class="w3-hover-opacity">
+        <img id="previewImg" v-show="imgPath" v-bind:src="imgPath" alt="item img" style="width:60%" class="w3-hover-opacity">
+        <img id="previewImg" v-show="!imgPath" src="../../../src/assets/logo.png" alt="Temp Logo" style="width:60%" class="w3-hover-opacity">
         <div>
           <table class="w3-table w3-striped w3-bordered w3-border">
             <thead class="w3-teal"><th style="width:30%">구분</th><th>내용</th></thead>
