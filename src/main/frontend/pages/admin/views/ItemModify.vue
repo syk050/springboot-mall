@@ -11,8 +11,8 @@
       <div class="w3-container">
         <h1><b>상품 정보</b></h1>
         <div class="w3-section w3-container w3-bottombar">
-          <a class="w3-button w3-round-large w3-right w3-dark-gray" role="button" v-on:click="fnCancel">취소</a>
-          <a class="w3-button w3-round-large w3-right w3-indigo" role="button" v-on:click="fnSave">저장</a>
+          <a class="w3-button w3-right w3-dark-gray" role="button" v-on:click="fnCancel">취소</a>
+          <a class="w3-button w3-right w3-indigo" role="button" v-on:click="fnSave">저장</a>
         </div>
       </div>
     </header>
