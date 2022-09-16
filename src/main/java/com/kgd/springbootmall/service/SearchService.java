@@ -7,12 +7,15 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @Slf4j                                                                                                                  // lombok 어노테이션으로 log4j를 편하게 import 하여 사용할 수 있게 한다.
@@ -23,30 +26,37 @@ public class SearchService {
     private final SearchRepository searchRepository;
 
     @Transactional
-    public Page<Products> selectByURLName(String str, Pageable pageable){                                               // url로 query를 받아 검색하는 service 코드
+    public Page<Products> getByName(String str, Pageable pageable){                                               // url로 query를 받아 검색하는 service 코드
         Page<Products> rtn_Prod = searchRepository.findByName(str, pageable);
         return rtn_Prod;
     }
 
 
-    public List<ProductDTO> getProductDetail(String s){                                                                 // 첫 페이지 로딩할 때 임시로 전체를 가져와서 보여주는 service 코드(임시)
-        List<Products> prod = searchRepository.getProductDetail(s);
-        List<ProductDTO> prodDto = entitytoDTOList(prod);
+    public Map<String, List<ProductDTO>> getProductDetail(String s){
+        Map<String, List<ProductDTO>> prodMap = new HashMap<>();                                                        // 본 아이템 옵션과 서브 아이템 옵션을 리턴시키는 메서드
+        List<Products> prod;
+        List<ProductDTO> prodDto;
+
+        prod = searchRepository.getProductDetail(s);                                                     
+        prodDto = entitytoDTOList(prod, 0);
+        prodMap.put("realItems", prodDto);
+
 
         String rel_items = prod.get(0).getRel_items();
         String[] rel_items_array = getSplit(rel_items);
 
         prod = searchRepository.getRelProductDetail(rel_items_array);
-        prodDto.addAll(entitytoDTOList(prod));
-        // json 형식 분화 시까지, 임시로 본 옵션(같은 제품명)과 부 옵션값(관련 아이템)을 나누지 않고 테스트하기 위한 코드이다.
+        prodDto = entitytoDTOList(prod, 1);
+        prodMap.put("subItems", prodDto);
 
-        return prodDto;
+
+        return prodMap;
     }
 
 
-    public ProductDTO entitytoDTO(Products prod){                                                                       // Entity(DB) 에서 DTO(트랜잭션)으로 변환하는 코드(Controller나 Service 코드로 작성한다.)
+    public ProductDTO entityToDTO(Products prod){                                                                       // Entity(DB) 에서 DTO(트랜잭션)으로 변환하는 코드(Controller나 Service 코드로 작성한다.)
 
-        ProductDTO prodDTO = new ProductDTO(prod.getId(),
+        return new ProductDTO(prod.getId(),
                 prod.getName(),
                 prod.getCategory(),
                 prod.getPrice(),
@@ -57,20 +67,32 @@ public class SearchService {
                 prod.getSeller(),
                 prod.getRel_items());
 
-        return prodDTO;
     }
 
-    public List<ProductDTO> entitytoDTOList(List<Products> prodList){
+    public ProductDTO entityToDTOSub(Products prod){
+        return new ProductDTO(
+                prod.getId(),
+                prod.getName(),
+                prod.getPrice()
+        );
+    }
+
+    public List<ProductDTO> entitytoDTOList(List<Products> prodList, int bool){
 
         List<ProductDTO> dtoList = new ArrayList<>();
 
-        for(int i=0; i<prodList.size(); i++){
-            dtoList.add(entitytoDTO(prodList.get(i)));
-
+        if(bool==0){                                                                                                    // realDTO Translate
+            for(int i=0; i<prodList.size(); i++)
+                dtoList.add(entityToDTO(prodList.get(i)));
+        } else if (bool==1) {                                                                                           // subDTO Translate
+            for(int i=0; i<prodList.size(); i++)
+                dtoList.add(entityToDTOSub(prodList.get(i)));
         }
+
 
         return dtoList;
     }
+
 
 
     public void isSecureInputData(String s){

@@ -28,7 +28,7 @@ public interface SearchRepository extends JpaRepository<Products, Long> {
 
     @Query(value = "SELECT * FROM products WHERE id IN ?1",                                               // 관련 아이템인 만큼 필요한 속성(id, 제품명, 가격)만 select 하면 된다.    ( "SELECT id, name, price FROM products WHERE id IN ?1" )
     nativeQuery = true)
-    List<Products> getRelProductDetail(@Param("relIds") String[] relIds);
+    List<Products> getRelProductDetail(@Param("relItems") String[] relItems);
 
 
 

@@ -32,4 +32,10 @@ public class ProductDTO {
     
     private String rel_items;   // varchar2(30), 관련 아이템
 
+
+    public ProductDTO(int id, String name, int price) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+    }
 }
