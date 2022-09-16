@@ -22,7 +22,8 @@
     <!-- Content -->
     <div class="w3-row-padding ">
       <div class="w3-twothird">
-        <img src="../../../src/assets/logo.png" style="width:60%" alt="상품 이미지">
+        <img id="previewImg" v-show="imgPath" v-bind:src="imgPath" alt="item img" style="width:60%" class="w3-hover-opacity">
+        <img id="previewImg" v-show="!imgPath" src="../../../src/assets/logo.png" alt="Temp Logo" style="width:60%" class="w3-hover-opacity">
         <div>
           <table class="w3-table w3-striped w3-bordered w3-border">
             <thead class="w3-teal"><th style="width:30%">구분</th><th>내용</th></thead>
@@ -60,6 +61,7 @@ export default {
 
       id: '',
       name: '',
+      imgPath:'',
     }
   },
   mounted() {
@@ -70,6 +72,7 @@ export default {
       this.$axios.get('/kgd/items/' + this.idx).then(res =>{
         this.id = res.data.id
         this.name = res.data.name
+        this.imgPath = res.data.imgPath
         document.getElementById("content").innerHTML = res.data.content
       }).catch(err => {
         if (err.message.indexOf('Network Error') > -1) {

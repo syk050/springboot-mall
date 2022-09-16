@@ -25,7 +25,8 @@
     <!-- First Photo Grid-->
     <div class="w3-row-padding">
       <div class="w3-third w3-container w3-margin-bottom" v-for="(item, idx) in list" :key="idx"  v-on:click="fnView(`${item.id}`)">
-        <img src="../../../src/assets/logo.png" alt="Temp Logo" style="width:100%" class="w3-hover-opacity">
+        <img id="previewImg" v-show="item.imgPath" v-bind:src="item.imgPath" alt="item img" style="width:100%" class="w3-hover-opacity">
+        <img id="previewImg" v-show="!item.imgPath" src="../../../src/assets/logo.png" alt="Temp Logo" style="width:100%" class="w3-hover-opacity">
         <div class="w3-container w3-white">
           <p><b>{{ item.name }}</b></p>
           <p class="">
@@ -36,18 +37,6 @@
         </div>
       </div>
     </div>
-
-<!--    &lt;!&ndash; Pagination &ndash;&gt;-->
-<!--    <div class="w3-center w3-padding-32">-->
-<!--      <div class="w3-bar">-->
-<!--        <a href="#" class="w3-bar-item w3-button w3-hover-black">«</a>-->
-<!--        <a href="#" class="w3-bar-item w3-black w3-button">1</a>-->
-<!--        <a href="#" class="w3-bar-item w3-button w3-hover-black">2</a>-->
-<!--        <a href="#" class="w3-bar-item w3-button w3-hover-black">3</a>-->
-<!--        <a href="#" class="w3-bar-item w3-button w3-hover-black">4</a>-->
-<!--        <a href="#" class="w3-bar-item w3-button w3-hover-black">»</a>-->
-<!--      </div>-->
-<!--    </div>-->
   </div>
 </template>
 

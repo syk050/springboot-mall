@@ -11,5 +11,3 @@ public class SpringbootMallApplication {
     }
 
 }
-//dfdfdsfsdfdsfsdfsdsdsdfsdfs
-//fdsafdsafdsa
