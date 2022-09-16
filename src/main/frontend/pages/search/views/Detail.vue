@@ -128,7 +128,7 @@ export default {
   color: #2c3e50;
   min-width: 1000px;
 }
-#up_detail{
+#up_detail{                                                                                                             /* 사진과 설명을 아우르는 위쪽에 위치한 설명 탭 전체 */
   display: inline-block;
   text-align: left;
   margin: 100px auto 0;
@@ -136,13 +136,13 @@ export default {
   white-space: nowrap;
 }
 
-#itm_img{
+#itm_img{                                                                                                               /* 제품 사진 */
   margin : 40px 50px;
   width: 300px;
   height: 400px;
 }
 
-#right_detail{
+#right_detail{                                                                                                          /* 제품 detail div */
   display: inline-block;
   vertical-align: top;
   margin : 40px 50px;
@@ -150,24 +150,24 @@ export default {
   white-space: nowrap;
 }
 
-#down_detail{
+#down_detail{                                                                                                           /* 상세설명-질문응답-리뷰 div */
   height: 500px;
   margin-top: 70px;
 }
 
-.result_div{
+.result_div{                                                                                                            /* 구매 아이템 결정 div */
   border : 1px solid black;
   border-radius: 12px;
   width: 300px;
 }
 
-.result_name{
+.result_name{                                                                                                           /* 구매 아이템 결정 div 내의 제품명 */
   display: inline;
 
   margin-left: 10px;
 }
 
-.result_delbtn{
+.result_delbtn{                                                                                                         /* 구매 아이템 결정 div 내의 delete 버튼 */
   float : right;
   margin-right: 5px;
   margin-top : 5px

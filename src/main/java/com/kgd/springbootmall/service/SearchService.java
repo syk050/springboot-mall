@@ -7,57 +7,56 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-@Slf4j                                                      // lombok 어노테이션으로 log4j를 편하게 import 하여 사용할 수 있게 한다.
+
+@Slf4j                                                                                                                  // lombok 어노테이션으로 log4j를 편하게 import 하여 사용할 수 있게 한다.
 @Service
 @Component
 @RequiredArgsConstructor
 public class SearchService {
     private final SearchRepository searchRepository;
-    private Boolean isEmptyBoolean;
 
     @Transactional
-    public Page<Products> selectByURLName(String str, Pageable pageable){                     // url로 query를 받아 검색하는 service 코드
-
-
+    public Page<Products> getByName(String str, Pageable pageable){                                               // url로 query를 받아 검색하는 service 코드
         Page<Products> rtn_Prod = searchRepository.findByName(str, pageable);
-//        isListEmpty(rtn_Prod);
-
-//        List<ProductDTO> rtn_ProdDTO = new ArrayList<>();
-//
-//        if(!isEmptyBoolean)                                     // 데이터 있으면 넣고
-//            rtn_ProdDTO = ListEntitytoDTO(rtn_Prod);
-
         return rtn_Prod;
-
-    }
-
-    public ProductDTO getProductDetail(String s){                                     // 첫 페이지 로딩할 때 임시로 전체를 가져와서 보여주는 service 코드(임시)
-        Products prod = searchRepository.getProductDetail(s);
-
-        ProductDTO prodDto = entitytoDTO(prod);
-        return prodDto;
     }
 
 
-    public void isListEmpty(List<Products> prods){                                           // 리턴 값 비어 있는 지 확인, List로 받으면 nulll 이 안들어가고, 비어있는 배열이 들어간다.
-        isEmptyBoolean = prods.isEmpty();
+    public Map<String, List<ProductDTO>> getProductDetail(String s){
+        Map<String, List<ProductDTO>> prodMap = new HashMap<>();                                                        // 본 아이템 옵션과 서브 아이템 옵션을 리턴시키는 메서드
+        List<Products> prod;
+        List<ProductDTO> prodDto;
 
-        if(!isEmptyBoolean)
-            log.info("rtn_Prod", prods);
+        prod = searchRepository.getProductDetail(s);                                                     
+        prodDto = entitytoDTOList(prod, 0);
+        prodMap.put("realItems", prodDto);
 
+
+        String rel_items = prod.get(0).getRel_items();
+        String[] rel_items_array = getSplit(rel_items);
+
+        prod = searchRepository.getRelProductDetail(rel_items_array);
+        prodDto = entitytoDTOList(prod, 1);
+        prodMap.put("subItems", prodDto);
+
+
+        return prodMap;
     }
 
 
-    public ProductDTO entitytoDTO(Products prod){                              // Entity(DB) 에서 DTO(트랜잭션)으로 변환하는 코드(Controller나 Service 코드로 작성한다.)
+    public ProductDTO entityToDTO(Products prod){                                                                       // Entity(DB) 에서 DTO(트랜잭션)으로 변환하는 코드(Controller나 Service 코드로 작성한다.)
 
-        ProductDTO prodDTO = new ProductDTO(prod.getId(),
+        return new ProductDTO(prod.getId(),
                 prod.getName(),
                 prod.getCategory(),
                 prod.getPrice(),
@@ -65,59 +64,54 @@ public class SearchService {
                 prod.getClarif(),
                 prod.isDeli(),
                 prod.getColor(),
-                prod.getSeller());
+                prod.getSeller(),
+                prod.getRel_items());
 
-        return prodDTO;
     }
 
-    public List<ProductDTO> ListEntitytoDTO(List<Products> prods){                              // Entity(DB) 에서 DTO(트랜잭션)으로 변환하는 코드(Controller나 Service 코드로 작성한다.)
+    public ProductDTO entityToDTOSub(Products prod){
+        return new ProductDTO(
+                prod.getId(),
+                prod.getName(),
+                prod.getPrice()
+        );
+    }
 
-        List<ProductDTO> prodDTOList = new ArrayList<>() {};
-        ProductDTO tmp;
-        for(int i=0; i < prods.size(); i++){
-            tmp = new ProductDTO(prods.get(i).getId(),
-                    prods.get(i).getName(),
-                    prods.get(i).getCategory(),
-                    prods.get(i).getPrice(),
-                    prods.get(i).getDc_rate(),
-                    prods.get(i).getClarif(),
-                    prods.get(i).isDeli(),
-                    prods.get(i).getColor(),
-                    prods.get(i).getSeller());
-            prodDTOList.add(tmp);
+    public List<ProductDTO> entitytoDTOList(List<Products> prodList, int bool){
+
+        List<ProductDTO> dtoList = new ArrayList<>();
+
+        if(bool==0){                                                                                                    // realDTO Translate
+            for(int i=0; i<prodList.size(); i++)
+                dtoList.add(entityToDTO(prodList.get(i)));
+        } else if (bool==1) {                                                                                           // subDTO Translate
+            for(int i=0; i<prodList.size(); i++)
+                dtoList.add(entityToDTOSub(prodList.get(i)));
         }
-        return prodDTOList;
+
+
+        return dtoList;
     }
 
 
-    public List<Products> ListDTOtoEntity(List<ProductDTO> prodDTO){                            // DTO(트랜잭션)에서 Entity(DB)로의 변환코드(검색 페이지에서는 사용할 필요가 없다)
 
-        List<Products> prodList = new ArrayList<>() {};
-        Products tmp;
-        for(int i=0; i < prodDTO.size(); i++){
-            tmp = new Products(
-                    prodDTO.get(i).getName(),
-                    prodDTO.get(i).getCategory(),
-                    prodDTO.get(i).getPrice(),
-                    prodDTO.get(i).getDc_rate(),
-                    prodDTO.get(i).getClarif(),
-                    prodDTO.get(i).isDeli(),
-                    prodDTO.get(i).getColor(),
-                    prodDTO.get(i).getSeller());
-            prodList.add(tmp);
-        }
-        return prodList;
+    public void isSecureInputData(String s){
+
+    }
+
+    public String[] getSplit(String s){
+
+        String[] array = s.split(",");
+
+        return array;
     }
 
 
-    public void resetDB(){                                                                      // Test 코드에 필요한 Products 테이블 reset service 코드(id속성의 auto_increment를 초기화하고, 테이블 내용을 전체 삭제 한다)
+
+    public void resetDB(){                                                                                              // Test 코드에 필요한 Products 테이블 reset service 코드(id속성의 auto_increment를 초기화하고, 테이블 내용을 전체 삭제 한다)
         searchRepository.deleteAll();
         searchRepository.resetAuto();
     }
-
-
-
-
 
 }
 

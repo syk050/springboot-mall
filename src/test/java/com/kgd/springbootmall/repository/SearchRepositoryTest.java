@@ -38,11 +38,12 @@ public class SearchRepositoryTest {
         int dc_rate = 10;
         String clarif = "설명";
         boolean deli = true;
-        int color = 2;
+        String color = "red";
         String seller = "셀러";
+        String rel_items = "3, 4";
 
 
-//        prod1 = new Products(                                             // 낱개 추가 테스트 코드
+//        prod1 = new Products(                                                                                         // 낱개 추가 테스트 코드
 //                "제품명", "카테고리", 10000, 10, "설명", true, 2, "셀러"
 //        );
         
@@ -51,13 +52,24 @@ public class SearchRepositoryTest {
 
         for (int i=0; i<40; i++)
         {
-            prod1 = new Products(name+i, category+i, price, dc_rate, clarif+i, deli, color, seller);
+            prod1 = new Products(name+i, category+i, price, dc_rate, clarif+i, deli, color, seller, rel_items);
             prodList.add(prod1);
         }
+
+        prod1 = new Products("제품명0", category, price, dc_rate, clarif, deli, "blue", seller, rel_items);              // detail 페이지에서 옵션으로 복수 개의 옵션을 가져오기 위한 데이터
+        prodList.add(prod1);
+
     }
 
     @Test
-    public void insertTest(){                                               // 낱개 추가 테스트 코드
+    public void resetDB(){                                                                                              // DB reset test
+        searchRepository.deleteAll();
+        searchRepository.resetAuto();
+    }
+
+
+    @Test
+    public void insertTest(){                                                                                           // 낱개 추가 테스트 코드
         Products rtn_prods = searchRepository.save(prod1);
 
         assert(prod1.getName().equals(rtn_prods.getName()));
@@ -65,7 +77,7 @@ public class SearchRepositoryTest {
 
 
     @Test
-    public void insetListTest(){                                            // 리스트 추가 테스트 코드
+    public void insetListTest(){                                                                                        // 리스트 추가 테스트 코드
         List<Products> list = searchRepository.saveAll(prodList);
 
         assert(prodList.get(0).getName().equals(list.get(0).getName()));
