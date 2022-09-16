@@ -41,22 +41,23 @@
       </div>
 
       <!-- 태그 -->
-      <div class="w3-third w3-container">
-        <h1 class="t-header">Tag</h1>
-        <div id="current-tag" class="w3-container w3-bottombar w3-padding-16 dnd-box">
-          <!--          현재 태그 -->
+      <itemTag/>
+<!--      <div class="w3-third w3-container">-->
+<!--        <h1 class="t-header">Tag</h1>-->
+<!--        <div id="current-tag" class="w3-container w3-bottombar w3-padding-16 dnd-box">-->
+<!--          &lt;!&ndash;          현재 태그 &ndash;&gt;-->
 
-        </div>
-        <div id="not-tag" class="w3-container w3-padding-16 dnd-box">
-          <!--          추가 가능한 태그 -->
-          <span id="travel" class="w3-tag">Travel</span>
-          <span id="newyork" class="w3-tag">New York</span>
-          <span id="london" class="w3-tag">London</span>
-          <span id="ikea" class="w3-tag">IKEA</span>
-          <span id="norway" class="w3-tag">NORWAY</span>
-          <span id="diy" class="w3-tag">DIY</span>
-        </div>
-      </div>
+<!--        </div>-->
+<!--        <div id="not-tag" class="w3-container w3-padding-16 dnd-box">-->
+<!--          &lt;!&ndash;          추가 가능한 태그 &ndash;&gt;-->
+<!--          <span id="travel" class="w3-tag">Travel</span>-->
+<!--          <span id="newyork" class="w3-tag">New York</span>-->
+<!--          <span id="london" class="w3-tag">London</span>-->
+<!--          <span id="ikea" class="w3-tag">IKEA</span>-->
+<!--          <span id="norway" class="w3-tag">NORWAY</span>-->
+<!--          <span id="diy" class="w3-tag">DIY</span>-->
+<!--        </div>-->
+<!--      </div>-->
     </div>
     <!-- Content -->
   </div>
@@ -66,10 +67,13 @@
 <script>
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import MyCustomUploadAdapterPlugin from "../assets/js/MyUploadAdapter";
-import { dnd } from "../assets/js/dnd"
+import itemTag from "./components/ItemTag";
 
 export default {
   name: "ItemAdd",
+  components: {
+    itemTag
+  },
   data() {
     return {
       editor: ClassicEditor,
@@ -83,7 +87,6 @@ export default {
     }
   },
   mounted() {
-    dnd.init()
     this.previewImg()
   },
   methods: {
