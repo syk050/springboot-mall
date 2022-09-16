@@ -26,7 +26,7 @@ public class ProductDTO {
 
     private boolean deli;      // Boolean, 무료배송여부
 
-    private int color;         // int, 색상여부
+    private String color;         // int, 색상여부
 
     private String seller;     // varchar2(30), 판매자
 

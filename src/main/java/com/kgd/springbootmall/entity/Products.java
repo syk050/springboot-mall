@@ -1,13 +1,9 @@
 package com.kgd.springbootmall.entity;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.hibernate.annotations.Type;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 import javax.persistence.*;
 
@@ -36,12 +32,14 @@ public class Products {
     @Column(nullable = false, columnDefinition = "TINYINT(1)")
     private boolean deli;      // Boolean, 무료배송여부
 
-    private int color;         // int, 색상여부
+    private String color;         // int, 색상여부
 
     private String seller;     // varchar2(30), 판매자
 
+//    private String rel_items;   // 관련 아이템(아이템 선택 시, 구매할 수 있는 옵션 상품)
 
-    public Products(String name, String category, int price, int dc_rate, String clarif, boolean deli, int color, String seller) {
+
+    public Products(String name, String category, int price, int dc_rate, String clarif, boolean deli, String color, String seller) {
         this.name = name;
         this.category = category;
         this.price = price;
