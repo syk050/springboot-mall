@@ -40,6 +40,7 @@ public class SearchRepositoryTest {
         boolean deli = true;
         String color = "red";
         String seller = "셀러";
+        String rel_items = "3, 4";
 
 
 //        prod1 = new Products(                                                                                         // 낱개 추가 테스트 코드
@@ -51,14 +52,21 @@ public class SearchRepositoryTest {
 
         for (int i=0; i<40; i++)
         {
-            prod1 = new Products(name+i, category+i, price, dc_rate, clarif+i, deli, color, seller);
+            prod1 = new Products(name+i, category+i, price, dc_rate, clarif+i, deli, color, seller, rel_items);
             prodList.add(prod1);
         }
 
-        prod1 = new Products("제품명0", category, price, dc_rate, clarif, deli, "blue", seller);              // detail 페이지에서 옵션으로 복수 개의 옵션을 가져오기 위한 데이터
+        prod1 = new Products("제품명0", category, price, dc_rate, clarif, deli, "blue", seller, rel_items);              // detail 페이지에서 옵션으로 복수 개의 옵션을 가져오기 위한 데이터
         prodList.add(prod1);
 
     }
+
+    @Test
+    public void resetDB(){                                                                                              // DB reset test
+        searchRepository.deleteAll();
+        searchRepository.resetAuto();
+    }
+
 
     @Test
     public void insertTest(){                                                                                           // 낱개 추가 테스트 코드

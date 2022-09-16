@@ -29,5 +29,7 @@ public class ProductDTO {
     private String color;         // int, 색상여부
 
     private String seller;     // varchar2(30), 판매자
+    
+    private String rel_items;   // varchar2(30), 관련 아이템
 
 }

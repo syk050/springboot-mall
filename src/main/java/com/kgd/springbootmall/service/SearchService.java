@@ -29,10 +29,17 @@ public class SearchService {
     }
 
 
-    public List<ProductDTO> getProductDetail(String s){                                                                       // 첫 페이지 로딩할 때 임시로 전체를 가져와서 보여주는 service 코드(임시)
+    public List<ProductDTO> getProductDetail(String s){                                                                 // 첫 페이지 로딩할 때 임시로 전체를 가져와서 보여주는 service 코드(임시)
         List<Products> prod = searchRepository.getProductDetail(s);
-
         List<ProductDTO> prodDto = entitytoDTOList(prod);
+
+        String rel_items = prod.get(0).getRel_items();
+        String[] rel_items_array = getSplit(rel_items);
+
+        prod = searchRepository.getRelProductDetail(rel_items_array);
+        prodDto.addAll(entitytoDTOList(prod));
+        // json 형식 분화 시까지, 임시로 본 옵션(같은 제품명)과 부 옵션값(관련 아이템)을 나누지 않고 테스트하기 위한 코드이다.
+
         return prodDto;
     }
 
@@ -47,7 +54,8 @@ public class SearchService {
                 prod.getClarif(),
                 prod.isDeli(),
                 prod.getColor(),
-                prod.getSeller());
+                prod.getSeller(),
+                prod.getRel_items());
 
         return prodDTO;
     }
@@ -67,6 +75,13 @@ public class SearchService {
 
     public void isSecureInputData(String s){
 
+    }
+
+    public String[] getSplit(String s){
+
+        String[] array = s.split(",");
+
+        return array;
     }
 
 
