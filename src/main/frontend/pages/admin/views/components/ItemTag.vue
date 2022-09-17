@@ -3,11 +3,11 @@
     <h1 class="t-header">Tag</h1>
     <div id="current-tag" class="w3-container w3-bottombar w3-padding-16 dnd-box">
       <!--          현재 태그 -->
-
+      <span v-for="(tag, idx) in tagList" :key="idx" v-bind:id="tag" class="w3-tag">{{ tag }}</span>
     </div>
     <div id="not-tag" class="w3-container w3-padding-16 dnd-box">
       <!--          추가 가능한 태그 -->
-      <span v-for="(tag, idx) in tags" :key="idx" v-bind:id="tag.tag" class="w3-tag">{{ tag.tag }}</span>
+      <span v-for="(tag, idx) in tags" :key="idx" v-bind:id="tag" class="w3-tag">{{ tag }}</span>
     </div>
   </div>
 </template>
@@ -17,28 +17,54 @@ import { dnd } from "../../assets/js/dnd";
 
 export default {
   name: "ItemTag",
+  props: {
+    idxValue: String
+  },
   data() {
     return{
+      apiUrl: "/kgd/tag",
       tags: {},
+      tagList: {},
     }
   },
   mounted() {
-    this.fnGetTag()
+    this.init()
   },
   updated() {
     dnd.init()
   },
   methods: {
-    fnGetTag() {
-      const apiUrl = "/kgd/tag"
-
-      this.$axios.get(apiUrl).then(res =>{
-        this.tags = res.data
+    init() {
+      if (this.$route.name === "ItemModify"){  // router에 등록된 name
+        console.log("상품 수정 페이지")
+        this.getTag()
+      }else if(this.$route.name === "ItemsDetail") {
+        console.log("상품 정보 페이지")
+        this.loadTag()
+      }else{
+        console.log('상품 등록 페이지')
+      }
+    },
+    async loadTag() {
+      await this.$axios.get(this.apiUrl).then(res =>{
+        // this.tags = res.data
+        this.tags = res.data.map(x => x.tag)
       }).catch(err => {
         if (err.message.indexOf('Network Error') > -1) {
           alert('네트워크가 원활하지 않습니다.\n잠시 후 다시 시도해주세요.')
         }
       })
+    },
+    getTag() {
+      this.loadTag()
+          .then(() => {
+            let s_tags = new Set(this.tags.map(x => x))
+            let s_tagList = new Set(["app"])
+
+            this.tags = new Set([...s_tags].filter(x => !s_tagList.has(x)))
+          }).catch(err => {
+            console.error(err);
+          });
     }
   }
 }
