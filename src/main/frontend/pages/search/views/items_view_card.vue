@@ -4,24 +4,6 @@
       <button id="item_btn"> 아이템을 선택해주세요 </button>
     </div>
     <ul id="items_card_list">
-      <li>
-        <button class="items_card">
-          <img class="items_card_img" src="../../../src/assets/pancakes.jpg">
-          first
-        </button>
-      </li>
-      <li>
-        <button class="items_card">
-          <img class="items_card_img" src="../../../src/assets/pancakes.jpg">
-          second
-        </button>
-      </li>
-      <li>
-        <button class="items_card">
-          <img class="items_card_img" src="../../../src/assets/pancakes.jpg">
-          third
-        </button>
-      </li>
     </ul>
   </div>
 </template>
@@ -41,9 +23,6 @@ export default {
   },
   mounted() {
     document.getElementById("item_btn").addEventListener("click", ()=> this.show_items_list());
-    for(let i=0; i<3; i++){
-      document.getElementsByClassName("items_card")[i].addEventListener("click", ()=> (this.item_clicked()));
-    }
 
   },
   watch : {
@@ -107,7 +86,11 @@ export default {
 
         btn.setAttribute('class', 'items_card');
         img.setAttribute('class', 'items_card_img');
+        p.setAttribute('class', 'items_card_p');
         img.setAttribute('src', this.imgSrc);
+
+        btn.addEventListener("click", ()=> (this.item_clicked()));
+
 
         p.innerText = this.detail.realItems[i].color;
 
@@ -175,6 +158,11 @@ button{
   margin: 10px;
   border: 0.5px solid grey;
   border-radius: 6px;
+}
+
+.items_card_p{
+  float : right;
+
 }
 
 
