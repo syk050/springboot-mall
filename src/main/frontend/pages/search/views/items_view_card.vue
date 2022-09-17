@@ -48,7 +48,7 @@ export default {
       this.create_result_item();
 
     },
-    create_result_item(){     // 제품 추가 시, 결과 다이얼로그
+    create_result_item(){                                                                                               // 옵션 선택 혹은 추가 시, 선택확인 div 생성
       let point_tag = document.getElementById("items_card_list");
       let tag_div = document.createElement('div');
       let tag_name = document.createElement('h2');
@@ -61,6 +61,12 @@ export default {
       tag_name.innerText = "제품명";
       tag_delbtn.innerText = "X"
 
+      tag_delbtn.addEventListener("click", ()=>{
+        let parent = tag_div.parentElement;
+        parent.removeChild(tag_div);
+      }
+      )
+
       tag_div.appendChild(tag_name);
       tag_div.appendChild(tag_delbtn);
       point_tag.after(tag_div);
@@ -68,7 +74,7 @@ export default {
     },
 
 
-    create_option_menu(){
+    create_option_menu(){                                                                                               // 아이템을 선택해주세요 버튼 클릭시 나오는 옵션 메뉴 생성
       console.log(this.detail);
       let point_tag = document.getElementById("items_card_list");
       let li;
