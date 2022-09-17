@@ -36,15 +36,8 @@
         </div>
       </div>
 
-      <div class="w3-third w3-container">
-        <h1>Tag</h1>
-        <div class="w3-container w3-bottombar pading-bottom">
-<!--          현재 태그 -->
-          <span class="w3-tag w3-blue-grey">Travel</span> <span class="w3-tag w3-blue-grey">New York</span>
-          <span class="w3-tag w3-blue-grey">London</span> <span class="w3-tag w3-blue-grey">IKEA</span>
-          <span class="w3-tag w3-blue-grey">NORWAY</span> <span class="w3-tag w3-blue-grey">DIY</span>
-        </div>
-      </div>
+      <!--   태그   -->
+      <itemTag :idxValue="idx"/>
     </div>
     <!-- Content -->
   </div>
@@ -52,6 +45,8 @@
 </template>
 
 <script>
+import itemTag from "./components/ItemTag";
+
 export default {
   name: "ItemsList",
   data() {
@@ -63,6 +58,9 @@ export default {
       name: '',
       imgPath:'',
     }
+  },
+  components: {
+    itemTag
   },
   mounted() {
     this.fnGetView()
