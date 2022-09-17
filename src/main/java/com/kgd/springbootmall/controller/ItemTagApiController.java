@@ -7,12 +7,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @RestController
 public class ItemTagApiController {
     private final ItemTagService service;
 
     @GetMapping("/kgd/tag/{itemId}")
-    public ItemTagResponseDto findById(@PathVariable Long itemId) { return service.findById(itemId); }
+    public List<ItemTagResponseDto> findById(@PathVariable Long itemId) { return service.getItemsTagList(itemId); }
 
 }
