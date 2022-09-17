@@ -8,7 +8,7 @@
         <h5>{{item_detail.clarif}}</h5>
         <h3>{{item_detail.price}}</h3>
 
-        <items_view_card/>
+        <items_view_card :length="item_detail.realItems" v-bind:detail="this.item_detail"/>
       </div>
     </div>
 

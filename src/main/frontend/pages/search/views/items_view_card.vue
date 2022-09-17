@@ -30,17 +30,26 @@
 export default {
 
   name: "items_view_card",
+  props : {
+    detail : Object,    // 변수에 담아 사용하려 하니 watch문이 제대로 먹히지 않는 오류가 있다.
+  },
   data(){
     return{
+      imgSrc : require('../../../src/assets/pancakes.jpg'),
       is_menu_clicked : false,
     }
   },
   mounted() {
-      document.getElementById("item_btn").addEventListener("click", ()=> this.show_items_list());
-      for(let i=0; i<3; i++){
-        document.getElementsByClassName("items_card")[i].addEventListener("click", ()=> (this.item_clicked()));
-      }
+    document.getElementById("item_btn").addEventListener("click", ()=> this.show_items_list());
+    for(let i=0; i<3; i++){
+      document.getElementsByClassName("items_card")[i].addEventListener("click", ()=> (this.item_clicked()));
+    }
 
+  },
+  watch : {
+    detail(){
+      this.create_option_menu();
+    },
   },
   methods:{
     show_items_list(){
@@ -77,6 +86,42 @@ export default {
       tag_div.appendChild(tag_delbtn);
       point_tag.after(tag_div);
       point_tag.after(document.createElement('br'));
+    },
+
+
+    create_option_menu(){
+      console.log(this.detail);
+      let point_tag = document.getElementById("items_card_list");
+      let li;
+      let btn;
+      let img;
+      let p;
+
+
+
+      for(let i=0; i<this.detail.realItems.length; i++){
+        li = document.createElement('li');
+        btn = document.createElement('button');
+        img = document.createElement('img');
+        p = document.createElement('p');
+
+        btn.setAttribute('class', 'items_card');
+        img.setAttribute('class', 'items_card_img');
+        img.setAttribute('src', this.imgSrc);
+
+        p.innerText = this.detail.realItems[i].color;
+
+        btn.appendChild(img);
+        btn.appendChild(p);
+        li.appendChild(btn);
+        point_tag.appendChild(li);
+        console.log(this.detail.realItems.length);
+
+      }
+
+
+
+
     }
 
 
@@ -85,7 +130,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 
 button{
   background-color: transparent;
