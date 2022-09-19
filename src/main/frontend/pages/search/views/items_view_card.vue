@@ -60,23 +60,47 @@ export default {
       let tag_div = document.createElement('div');
       let tag_name = document.createElement('p');
       let tag_delbtn = document.createElement('button');
+      let prev_addbtn = document.createElement('button');
+      let num_addbtn = document.createElement('input');
+      let next_addbtn = document.createElement('button');
 
       tag_div.setAttribute('class', 'result_div');
       tag_name.setAttribute('class', 'result_name');
       tag_delbtn.setAttribute('class', 'result_delbtn');
+      num_addbtn.setAttribute('type', 'number');
+      num_addbtn.setAttribute('readonly', '');
+
 
       tag_name.innerText = this.detail.realItems[i].color;
-      tag_delbtn.innerText = "X"
+      tag_delbtn.innerText = "X";
+
+      prev_addbtn.innerText = "<";
+      num_addbtn.value = 0;
+      next_addbtn.innerText = ">";
 
       tag_delbtn.addEventListener("click", ()=>{
         this.is_r_option_created[i] = 0;
         let parent = tag_div.parentElement;
         parent.removeChild(tag_div);
-      }
-      )
+      });
+
+      prev_addbtn.addEventListener("click", ()=>{
+        if(num_addbtn.value > 0)
+          num_addbtn.value--;
+      });
+
+      next_addbtn.addEventListener("click", ()=>{
+        if(num_addbtn.value < 1000)
+          num_addbtn.value++;
+      });
 
       tag_div.appendChild(tag_name);
       tag_div.appendChild(tag_delbtn);
+
+      tag_div.appendChild(prev_addbtn);
+      tag_div.appendChild(num_addbtn);
+      tag_div.appendChild(next_addbtn);
+
       point_tag.after(tag_div);
       point_tag.after(document.createElement('br'));
 
