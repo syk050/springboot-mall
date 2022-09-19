@@ -13,12 +13,14 @@ export default {
 
   name: "items_view_card",
   props : {
-    detail : Object,    // 변수에 담아 사용하려 하니 watch문이 제대로 먹히지 않는 오류가 있다.
+    detail : Object,                                                                                                    // props를 변수에 담아 사용하려 하니 watch문이 제대로 먹히지 않는 오류가 있다.
   },
   data(){
     return{
       imgSrc : require('../../../src/assets/pancakes.jpg'),
       is_menu_clicked : false,
+      is_r_option_created : [],
+      is_s_option_created : [],
     }
   },
   mounted() {
@@ -26,7 +28,9 @@ export default {
 
   },
   watch : {
-    detail(){
+    detail(){                                                                                                           // detail props 변수를 받아오면 실행
+      this.is_r_option_created = Array(this.detail.realItems.length).fill(0);                                      // 선택되었는지 확인하는 방법
+      this.is_s_option_created = Array(this.detail.subItems.length).fill(0);                                       //
       this.create_option_menu();
     },
   },
@@ -43,32 +47,68 @@ export default {
         dom.style.visibility = "hidden";
       }
     },
+    create_result_item(i){                                                                                               // 옵션 선택 혹은 추가 시, 선택확인 div 생성
 
-    item_clicked(){
-      this.create_result_item();
+      if(this.is_r_option_created[i] === 1){
+        alert("이미 추가된 제품입니다.");
 
-    },
-    create_result_item(){     // 제품 추가 시, 결과 다이얼로그
+        return
+      }
+
+
       let point_tag = document.getElementById("items_card_list");
       let tag_div = document.createElement('div');
-      let tag_name = document.createElement('h2');
+      let tag_name = document.createElement('p');
       let tag_delbtn = document.createElement('button');
+      let prev_addbtn = document.createElement('button');
+      let num_addbtn = document.createElement('input');
+      let next_addbtn = document.createElement('button');
 
       tag_div.setAttribute('class', 'result_div');
       tag_name.setAttribute('class', 'result_name');
       tag_delbtn.setAttribute('class', 'result_delbtn');
+      num_addbtn.setAttribute('type', 'number');
+      num_addbtn.setAttribute('readonly', '');
 
-      tag_name.innerText = "제품명";
-      tag_delbtn.innerText = "X"
+
+      tag_name.innerText = this.detail.realItems[i].color;
+      tag_delbtn.innerText = "X";
+
+      prev_addbtn.innerText = "<";
+      num_addbtn.value = 0;
+      next_addbtn.innerText = ">";
+
+      tag_delbtn.addEventListener("click", ()=>{
+        this.is_r_option_created[i] = 0;
+        let parent = tag_div.parentElement;
+        parent.removeChild(tag_div);
+      });
+
+      prev_addbtn.addEventListener("click", ()=>{
+        if(num_addbtn.value > 0)
+          num_addbtn.value--;
+      });
+
+      next_addbtn.addEventListener("click", ()=>{
+        if(num_addbtn.value < 1000)
+          num_addbtn.value++;
+      });
 
       tag_div.appendChild(tag_name);
       tag_div.appendChild(tag_delbtn);
+
+      tag_div.appendChild(prev_addbtn);
+      tag_div.appendChild(num_addbtn);
+      tag_div.appendChild(next_addbtn);
+
       point_tag.after(tag_div);
       point_tag.after(document.createElement('br'));
+
+      this.is_r_option_created[i] = 1;
     },
 
 
-    create_option_menu(){
+    create_option_menu(){                                                                                               // 아이템을 선택해주세요 버튼 클릭시 나오는 옵션 메뉴 생성
       console.log(this.detail);
       let point_tag = document.getElementById("items_card_list");
       let li;
@@ -79,6 +119,7 @@ export default {
 
 
       for(let i=0; i<this.detail.realItems.length; i++){
+
         li = document.createElement('li');
         btn = document.createElement('button');
         img = document.createElement('img');
@@ -89,7 +130,7 @@ export default {
         p.setAttribute('class', 'items_card_p');
         img.setAttribute('src', this.imgSrc);
 
-        btn.addEventListener("click", ()=> (this.item_clicked()));
+        btn.addEventListener("click", ()=> (this.create_result_item(i)));
 
 
         p.innerText = this.detail.realItems[i].color;
@@ -98,12 +139,8 @@ export default {
         btn.appendChild(p);
         li.appendChild(btn);
         point_tag.appendChild(li);
-        console.log(this.detail.realItems.length);
 
       }
-
-
-
 
     }
 
@@ -124,12 +161,12 @@ button{
 
 #items_card_list{
   width: 400px;
-  height : 300px;
+  height : 350px;
   display: inline-block;
   text-align: center;
   visibility: hidden;
   list-style: none;
-  margin: 10px 0px 10px;
+  margin: 30px 0px 10px;
   padding: 10px 0px;
   border: none;
   overflow: scroll;
@@ -156,13 +193,36 @@ button{
   width: 70px;
   height: 80px;
   margin: 10px;
-  border: 0.5px solid grey;
+  border: 1px solid grey;
   border-radius: 6px;
 }
 
 .items_card_p{
   float : right;
 
+}
+
+.result_div{                                                                                                            /* 구매 아이템 결정 div */
+  border : none;
+  border-radius: 12px;
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+  width: 300px;
+  height : 100px;
+  margin-left : 45px;
+}
+
+.result_name{                                                                                                           /* 구매 아이템 결정 div 내의 제품명 */
+  display: inline-block;
+  font-family: "맑은고딕", "Malgun Gothic";
+  font-weight: 600;
+  font-size: 20px;
+  margin-left: 30px;
+}
+
+.result_delbtn{                                                                                                         /* 구매 아이템 결정 div 내의 delete 버튼 */
+  float : right;
+  margin-right: 5px;
+  margin-top : 8px
 }
 
 
