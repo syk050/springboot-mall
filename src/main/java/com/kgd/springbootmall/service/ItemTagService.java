@@ -21,7 +21,16 @@ import java.util.stream.Collectors;
 public class ItemTagService {
     private final ItemTagRepository repository;
 
-    /** 아이템 태그 가져오기 */
+    /** 아이템 태그 전부 가져오기 */
+    @Transactional
+    public List<ItemTagResponseDto> getAllItemsTagList() {
+
+        return repository.findAll().stream()
+                .map(ItemTagResponseDto::new)
+                .collect(Collectors.toList());
+    }
+
+    /** 해당 아이템 태그 가져오기 */
     @Transactional
     public List<ItemTagResponseDto> getItemsTagList(Long itemId) {
 
