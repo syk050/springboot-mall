@@ -30,9 +30,7 @@
         <div class="w3-container w3-white">
           <p><b>{{ item.name }}</b></p>
           <p class="">
-            <span class="w3-tag w3-blue-grey">Travel</span> <span class="w3-tag w3-blue-grey">New York</span>
-            <span class="w3-tag w3-blue-grey">London</span> <span class="w3-tag w3-blue-grey">IKEA</span>
-            <span class="w3-tag w3-blue-grey">NORWAY</span> <span class="w3-tag w3-blue-grey">DIY</span>
+            <span v-for="(tag, idx) in test[item.id]" :key="idx" class="w3-tag w3-blue-grey">{{ tag }}</span>
           </p>
         </div>
       </div>
@@ -47,11 +45,13 @@ export default {
     return {
       requestBody: {},
       list: {},
-      test: {}
+      test: {},
+      itemTagList: ''
     }
   },
   mounted() {
     this.fnGetList()
+    this.formattingItemTag()
   },
   methods: {
     fnGetList() {
@@ -79,7 +79,6 @@ export default {
       await this.$axios.get("/kgd/item-tag")
           .then(res => {
             this.itemTagList = res.data
-
           }).catch(err => {
             if (err.message.indexOf('Network Error') > -1) {
               alert('네트워크가 원활하지 않습니다.\n잠시 후 다시 시도해주세요.')
@@ -88,11 +87,18 @@ export default {
             }
           })
     },
-    mappingItemTag() {
+    formattingItemTag() {
       this.getItemTag().then(() => {
+        this.itemTagList.forEach((val => {
+          if (val['itemId'] in this.test ) {
+            this.test[val['itemId']].push(val['tag'])
+          }else{
+            this.test[val['itemId']] = new Array(val['tag'])
+          }
+        }))
 
+        console.log(this.test)
       })
-
     }
   },
 }
