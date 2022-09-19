@@ -155,23 +155,8 @@ export default {
   margin-top: 70px;
 }
 
-.result_div{                                                                                                            /* 구매 아이템 결정 div */
-  border : 1px solid black;
-  border-radius: 12px;
-  width: 300px;
-}
 
-.result_name{                                                                                                           /* 구매 아이템 결정 div 내의 제품명 */
-  display: inline;
 
-  margin-left: 10px;
-}
-
-.result_delbtn{                                                                                                         /* 구매 아이템 결정 div 내의 delete 버튼 */
-  float : right;
-  margin-right: 5px;
-  margin-top : 5px
-}
 
 
 
