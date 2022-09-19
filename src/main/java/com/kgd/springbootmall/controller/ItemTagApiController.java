@@ -14,7 +14,7 @@ import java.util.List;
 public class ItemTagApiController {
     private final ItemTagService service;
 
-    @GetMapping("/kgd/tag/{itemId}")
+    @GetMapping("/kgd/item-tag/{itemId}")
     public List<ItemTagResponseDto> findById(@PathVariable Long itemId) { return service.getItemsTagList(itemId); }
 
 }

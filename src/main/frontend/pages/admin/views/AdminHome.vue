@@ -14,9 +14,9 @@
         <div class="w3-section w3-bottombar w3-padding-16">
           <span class="w3-margin-right">Filter:</span>
           <button class="w3-button w3-black">ALL</button>
-          <button class="w3-button w3-white"><i class="fa fa-diamond w3-margin-right"></i>Design</button>
-          <button class="w3-button w3-white w3-hide-small"><i class="fa fa-photo w3-margin-right"></i>Photos</button>
-          <button class="w3-button w3-white w3-hide-small"><i class="fa fa-map-pin w3-margin-right"></i>Art</button>
+<!--          <button class="w3-button w3-white"><i class="fa fa-diamond w3-margin-right"></i>Design</button>-->
+<!--          <button class="w3-button w3-white w3-hide-small"><i class="fa fa-photo w3-margin-right"></i>Photos</button>-->
+<!--          <button class="w3-button w3-white w3-hide-small"><i class="fa fa-map-pin w3-margin-right"></i>Art</button>-->
           <button class="w3-button w3-indigo w3-right" v-on:click="fnAdd">추가</button>
         </div>
       </div>
@@ -46,7 +46,8 @@ export default {
   data() { //변수 생성
     return {
       requestBody: {},
-      list: {}
+      list: {},
+      test: {}
     }
   },
   mounted() {
@@ -73,6 +74,25 @@ export default {
       this.$router.push({
         path: this.$itemAdd
       })
+    },
+    async getItemTag() {
+      await this.$axios.get("/kgd/item-tag")
+          .then(res => {
+            this.itemTagList = res.data
+
+          }).catch(err => {
+            if (err.message.indexOf('Network Error') > -1) {
+              alert('네트워크가 원활하지 않습니다.\n잠시 후 다시 시도해주세요.')
+            }else{
+              console.error(err);
+            }
+          })
+    },
+    mappingItemTag() {
+      this.getItemTag().then(() => {
+
+      })
+
     }
   },
 }
