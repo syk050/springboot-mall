@@ -13,7 +13,7 @@ export default {
 
   name: "items_view_card",
   props : {
-    detail : Object,    // 변수에 담아 사용하려 하니 watch문이 제대로 먹히지 않는 오류가 있다.
+    detail : Object,                                                                                                    // props를 변수에 담아 사용하려 하니 watch문이 제대로 먹히지 않는 오류가 있다.
   },
   data(){
     return{
@@ -69,6 +69,7 @@ export default {
       tag_delbtn.innerText = "X"
 
       tag_delbtn.addEventListener("click", ()=>{
+        this.is_r_option_created[i] = 0;
         let parent = tag_div.parentElement;
         parent.removeChild(tag_div);
       }
@@ -114,7 +115,6 @@ export default {
         btn.appendChild(p);
         li.appendChild(btn);
         point_tag.appendChild(li);
-        console.log(this.detail.realItems.length);
 
       }
 
