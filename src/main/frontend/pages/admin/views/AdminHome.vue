@@ -24,13 +24,13 @@
 
     <!-- First Photo Grid-->
     <div class="w3-row-padding">
-      <div class="w3-third w3-container w3-margin-bottom" v-for="(item, idx) in list" :key="idx"  v-on:click="fnView(`${item.id}`)">
+      <div class="w3-third w3-container w3-margin-bottom" v-for="(item, idx) in itemList" :key="idx"  v-on:click="fnView(`${item.id}`)">
         <img id="previewImg" v-show="item.imgPath" v-bind:src="item.imgPath" alt="item img" style="width:100%" class="w3-hover-opacity">
         <img id="previewImg" v-show="!item.imgPath" src="../../../src/assets/logo.png" alt="Temp Logo" style="width:100%" class="w3-hover-opacity">
         <div class="w3-container w3-white">
           <p><b>{{ item.name }}</b></p>
           <p class="">
-            <span v-for="(tag, idx) in test[item.id]" :key="idx" class="w3-tag w3-blue-grey">{{ tag }}</span>
+            <span v-for="(tag, idx) in itemTagObj[item.id]" :key="idx" class="w3-tag w3-blue-grey">{{ tag }}</span>
           </p>
         </div>
       </div>
@@ -44,9 +44,9 @@ export default {
   data() { //변수 생성
     return {
       requestBody: {},
-      list: {},
-      test: {},
-      itemTagList: ''
+      itemList: {},
+      itemTagObj: {},
+      resItemTag: ''
     }
   },
   mounted() {
@@ -56,7 +56,7 @@ export default {
   methods: {
     fnGetList() {
       this.$axios.get( "/kgd/items").then((res) => {
-        this.list = res.data
+        this.itemList = res.data
       }).catch((err) => {
         if (err.message.indexOf('Network Error') > -1) {
           alert('네트워크가 원활하지 않습니다.\n잠시 후 다시 시도해주세요.')
@@ -78,7 +78,7 @@ export default {
     async getItemTag() {
       await this.$axios.get("/kgd/item-tag")
           .then(res => {
-            this.itemTagList = res.data
+            this.resItemTag = res.data
           }).catch(err => {
             if (err.message.indexOf('Network Error') > -1) {
               alert('네트워크가 원활하지 않습니다.\n잠시 후 다시 시도해주세요.')
@@ -89,15 +89,13 @@ export default {
     },
     formattingItemTag() {
       this.getItemTag().then(() => {
-        this.itemTagList.forEach((val => {
-          if (val['itemId'] in this.test ) {
-            this.test[val['itemId']].push(val['tag'])
+        this.resItemTag.forEach((val => {
+          if (val['itemId'] in this.itemTagObj ) {
+            this.itemTagObj[val['itemId']].push(val['tag'])
           }else{
-            this.test[val['itemId']] = new Array(val['tag'])
+            this.itemTagObj[val['itemId']] = new Array(val['tag'])
           }
         }))
-
-        console.log(this.test)
       })
     }
   },

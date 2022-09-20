@@ -22,7 +22,8 @@ export default {
   },
   data() {
     return{
-      apiUrl: "/kgd/item-tag/",
+      tagUrl: "/kgd/tag/",
+      itemTagUrl: "/kgd/item-tag/",
       tags: {},
       itemTagList: {},
     }
@@ -31,7 +32,9 @@ export default {
     this.init()
   },
   updated() {
-    dnd.init()
+    if (this.$route.name === "ItemModify" || this.$route.name === "ItemAdd"){  // router에 등록된 name
+      dnd.init()
+    }
   },
   methods: {
     init() {
@@ -50,7 +53,7 @@ export default {
       }
     },
     async loadTag() {
-      await this.$axios.get(this.apiUrl).then(res =>{
+      await this.$axios.get(this.tagUrl).then(res =>{
         // this.tags = res.data
         this.tags = res.data.map(x => x.tag)
       }).catch(err => {
@@ -60,7 +63,7 @@ export default {
       })
     },
     async getItemTag() {
-      await this.$axios.get(this.apiUrl + this.idxValue)
+      await this.$axios.get(this.itemTagUrl + this.idxValue)
           .then(res => {
             this.itemTagList = res.data.map(x => x.tag)
           }).catch(err => {
