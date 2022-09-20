@@ -6,13 +6,14 @@
   <div class="w3-main" style="margin-left:300px">
     <!-- Header -->
     <header id="">
-      <a href="/admin"><img src="../../../src/assets/logo.png" style="width:65px;" class="w3-circle w3-right w3-margin w3-hide-large w3-hover-opacity"></a>
+      <a href="/admin"><img src="../../../src/assets/logo.png" style="width:65px;" alt="" class="w3-circle w3-right w3-margin w3-hide-large w3-hover-opacity"></a>
       <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i class="fa fa-bars"></i></span>
       <div class="w3-container">
         <h1><b>상품 등록</b></h1>
         <div class="w3-section w3-container w3-bottombar">
           <a class="w3-button w3-right w3-dark-gray" role="button" v-on:click="fnList">목록</a>
-          <a class="w3-button w3-right w3-indigo" role="button" v-on:click="fnSave">저장</a>
+          <a class="w3-button w3-right w3-indigo" role="button" v-on:click="beforeSave">저장</a>
+          <a class="w3-button w3-right w3-indigo" role="button" v-on:click="test">테스트</a>
         </div>
       </div>
     </header>
@@ -42,22 +43,6 @@
 
       <!-- 태그 -->
       <itemTag/>
-<!--      <div class="w3-third w3-container">-->
-<!--        <h1 class="t-header">Tag</h1>-->
-<!--        <div id="current-tag" class="w3-container w3-bottombar w3-padding-16 dnd-box">-->
-<!--          &lt;!&ndash;          현재 태그 &ndash;&gt;-->
-
-<!--        </div>-->
-<!--        <div id="not-tag" class="w3-container w3-padding-16 dnd-box">-->
-<!--          &lt;!&ndash;          추가 가능한 태그 &ndash;&gt;-->
-<!--          <span id="travel" class="w3-tag">Travel</span>-->
-<!--          <span id="newyork" class="w3-tag">New York</span>-->
-<!--          <span id="london" class="w3-tag">London</span>-->
-<!--          <span id="ikea" class="w3-tag">IKEA</span>-->
-<!--          <span id="norway" class="w3-tag">NORWAY</span>-->
-<!--          <span id="diy" class="w3-tag">DIY</span>-->
-<!--        </div>-->
-<!--      </div>-->
     </div>
     <!-- Content -->
   </div>
@@ -84,6 +69,7 @@ export default {
 
       name: '',
       editorData: '',
+      form: {},
     }
   },
   mounted() {
@@ -95,45 +81,45 @@ export default {
         path: '/admin',
       })
     },
-    fnSave() {
+    beforeSave() {
       const inputFile = document.getElementById("input-file");
-      // 태그 가져오기
-      // let nodeList = document.getElementById("current-tag").childNodes;
-      // for (let i = 0; i < nodeList.length; i++) {
-      //   console.log(nodeList[i].innerText)
-      // }
-
-      const apiUrl = '/kgd/items/'
 
       this.form = {
         "name": this.name,
         "content": this.editorData
       }
 
-      if (inputFile.value) {
-        this.imgSave()
-            .then(path => {
-              // this.form.append("imgPath", path);
-              this.form["imgPath"] = path;
-              this.$axios.post(apiUrl, this.form)
-                  .then(() => {
-                    this.fnList()
-                  }).catch(err => {
-                if (err.message.indexOf('Network Error') > -1) {
-                  alert('네트워크가 원활하지 않습니다.\n잠시 후 다시 시도해주세요.')
-                }
-              })
-            })
-      }else{
-        this.$axios.post(apiUrl, this.form)
-            .then(() => {
-              this.fnList()
-            }).catch(err => {
-          if (err.message.indexOf('Network Error') > -1) {
-            alert('네트워크가 원활하지 않습니다.\n잠시 후 다시 시도해주세요.')
-          }
+      if (inputFile) {
+        this.imgSave().then(path => {
+          this.form["imgPath"] = path;
+
+          this.fnSave();
         })
+      }else{
+        this.fnSave();
       }
+    },
+    fnSave() {
+      // 태그 가져오기
+      let nodeList = document.getElementById("current-tag").childNodes;
+      let tempTagList = []
+      for (let i = 0; i < nodeList.length; i++) {
+        tempTagList.push(nodeList[i].innerText)
+        console.log(nodeList[i].innerText)
+      }
+
+      const apiUrl = '/kgd/items/'
+
+      this.$axios.post(apiUrl, this.form)
+          .then(() => {
+            this.fnList()
+          }).catch(err => {
+        if (err.message.indexOf('Network Error') > -1) {
+          alert('네트워크가 원활하지 않습니다.\n잠시 후 다시 시도해주세요.')
+        }
+      })
+
+
     },
     previewImg() {
       const inputFile = document.getElementById("input-file");
@@ -167,6 +153,22 @@ export default {
             console.error(err);
       })
       return imgPath
+    },
+    test() {
+      // let nodeList = document.getElementById("current-tag").childNodes;
+      // let tempTagList = new Array()
+      // for (let i = 0; i < nodeList.length; i++) {
+      //   if (nodeList[i].innerText !== undefined ){
+      //     tempTagList.push(nodeList[i].innerText)
+      //   }
+      //
+      // }
+      // console.log(tempTagList)
+
+      const nodeList = document.querySelectorAll('#current-tag .w3-tag');
+      for(var value of nodeList.values()) {
+        console.log(value.innerText);
+      }
     }
   }
 }
