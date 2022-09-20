@@ -14,9 +14,9 @@
         <div class="w3-section w3-bottombar w3-padding-16">
           <span class="w3-margin-right">Filter:</span>
           <button class="w3-button w3-black">ALL</button>
-          <button class="w3-button w3-white"><i class="fa fa-diamond w3-margin-right"></i>Design</button>
-          <button class="w3-button w3-white w3-hide-small"><i class="fa fa-photo w3-margin-right"></i>Photos</button>
-          <button class="w3-button w3-white w3-hide-small"><i class="fa fa-map-pin w3-margin-right"></i>Art</button>
+<!--          <button class="w3-button w3-white"><i class="fa fa-diamond w3-margin-right"></i>Design</button>-->
+<!--          <button class="w3-button w3-white w3-hide-small"><i class="fa fa-photo w3-margin-right"></i>Photos</button>-->
+<!--          <button class="w3-button w3-white w3-hide-small"><i class="fa fa-map-pin w3-margin-right"></i>Art</button>-->
           <button class="w3-button w3-indigo w3-right" v-on:click="fnAdd">추가</button>
         </div>
       </div>
@@ -30,9 +30,7 @@
         <div class="w3-container w3-white">
           <p><b>{{ item.name }}</b></p>
           <p class="">
-            <span class="w3-tag w3-blue-grey">Travel</span> <span class="w3-tag w3-blue-grey">New York</span>
-            <span class="w3-tag w3-blue-grey">London</span> <span class="w3-tag w3-blue-grey">IKEA</span>
-            <span class="w3-tag w3-blue-grey">NORWAY</span> <span class="w3-tag w3-blue-grey">DIY</span>
+            <span v-for="(tag, idx) in test[item.id]" :key="idx" class="w3-tag w3-blue-grey">{{ tag }}</span>
           </p>
         </div>
       </div>
@@ -46,11 +44,14 @@ export default {
   data() { //변수 생성
     return {
       requestBody: {},
-      list: {}
+      list: {},
+      test: {},
+      itemTagList: ''
     }
   },
   mounted() {
     this.fnGetList()
+    this.formattingItemTag()
   },
   methods: {
     fnGetList() {
@@ -72,6 +73,31 @@ export default {
     fnAdd() {
       this.$router.push({
         path: this.$itemAdd
+      })
+    },
+    async getItemTag() {
+      await this.$axios.get("/kgd/item-tag")
+          .then(res => {
+            this.itemTagList = res.data
+          }).catch(err => {
+            if (err.message.indexOf('Network Error') > -1) {
+              alert('네트워크가 원활하지 않습니다.\n잠시 후 다시 시도해주세요.')
+            }else{
+              console.error(err);
+            }
+          })
+    },
+    formattingItemTag() {
+      this.getItemTag().then(() => {
+        this.itemTagList.forEach((val => {
+          if (val['itemId'] in this.test ) {
+            this.test[val['itemId']].push(val['tag'])
+          }else{
+            this.test[val['itemId']] = new Array(val['tag'])
+          }
+        }))
+
+        console.log(this.test)
       })
     }
   },

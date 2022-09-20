@@ -22,7 +22,7 @@ export default {
   },
   data() {
     return{
-      apiUrl: "/kgd/tag/",
+      apiUrl: "/kgd/item-tag/",
       tags: {},
       itemTagList: {},
     }
