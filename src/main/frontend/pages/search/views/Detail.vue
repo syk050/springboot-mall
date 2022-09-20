@@ -9,6 +9,8 @@
         <h3>{{item_detail.price}}</h3>
 
         <items_view_card :length="item_detail.realItems" v-bind:detail="this.item_detail"/>
+        <button id="buy_btn">바로구매</button>
+        <button id="cart_btn">장바구니</button>
       </div>
     </div>
 
@@ -155,10 +157,12 @@ export default {
   margin-top: 70px;
 }
 
-
-
-
-
+#buy_btn, #cart_btn{
+  margin-top : 70px;
+  margin-right: 30px;
+  width : 200px;
+  height: 60px;
+}
 
 
 </style>

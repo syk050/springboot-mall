@@ -31,7 +31,7 @@ export default {
     detail(){                                                                                                           // detail props 변수를 받아오면 실행
       this.is_r_option_created = Array(this.detail.realItems.length).fill(0);                                      // 선택되었는지 확인하는 방법
       this.is_s_option_created = Array(this.detail.subItems.length).fill(0);                                       //
-      this.create_option_menu();
+      this.mount_option_menu();
     },
   },
   methods:{
@@ -47,9 +47,61 @@ export default {
         dom.style.visibility = "hidden";
       }
     },
-    create_result_item(i){                                                                                               // 옵션 선택 혹은 추가 시, 선택확인 div 생성
 
-      if(this.is_r_option_created[i] === 1){
+    mount_option_menu(){                                                                                                // 본품 옵션 및 사이드 옵션 나눠서 추가
+      this.create_option_menu(this.detail.realItems);
+      this.create_option_menu(this.detail.subItems);
+    },
+
+    create_option_menu(a){                                                                                               // 아이템을 선택해주세요 버튼 클릭시 나오는 옵션 메뉴 생성
+      console.log(a);
+      let point_tag = document.getElementById("items_card_list");
+      let li;
+      let btn;
+      let img;
+      let p;
+      let text;
+
+
+
+      for(let i=0; i<a.length; i++){
+
+        if(a[i].color === null)
+          text = a[i].name;
+        else
+          text = a[i].color;
+
+        li = document.createElement('li');
+        btn = document.createElement('button');
+        img = document.createElement('img');
+        p = document.createElement('p');
+
+        btn.setAttribute('class', 'items_card');
+        img.setAttribute('class', 'items_card_img');
+        p.setAttribute('class', 'items_card_p');
+        img.setAttribute('src', this.imgSrc);
+
+
+        if(a[i].color === null)
+          btn.addEventListener("click", ()=> (this.create_result_item(i, this.is_s_option_created, this.detail.subItems, text)));
+        else
+          btn.addEventListener("click", ()=> (this.create_result_item(i, this.is_r_option_created, this.detail.realItems, text)));
+
+
+        p.innerText = text;
+
+        btn.appendChild(img);
+        btn.appendChild(p);
+        li.appendChild(btn);
+        point_tag.appendChild(li);
+
+      }
+
+    },
+
+    create_result_item(i, is_option_created, a, text){                                                                                               // 옵션 선택 혹은 추가 시, 선택확인 div 생성
+
+      if(is_option_created[i] === 1){
         alert("이미 추가된 제품입니다.");
 
         return
@@ -71,7 +123,7 @@ export default {
       num_addbtn.setAttribute('readonly', '');
 
 
-      tag_name.innerText = this.detail.realItems[i].color;
+      tag_name.innerText = text;
       tag_delbtn.innerText = "X";
 
       prev_addbtn.innerText = "<";
@@ -108,41 +160,9 @@ export default {
     },
 
 
-    create_option_menu(){                                                                                               // 아이템을 선택해주세요 버튼 클릭시 나오는 옵션 메뉴 생성
-      console.log(this.detail);
-      let point_tag = document.getElementById("items_card_list");
-      let li;
-      let btn;
-      let img;
-      let p;
 
 
 
-      for(let i=0; i<this.detail.realItems.length; i++){
-
-        li = document.createElement('li');
-        btn = document.createElement('button');
-        img = document.createElement('img');
-        p = document.createElement('p');
-
-        btn.setAttribute('class', 'items_card');
-        img.setAttribute('class', 'items_card_img');
-        p.setAttribute('class', 'items_card_p');
-        img.setAttribute('src', this.imgSrc);
-
-        btn.addEventListener("click", ()=> (this.create_result_item(i)));
-
-
-        p.innerText = this.detail.realItems[i].color;
-
-        btn.appendChild(img);
-        btn.appendChild(p);
-        li.appendChild(btn);
-        point_tag.appendChild(li);
-
-      }
-
-    }
 
 
 
