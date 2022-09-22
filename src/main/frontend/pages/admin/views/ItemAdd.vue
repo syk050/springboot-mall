@@ -70,10 +70,23 @@ export default {
       name: '',
       editorData: '',
       form: {},
+      itemId: '',
     }
   },
   mounted() {
     this.previewImg()
+  },
+  unmounted() {
+    console.log('떠남')
+    const apiUrl = '/kgd/item-tag'
+
+    const nodeList = document.querySelectorAll('#current-tag .w3-tag');
+    let tagData = []
+    for(const value of nodeList.values()) {
+      tagData.push({"tag": value.innerText, "itemId": this.itemId})
+    }
+
+    this.$axios.post(apiUrl, tagData)
   },
   methods: {
     fnList() {
@@ -111,15 +124,14 @@ export default {
       const apiUrl = '/kgd/items/'
 
       this.$axios.post(apiUrl, this.form)
-          .then(() => {
+          .then((id) => {
+            this.itemId = id
             this.fnList()
           }).catch(err => {
         if (err.message.indexOf('Network Error') > -1) {
           alert('네트워크가 원활하지 않습니다.\n잠시 후 다시 시도해주세요.')
         }
       })
-
-
     },
     previewImg() {
       const inputFile = document.getElementById("input-file");
@@ -154,6 +166,9 @@ export default {
       })
       return imgPath
     },
+    /* TODO 상품 저장 후 ID 값을 받아 태그 저장
+     * https://developer.mozilla.org/ko/docs/Web/API/NodeList
+     */
     test() {
       // let nodeList = document.getElementById("current-tag").childNodes;
       // let tempTagList = new Array()
@@ -166,8 +181,9 @@ export default {
       // console.log(tempTagList)
 
       const nodeList = document.querySelectorAll('#current-tag .w3-tag');
-      for(var value of nodeList.values()) {
-        console.log(value.innerText);
+      let tempTagList = []
+      for(const value of nodeList.values()) {
+        tempTagList.push(value.innerText)
       }
     }
   }

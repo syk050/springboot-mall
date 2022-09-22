@@ -49,3 +49,11 @@ Object.fromEntries()
 
 "key" in obj // true, regardless of the actual value
 ─────────────────────────────────────────────────────────────────────────────────────────────────────────────
+beforeCreate()      created()
+
+beforeMount()       mounted()
+
+beforeUpdate()      updated()
+
+beforeUnmount()     unmounted()
+─────────────────────────────────────────────────────────────────────────────────────────────────────────────
