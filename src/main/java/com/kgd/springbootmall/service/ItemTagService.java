@@ -1,6 +1,7 @@
 package com.kgd.springbootmall.service;
 
 import com.kgd.springbootmall.dto.ItemTagResponseDto;
+import com.kgd.springbootmall.dto.ItemTagSaveDto;
 import com.kgd.springbootmall.dto.ItemsListResponseDto;
 import com.kgd.springbootmall.dto.ProductDTO;
 import com.kgd.springbootmall.entity.ItemTag;
@@ -11,7 +12,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,4 +38,8 @@ public class ItemTagService {
                 .map(ItemTagResponseDto::new)
                 .collect(Collectors.toList());
     }
+
+    /** 아이템 태그 등록 */
+    @Transactional
+    public Long save(ItemTagSaveDto saveDto) { return repository.save(saveDto.toEntity()).getItemId();}
 }
