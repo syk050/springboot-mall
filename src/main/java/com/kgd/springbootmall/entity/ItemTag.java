@@ -24,8 +24,7 @@ public class ItemTag {
     private Long itemId;
 
     @Builder
-    public ItemTag(Long id, String tag, Long itemId) {
-        this.id = id;
+    public ItemTag(String tag, Long itemId) {
         this.tag = tag;
         this.itemId = itemId;
     }
