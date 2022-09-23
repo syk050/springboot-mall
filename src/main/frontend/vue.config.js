@@ -34,6 +34,11 @@ module.exports = defineConfig({
       entry: 'pages/payment/main.js',
       template: 'public/pay-page.html',
       filename: 'pay-page.out.html'
+    },
+    login:{
+      entry: 'pages/login/main.js',
+      template: 'public/login-page.html',
+      filename: 'login-page.out.html'
     }
   },
   devServer : {
