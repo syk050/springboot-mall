@@ -60,16 +60,20 @@ export default {
       let btn;
       let img;
       let p;
-      let text;
+
 
 
 
       for(let i=0; i<a.length; i++){
 
+        let text;
+
         if(a[i].color === null)
           text = a[i].name;
         else
           text = a[i].color;
+
+
 
         li = document.createElement('li');
         btn = document.createElement('button');
@@ -83,9 +87,9 @@ export default {
 
 
         if(a[i].color === null)
-          btn.addEventListener("click", ()=> (this.create_result_item(i, this.is_s_option_created, this.detail.subItems, text)));
+          btn.addEventListener("click", ()=> (this.create_result_item(i, this.is_s_option_created, this.detail.subItems, text, 1)));
         else
-          btn.addEventListener("click", ()=> (this.create_result_item(i, this.is_r_option_created, this.detail.realItems, text)));
+          btn.addEventListener("click", ()=> (this.create_result_item(i, this.is_r_option_created, this.detail.realItems, text, 0)));
 
 
         p.innerText = text;
@@ -99,12 +103,27 @@ export default {
 
     },
 
-    create_result_item(i, is_option_created, a, text){                                                                                               // 옵션 선택 혹은 추가 시, 선택확인 div 생성
+    create_result_item(i, is_option_created, a, t, num){                                                             // 옵션 선택 혹은 추가 시, 선택확인 div 생성
+      console.log(i);
+      if(num == 0) {
 
-      if(is_option_created[i] === 1){
-        alert("이미 추가된 제품입니다.");
+        if(this.is_r_option_created[i] === 1) {
+          alert("이미 추가된 제품입니다.");
+          return
+        }
+        else
+          this.is_r_option_created[i] = 1;
 
-        return
+      }
+      else if(num==1){
+
+        if (this.is_s_option_created[i] === 1) {
+          alert("이미 추가된 제품입니다.");
+          return
+        }
+        else
+          this.is_s_option_created[i] = 1;
+
       }
 
 
@@ -123,7 +142,7 @@ export default {
       num_addbtn.setAttribute('readonly', '');
 
 
-      tag_name.innerText = text;
+      tag_name.innerText = t;
       tag_delbtn.innerText = "X";
 
       prev_addbtn.innerText = "<";
@@ -131,7 +150,11 @@ export default {
       next_addbtn.innerText = ">";
 
       tag_delbtn.addEventListener("click", ()=>{
-        this.is_r_option_created[i] = 0;
+        if(num == 0)
+          this.is_r_option_created[i] = 0;
+        else
+          this.is_s_option_created[i] = 0;
+
         let parent = tag_div.parentElement;
         parent.removeChild(tag_div);
       });
@@ -156,7 +179,7 @@ export default {
       point_tag.after(tag_div);
       point_tag.after(document.createElement('br'));
 
-      this.is_r_option_created[i] = 1;
+
     },
 
 
