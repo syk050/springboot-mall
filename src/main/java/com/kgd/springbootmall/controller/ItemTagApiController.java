@@ -1,8 +1,9 @@
 package com.kgd.springbootmall.controller;
 
 import com.kgd.springbootmall.dto.ItemTagResponseDto;
-import com.kgd.springbootmall.dto.ItemTagSaveDto;
 import com.kgd.springbootmall.service.ItemTagService;
+import com.kgd.springbootmall.vo.ItemTagListVO;
+import com.kgd.springbootmall.vo.StringListVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,9 +27,9 @@ public class ItemTagApiController {
     }
 
     @PostMapping("/kgd/item-tag")
-    public List<Long> saveArray(@RequestBody ItemTagSaveDto[] saveDtoArray) {
-        System.out.println("들어옴??");
-        return service.saveArray(saveDtoArray);
+    public void save(@RequestBody ItemTagListVO listVO) {
+        System.out.println("ItemTagListVO");
+        listVO.getList();
     }
 
 }
