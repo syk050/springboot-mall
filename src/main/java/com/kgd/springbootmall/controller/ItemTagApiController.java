@@ -18,17 +18,12 @@ public class ItemTagApiController {
     @GetMapping("/kgd/item-tag/{itemId}")
     public List<ItemTagResponseDto> findById(@PathVariable Long itemId) { return service.getItemsTagList(itemId); }
 
-//    @PostMapping("/kgd/item-tag")
-//    public Long save(@RequestBody ItemTagSaveDto saveDto) {
-//        return service.save(saveDto);
-//    }
-
-//    @PostMapping("/kgd/item-tag")
-//    public List<Long> saveList(@RequestBody List<ItemTagSaveDto> saveDtoList) {
-//        System.out.println("들어옴??");
-//        System.out.println(saveDtoList);
-//        return service.saveList(saveDtoList);
-//    }
+    @PostMapping("/kgd/item-tag")
+    public void save(@RequestBody StringListVO testVos) {
+        System.out.println("StringListVO");
+        System.out.println(testVos.getTags());
+        System.out.println(testVos.getItemId());
+    }
 
     @PostMapping("/kgd/item-tag")
     public List<Long> saveArray(@RequestBody ItemTagSaveDto[] saveDtoArray) {
