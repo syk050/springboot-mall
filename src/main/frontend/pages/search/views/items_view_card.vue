@@ -138,8 +138,11 @@ export default {
       tag_div.setAttribute('class', 'result_div');
       tag_name.setAttribute('class', 'result_name');
       tag_delbtn.setAttribute('class', 'result_delbtn');
+      prev_addbtn.setAttribute('class', 'result_minusbtn')
+      num_addbtn.setAttribute('class', 'result_num_count');
       num_addbtn.setAttribute('type', 'number');
-      num_addbtn.setAttribute('readonly', '');
+      num_addbtn.setAttribute('size', '1');
+      // num_addbtn.setAttribute('readonly', '');
 
 
       tag_name.innerText = t;
@@ -171,6 +174,7 @@ export default {
 
       tag_div.appendChild(tag_name);
       tag_div.appendChild(tag_delbtn);
+      tag_div.appendChild(document.createElement('br'));
 
       tag_div.appendChild(prev_addbtn);
       tag_div.appendChild(num_addbtn);
@@ -181,13 +185,6 @@ export default {
 
 
     },
-
-
-
-
-
-
-
 
   }
 }
@@ -200,6 +197,18 @@ button{
   border: none;
   border-radius: 4px;
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+}
+
+input{
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button{
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 }
 
 #items_card_list{
@@ -266,6 +275,11 @@ button{
   float : right;
   margin-right: 5px;
   margin-top : 8px
+}
+.result_num_count{
+  border: none;
+  width: 50px;
+  text-align: center;
 }
 
 

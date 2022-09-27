@@ -1,14 +1,16 @@
 package com.kgd.springbootmall.dto;
 
 
+import com.kgd.springbootmall.entity.Products;
 import com.sun.istack.NotNull;
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
+@NoArgsConstructor
 public class ProductDTO {
 
     @NotNull
@@ -29,13 +31,58 @@ public class ProductDTO {
     private String color;         // int, 색상여부
 
     private String seller;     // varchar2(30), 판매자
-    
+
     private String rel_items;   // varchar2(30), 관련 아이템
 
+    @Builder
+    public ProductDTO(int id, String name, String category, int price, int dc_rate, String clarif, boolean deli, String color, String seller, String rel_items) {
+        this.id = id;
+        this.name = name;
+        this.category = category;
+        this.price = price;
+        this.dc_rate = dc_rate;
+        this.clarif = clarif;
+        this.deli = deli;
+        this.color = color;
+        this.seller = seller;
+        this.rel_items = rel_items;
+    }
 
+    @Builder
     public ProductDTO(int id, String name, int price) {
         this.id = id;
         this.name = name;
         this.price = price;
     }
+
+    public ProductDTO toDTO(Products p){
+        ProductDTO dto = ProductDTO.builder()
+                .id(p.getId())
+                .name(p.getName())
+                .category(p.getCategory())
+                .price(p.getPrice())
+                .dc_rate(p.getDc_rate())
+                .clarif(p.getClarif())
+                .deli(p.isDeli())
+                .color(p.getColor())
+                .seller(p.getSeller())
+                .rel_items(p.getRel_items())
+                .build();
+        return dto;
+    }
+
+    public ProductDTO toSubDTO(Products p){
+        ProductDTO dto = ProductDTO.builder()
+                .id(p.getId())
+                .name(p.getName())
+                .price(p.getPrice())
+                .build();
+        return dto;
+    }
+
+
+    // 생성자로도 충분히 DTO를 만들 수 있지만, Builder 패턴을 사용할 경우, 생성자보다 DTO 생성코드가 축약되고, 생성자와 달리 메서드명을 사용할 수 있다.
+
+
+
 }

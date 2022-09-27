@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -54,45 +53,20 @@ public class SearchService {
     }
 
 
-    public ProductDTO entityToDTO(Products prod){                                                                       // Entity(DB) 에서 DTO(트랜잭션)으로 변환하는 코드(Controller나 Service 코드로 작성한다.)
-
-        return new ProductDTO(prod.getId(),
-                prod.getName(),
-                prod.getCategory(),
-                prod.getPrice(),
-                prod.getDc_rate(),
-                prod.getClarif(),
-                prod.isDeli(),
-                prod.getColor(),
-                prod.getSeller(),
-                prod.getRel_items());
-
-    }
-
-    public ProductDTO entityToDTOSub(Products prod){
-        return new ProductDTO(
-                prod.getId(),
-                prod.getName(),
-                prod.getPrice()
-        );
-    }
-
     public List<ProductDTO> entitytoDTOList(List<Products> prodList, int bool){
 
         List<ProductDTO> dtoList = new ArrayList<>();
 
         if(bool==0){                                                                                                    // realDTO Translate
             for(int i=0; i<prodList.size(); i++)
-                dtoList.add(entityToDTO(prodList.get(i)));
+                dtoList.add(new ProductDTO().toDTO(prodList.get(i)));
         } else if (bool==1) {                                                                                           // subDTO Translate
             for(int i=0; i<prodList.size(); i++)
-                dtoList.add(entityToDTOSub(prodList.get(i)));
+                dtoList.add(new ProductDTO().toSubDTO(prodList.get(i)));
         }
-
 
         return dtoList;
     }
-
 
 
     public void isSecureInputData(String s){
@@ -102,7 +76,6 @@ public class SearchService {
     public String[] getSplit(String s){
 
         String[] array = s.split(",");
-
         return array;
     }
 
