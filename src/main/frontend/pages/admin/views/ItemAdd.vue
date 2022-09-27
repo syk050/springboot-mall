@@ -77,16 +77,23 @@ export default {
     this.previewImg()
   },
   unmounted() {
-    console.log('떠남')
-    const apiUrl = '/kgd/item-tag'
-
-    const nodeList = document.querySelectorAll('#current-tag .w3-tag');
-    let tagData = []
-    for(const value of nodeList.values()) {
-      tagData.push({"tag": value.innerText, "itemId": this.itemId})
-    }
-
-    this.$axios.post(apiUrl, tagData)
+    // const apiUrl = '/kgd/item-tag'
+    //
+    // const nodeList = document.querySelectorAll('#current-tag .w3-tag');
+    // let tagData = []
+    // for(const value of nodeList.values()) {
+    //   tagData.push({"tag": value.innerText, "itemId": this.itemId})
+    // }
+    //
+    // const formData = new FormData();
+    //
+    // tagData.forEach(function(value) {
+    //   formData.append("ItemTag[]", value) // you have to add array symbol after the key name
+    // })
+    //
+    // // 양식 데이터에서는 배열을 직접 보낼 수 없음
+    // // this.$axios.post(apiUrl, tagData)
+    // this.$axios.post(apiUrl, formData)
   },
   methods: {
     fnList() {
@@ -113,19 +120,11 @@ export default {
       }
     },
     fnSave() {
-      // 태그 가져오기
-      let nodeList = document.getElementById("current-tag").childNodes;
-      let tempTagList = []
-      for (let i = 0; i < nodeList.length; i++) {
-        tempTagList.push(nodeList[i].innerText)
-        console.log(nodeList[i].innerText)
-      }
-
       const apiUrl = '/kgd/items/'
 
       this.$axios.post(apiUrl, this.form)
-          .then((id) => {
-            this.itemId = id
+          .then((res) => {
+            this.itemId = res.data
             this.fnList()
           }).catch(err => {
         if (err.message.indexOf('Network Error') > -1) {
@@ -166,25 +165,29 @@ export default {
       })
       return imgPath
     },
-    /* TODO 상품 저장 후 ID 값을 받아 태그 저장
-     * https://developer.mozilla.org/ko/docs/Web/API/NodeList
-     */
     test() {
-      // let nodeList = document.getElementById("current-tag").childNodes;
-      // let tempTagList = new Array()
-      // for (let i = 0; i < nodeList.length; i++) {
-      //   if (nodeList[i].innerText !== undefined ){
-      //     tempTagList.push(nodeList[i].innerText)
-      //   }
-      //
-      // }
-      // console.log(tempTagList)
-
+      const apiUrl = '/kgd/item-tag'
       const nodeList = document.querySelectorAll('#current-tag .w3-tag');
-      let tempTagList = []
+      const formData = {'itemTag': []}
+
+      // for(const value of nodeList.values()) {
+      //   formData['tags'].push(value.innerText)
+      // }
+      // formData["itemId"] = 9999
+
       for(const value of nodeList.values()) {
-        tempTagList.push(value.innerText)
+        formData['itemTag'].push({"tag":value.innerText, "itemId":999})
       }
+
+
+      // for (const [key, value] of Object.entries(formData)) {
+      //   console.log(`${key}: ${value}`);
+      // }
+
+      // 양식 데이터에서는 배열을 직접 보낼 수 없음
+      // this.$axios.post(apiUrl, tagData)
+      // this.$axios.post(apiUrl, JSON.stringify({list: tagData}))
+      this.$axios.post(apiUrl, formData)
     }
   }
 }
