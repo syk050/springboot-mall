@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.domain.Page;
 
 @Getter
 @Setter
@@ -80,8 +81,25 @@ public class ProductDTO {
         return dto;
     }
 
+    public Page<ProductDTO> toDTOPage(Page<Products> pList){
+        Page<ProductDTO> dtoList = pList.map(p -> ProductDTO.builder()
+                .id(getId())
+                .name(p.getName())
+                .category(p.getCategory())
+                .price(p.getPrice())
+                .dc_rate(p.getDc_rate())
+                .clarif(p.getClarif())
+                .deli(p.isDeli())
+                .color(p.getColor())
+                .seller(p.getSeller())
+                .rel_items(p.getRel_items())
+                .build());
 
-    // 생성자로도 충분히 DTO를 만들 수 있지만, Builder 패턴을 사용할 경우, 생성자보다 DTO 생성코드가 축약되고, 생성자와 달리 메서드명을 사용할 수 있다.
+        return dtoList;
+    }
+
+
+    // 생성자로도 충분히 DTO를 만들 수 있지만, Builder 패턴을 사용할 경우, 생성자보다 DTO 생성코드가 간단해지고, 생성자와 달리 메서드명으로 호출할 수 있다.
 
 
 

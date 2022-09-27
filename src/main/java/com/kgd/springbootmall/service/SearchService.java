@@ -25,9 +25,9 @@ public class SearchService {
     private final SearchRepository searchRepository;
 
     @Transactional
-    public Page<Products> getByName(String str, Pageable pageable){                                               // url로 query를 받아 검색하는 service 코드
+    public Page<ProductDTO> getByName(String str, Pageable pageable){                                               // url로 query를 받아 검색하는 service 코드
         Page<Products> rtn_Prod = searchRepository.findByName(str, pageable);
-        return rtn_Prod;
+        return new ProductDTO().toDTOPage(rtn_Prod);
     }
 
 

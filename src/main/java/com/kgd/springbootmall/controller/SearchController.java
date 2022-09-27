@@ -28,8 +28,8 @@ public class SearchController {
     private final SearchService searchService;
 
     @GetMapping("/name")
-    public Page<Products> selectProducts(@RequestParam String query, @PageableDefault(page = 0, size=6, sort="id", direction = Sort.Direction.ASC) Pageable pageable){
-        Page<Products> rtn_ProdDTO = searchService.getByName(query, pageable);
+    public Page<ProductDTO> selectProducts(@RequestParam String query, @PageableDefault(page = 0, size=6, sort="id", direction = Sort.Direction.ASC) Pageable pageable){
+        Page<ProductDTO> rtn_ProdDTO = searchService.getByName(query, pageable);
         return rtn_ProdDTO;
     }
                                                                                                                         // Paging 처리를 수월하게 하기 위해 page의 변수가 담길 수 있는 Page 객체열로 반환한다.                                                                                                                    // 이름 매개변수로 1개만 가져오는 메소드( Page로 반환하는 이유는 vue에서 변수로 매핑할 때 v-for을 쓰면 속성 개수만큼 반복하기 때문, Page로 반환하면 속성이 아닌 return값의 개수만큼 반복)
