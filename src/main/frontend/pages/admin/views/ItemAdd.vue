@@ -77,23 +77,15 @@ export default {
     this.previewImg()
   },
   unmounted() {
-    // const apiUrl = '/kgd/item-tag'
-    //
-    // const nodeList = document.querySelectorAll('#current-tag .w3-tag');
-    // let tagData = []
-    // for(const value of nodeList.values()) {
-    //   tagData.push({"tag": value.innerText, "itemId": this.itemId})
-    // }
-    //
-    // const formData = new FormData();
-    //
-    // tagData.forEach(function(value) {
-    //   formData.append("ItemTag[]", value) // you have to add array symbol after the key name
-    // })
-    //
-    // // 양식 데이터에서는 배열을 직접 보낼 수 없음
-    // // this.$axios.post(apiUrl, tagData)
-    // this.$axios.post(apiUrl, formData)
+    const apiUrl = '/kgd/item-tag'
+    const nodeList = document.querySelectorAll('#current-tag .w3-tag');
+    const formData = {'itemTag': []}
+
+    for(const value of nodeList.values()) {
+      formData['itemTag'].push({"tag":value.innerText, "itemId":999})
+    }
+
+    this.$axios.post(apiUrl, formData)
   },
   methods: {
     fnList() {
@@ -165,30 +157,6 @@ export default {
       })
       return imgPath
     },
-    test() {
-      const apiUrl = '/kgd/item-tag'
-      const nodeList = document.querySelectorAll('#current-tag .w3-tag');
-      const formData = {'itemTag': []}
-
-      // for(const value of nodeList.values()) {
-      //   formData['tags'].push(value.innerText)
-      // }
-      // formData["itemId"] = 9999
-
-      for(const value of nodeList.values()) {
-        formData['itemTag'].push({"tag":value.innerText, "itemId":999})
-      }
-
-
-      // for (const [key, value] of Object.entries(formData)) {
-      //   console.log(`${key}: ${value}`);
-      // }
-
-      // 양식 데이터에서는 배열을 직접 보낼 수 없음
-      // this.$axios.post(apiUrl, tagData)
-      // this.$axios.post(apiUrl, JSON.stringify({list: tagData}))
-      this.$axios.post(apiUrl, formData)
-    }
   }
 }
 </script>
