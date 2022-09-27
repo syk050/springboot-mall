@@ -20,13 +20,6 @@ public class ItemTagApiController {
     public List<ItemTagResponseDto> findById(@PathVariable Long itemId) { return service.getItemsTagList(itemId); }
 
     @PostMapping("/kgd/item-tag")
-    public void save(@RequestBody StringListVO testVos) {
-        System.out.println("StringListVO");
-        System.out.println(testVos.getTags());
-        System.out.println(testVos.getItemId());
-    }
-
-    @PostMapping("/kgd/item-tag")
     public void save(@RequestBody ItemTagListVO listVO) {
         System.out.println("ItemTagListVO");
         listVO.getList();
