@@ -12,7 +12,7 @@ import java.util.List;
 
 
 public interface SearchRepository extends JpaRepository<Products, Long> {
-    @Query(value = "SELECT * FROM products WHERE name LIKE %?1% GROUP BY name",                                         // id는 다르더라도 제품명이 같은(ex)같은 제품의 다른 색상) 제품은 1개만 검색되게끔 group by로 중복을 제거한다.
+    @Query(value = "SELECT * FROM products WHERE name LIKE %?1% GROUP BY name",                                         // id는 다르더라도 제품명이 같은(ex)같은 제품의 다른 색상) 제품은 1개만 검색되게끔 group by로 중복을 제거한다(중복 제거에는 같은 이름-다른색상-다른개수 인 아이템을 하나만 가져오기 위함).
     nativeQuery = true)
     Page<Products> findByName(@Param("name") String name, Pageable pageable);
                                                                                                                         // 제품명을 검색하여 결과를 Page 객체 배열로 가져오는 쿼리
@@ -20,7 +20,7 @@ public interface SearchRepository extends JpaRepository<Products, Long> {
                                                                                                                         // JpaRepository가 기본 제공하는 query가 존재하지만, 사용할 것이라면 List<>가 아닌 Page<> 형식으로 받아야 한다는 것을 명심해야 한다.
 
 
-    @Query(value = "SELECT * FROM products WHERE name LIKE ?1",                                                       // 제품명을 검색하여 어떤 제품명과 정확히 일치하는 제품 가져오기
+    @Query(value = "SELECT * FROM products WHERE name LIKE ?1",                                                         // 제품명을 검색하여 어떤 제품명과 정확히 일치하는 제품 가져오기
             nativeQuery = true)
     List<Products> getProductDetail(@Param("name") String name);
 

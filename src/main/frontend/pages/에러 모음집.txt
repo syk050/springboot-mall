@@ -1,0 +1,34 @@
+No tests found for given includes
+    ㄴ 해결방법 : 설정 > 빌드, 실행 > 빌드 도구 > 그래들 > Run tests using 을 IntelliJ IDEA로 설정해야 한다.
+
+Access to DialectResolutionInfo cannot be null when 'hibernate.dialect' not set
+    ㄴ 해결방법 : application.properties 프로퍼티 파일에 있는 정보와 jpa 정보가 기입되어 있지 않을 때 발생
+
+Paging query needs to have a Pageable parameter
+    ㄴ 해결방법 : 대부분은 Pagable의 import 문제, 하필 우선순위 첫 번째가 aws.print.pageable이라 발생한 문제라, spring boot 쪽으로 import 하면 해결
+
+~~~~ 8080 or 8081 port is already use
+    ㄴ 해결방법 : 8080 포트 사용 누락으로 인한 오류,
+        1. cmd 관리자 권한으로 실행, 2. netstat -a -o 입력 후, 로컬 주소가 0.0.0.0:8080인 것의 PID 확인, 3. taskkill /f /pid PID번호 입력
+
+[Vue warn]: Failed to mount app: mount target selector "#app" returned null
+    ㄴ 해결방법 : 기준점이 되는 html 파일의 <div id="app"></div>이 있는지 확인해 보자. app에 마운트하는 것이니, app div가 있어야 한다.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
