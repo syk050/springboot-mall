@@ -77,15 +77,15 @@ export default {
     this.previewImg()
   },
   unmounted() {
-    const apiUrl = '/kgd/item-tag'
-    const nodeList = document.querySelectorAll('#current-tag .w3-tag');
-    const formData = {'itemTag': []}
-
-    for(const value of nodeList.values()) {
-      formData['itemTag'].push({"tag":value.innerText, "itemId":999})
-    }
-
-    this.$axios.post(apiUrl, formData)
+    // const apiUrl = '/kgd/item-tag'
+    // const nodeList = document.querySelectorAll('#current-tag .w3-tag');
+    // const formData = {'itemTag': []}
+    //
+    // for(const value of nodeList.values()) {
+    //   formData['itemTag'].push({"tag":value.innerText, "itemId":999})
+    // }
+    //
+    // this.$axios.post(apiUrl, formData)
   },
   methods: {
     fnList() {
@@ -101,7 +101,7 @@ export default {
         "content": this.editorData
       }
 
-      if (inputFile) {
+      if (inputFile.value) {
         this.imgSave().then(path => {
           this.form["imgPath"] = path;
 
@@ -112,11 +112,20 @@ export default {
       }
     },
     fnSave() {
-      const apiUrl = '/kgd/items/'
+      const itemApiUrl = '/kgd/items/'
+      const itemTagApiUrl = '/kgd/item-tag'
+      const nodeList = document.querySelectorAll('#current-tag .w3-tag');
 
-      this.$axios.post(apiUrl, this.form)
+      this.$axios.post(itemApiUrl, this.form)
           .then((res) => {
+            const formData = {'itemTag': []}
             this.itemId = res.data
+
+            for(const value of nodeList.values()) {
+              formData['itemTag'].push({"tag":value.innerText, "itemId": this.itemId})
+            }
+            this.$axios.post(itemTagApiUrl, formData)
+
             this.fnList()
           }).catch(err => {
         if (err.message.indexOf('Network Error') > -1) {
@@ -157,6 +166,17 @@ export default {
       })
       return imgPath
     },
+    test() {
+      const itemTagApiUrl = '/kgd/item-tag'
+      const nodeList = document.querySelectorAll('#current-tag .w3-tag');
+      const formData = {'itemTag': []}
+
+      for(const value of nodeList.values()) {
+        formData['itemTag'].push({"tag":value.innerText, "itemId":999})
+      }
+
+      this.$axios.post(itemTagApiUrl, formData)
+    }
   }
 }
 </script>
