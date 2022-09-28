@@ -38,6 +38,8 @@ public class Products {
 
     private String rel_items;   // 관련 아이템(아이템 선택 시, 구매할 수 있는 옵션 상품)
 
+    private String img_url;
+
 
     public Products(String name, String category, int price, int dc_rate, String clarif, boolean deli, String color, String seller, String rel_items) {
         this.name = name;
@@ -49,6 +51,5 @@ public class Products {
         this.color = color;
         this.seller = seller;
         this.rel_items = rel_items;
-
     }
 }

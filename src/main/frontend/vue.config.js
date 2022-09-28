@@ -13,6 +13,11 @@ module.exports = defineConfig({
       template: 'public/search-page.html',
       filename: 'search-page.out.html'
     },
+    seller:{
+      entry: 'pages/seller/main.js',
+      template: 'public/seller-page.html',
+      filename: 'seller-page.out.html'
+    },
     admin:{
       entry: 'pages/admin/main.js',
       template: 'public/admin-page.html',
@@ -39,7 +44,7 @@ module.exports = defineConfig({
       entry: 'pages/login/main.js',
       template: 'public/login-page.html',
       filename: 'login-page.out.html'
-    }
+    },
   },
   devServer : {
     proxy : {
