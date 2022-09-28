@@ -49,11 +49,31 @@ Object.fromEntries()
 
 "key" in obj // true, regardless of the actual value
 ─────────────────────────────────────────────────────────────────────────────────────────────────────────────
-beforeCreate()      created()
+created()
+    컴포넌트의 데이터와 이벤트에 엑세스할 수 있습니다
+    초기에 외부에서 부여받은 설정에 의해 기본 값 변경이 필요할 때
 
-beforeMount()       mounted()
+mounted()
+    비동기 호출(async/await, promise) 구문을 통해 API 데이터를 가져올 때
+    Vue 라이프사이클은 비동기 흐름을 기다리지 않아 created에서 호출 구문을 무시하고 라이프사이클 진행
+    모든 자식 컴포넌트가 마운트되었음을 보장하지 않음
+    전체 화면내용이 렌더링될 때까지 기다리려면, mounted 내에서 vm.$nextTick를 사용
+─────────────────────────────────────────────────────────────────────────────────────────────────────────────
+vm.$인스턴스 속성             vm.$인스턴스 메소드/데이터          vm.$인스턴스 메소드/이벤트
+    vm.$data                    vm.$watch                       vm.$on
+    vm.$props                   vm.$set                         vm.$once
+    vm.$elvm.$options           vm.$delete                      vm.$off
+    vm.$parent                                                  vm.$emit
+    vm.$root
+    vm.$slots
+    vm.$scopedSlots
+    vm.$refs
+    vm.$isServer
+    vm.$attrs
+    vm.$listeners
 
-beforeUpdate()      updated()
-
-beforeUnmount()     unmounted()
+ => https://y-chyachya.tistory.com/11
+─────────────────────────────────────────────────────────────────────────────────────────────────────────────
+Vue 슬롯(slot) 사용법 및 예제
+=> https://webruden.tistory.com/923?category=809529
 ─────────────────────────────────────────────────────────────────────────────────────────────────────────────
