@@ -13,7 +13,6 @@
         <div class="w3-section w3-container w3-bottombar">
           <a class="w3-button w3-right w3-dark-gray" role="button" v-on:click="fnList">목록</a>
           <a class="w3-button w3-right w3-indigo" role="button" v-on:click="beforeSave">저장</a>
-          <a class="w3-button w3-right w3-indigo" role="button" v-on:click="test">테스트</a>
         </div>
       </div>
     </header>
@@ -75,17 +74,6 @@ export default {
   },
   mounted() {
     this.previewImg()
-  },
-  unmounted() {
-    // const apiUrl = '/kgd/item-tag'
-    // const nodeList = document.querySelectorAll('#current-tag .w3-tag');
-    // const formData = {'itemTag': []}
-    //
-    // for(const value of nodeList.values()) {
-    //   formData['itemTag'].push({"tag":value.innerText, "itemId":999})
-    // }
-    //
-    // this.$axios.post(apiUrl, formData)
   },
   methods: {
     fnList() {
@@ -165,17 +153,6 @@ export default {
             console.error(err);
       })
       return imgPath
-    },
-    test() {
-      const itemTagApiUrl = '/kgd/item-tag'
-      const nodeList = document.querySelectorAll('#current-tag .w3-tag');
-      const formData = {'itemTag': []}
-
-      for(const value of nodeList.values()) {
-        formData['itemTag'].push({"tag":value.innerText, "itemId":999})
-      }
-
-      this.$axios.post(itemTagApiUrl, formData)
     }
   }
 }
