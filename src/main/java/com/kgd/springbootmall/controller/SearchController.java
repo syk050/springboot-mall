@@ -17,8 +17,6 @@ import java.util.List;
 import java.util.Map;
 
 
-// 구조 :
-
                                                                                                                         // @RESTController는 String만 출력됨(해당 어노테이션 사용 시, @ResponseBody를 생략가능)
                                                                                                                         // jsp 파일을 출력하기 위해서는 @Contoller를 사용
 @RestController
