@@ -1,7 +1,7 @@
 package com.kgd.springbootmall.service;
 
 import com.kgd.springbootmall.dto.ProductDTO;
-import com.kgd.springbootmall.entity.Products;
+import com.kgd.springbootmall.entity.seller.Products;
 import com.kgd.springbootmall.repository.SearchRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

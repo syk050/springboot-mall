@@ -1,7 +1,7 @@
 package com.kgd.springbootmall.dto;
 
 
-import com.kgd.springbootmall.entity.Products;
+import com.kgd.springbootmall.entity.seller.Products;
 import com.sun.istack.NotNull;
 import lombok.Builder;
 import lombok.Getter;

@@ -1,7 +1,6 @@
 package com.kgd.springbootmall.controller;
 
 import com.kgd.springbootmall.dto.ProductDTO;
-import com.kgd.springbootmall.entity.Products;
 import com.kgd.springbootmall.service.SearchService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

@@ -1,4 +1,4 @@
-package com.kgd.springbootmall.entity;
+package com.kgd.springbootmall.entity.seller;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

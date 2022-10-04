@@ -1,6 +1,6 @@
 package com.kgd.springbootmall.repository;
 
-import com.kgd.springbootmall.entity.Products;
+import com.kgd.springbootmall.entity.seller.Products;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
