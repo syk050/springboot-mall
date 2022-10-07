@@ -1,0 +1,10 @@
+사용자 계정 관련 쿼리 ---------------------------------------------
+
+- 조회
+select user, host from mysql.user;		// 사용자 계정 조회
+show grants for spring				// 'spring' 사용자 권환 조회( all privileges의 내용을 보고 싶으면 admin의 권한을 보면 된다)
+
+
+- 권한 부여(권한 부여 후, flush privileges는 무조건 해야한다.)
+grant select, insert, update, delete on DB명.테이블명 TO '사용자명'@'호스트' identified by '비밀번호';
+		ex) grant select, insert, update, delete on innodb.* TO 'spring'@'%' identified by 'spring1234';
