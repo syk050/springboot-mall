@@ -18,7 +18,7 @@ public class Color {
     @Id
     @Column(nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Double num;
+    private Long num;
 
     private String name;
 
