@@ -3,6 +3,7 @@ import AdminHome from '../views/AdminHome'
 import ItemsDetail from '../views/ItemsDetail'
 import ItemModify from "../views/ItemModify";
 import ItemAdd from "../views/ItemAdd";
+import test from "../views/test";
 
 
 const routes = [
@@ -26,6 +27,12 @@ const routes = [
         name: 'ItemAdd',
         component: ItemAdd
     },
+    {
+        path: '/admin/test',
+        name: 'test',
+        component: test
+    },
+
 
 ]
 
