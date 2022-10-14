@@ -8,3 +8,17 @@ show grants for spring				// 'spring' 사용자 권환 조회( all privileges의
 - 권한 부여(권한 부여 후, flush privileges는 무조건 해야한다.)
 grant select, insert, update, delete on DB명.테이블명 TO '사용자명'@'호스트' identified by '비밀번호';
 		ex) grant select, insert, update, delete on innodb.* TO 'spring'@'%' identified by 'spring1234';
+
+
+- view 생성
+create or replace view v_prod
+as
+    select p.num
+    , p.name
+    , p.clarif
+    , p.rel_items
+    , p.regdate
+    , c.name c_name
+    , c.count
+    from product p, color c
+    where p.color_num = c.num;

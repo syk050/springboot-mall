@@ -12,6 +12,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 @SpringBootApplication
 @EntityListeners(AuditingEntityListener.class)
 public class Color {
