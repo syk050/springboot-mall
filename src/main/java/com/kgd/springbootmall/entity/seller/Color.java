@@ -1,6 +1,7 @@
 package com.kgd.springbootmall.entity.seller;
 
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -23,4 +24,10 @@ public class Color {
     private String name;
 
     private Integer count;
+
+
+    public Color(String name, Integer count) {
+        this.name = name;
+        this.count = count;
+    }
 }

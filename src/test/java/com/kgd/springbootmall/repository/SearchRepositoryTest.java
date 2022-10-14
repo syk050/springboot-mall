@@ -1,5 +1,6 @@
 package com.kgd.springbootmall.repository;
 
+import com.kgd.springbootmall.entity.seller.Color;
 import com.kgd.springbootmall.entity.seller.Product;
 import com.kgd.springbootmall.entity.seller.Products;
 import org.junit.Before;
@@ -27,6 +28,9 @@ public class SearchRepositoryTest {
 
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private ColorRepository colorRepository;
 
     List<Products> prodList;
     Products prod1;
@@ -69,6 +73,11 @@ public class SearchRepositoryTest {
         productRepository.resetAuto();
     }
 
+    public void resetColor(){
+        colorRepository.deleteAll();
+        colorRepository.resetAuto();
+    }
+
 
     @Test
     public void insertProducts(){                                                                                           // 낱개 추가 테스트 코드
@@ -91,7 +100,18 @@ public class SearchRepositoryTest {
     public void insertProduct(){
         resetProduct();
 
-        Product prod = new Product();
+        Product prod = new Product("제품1", "설명", "관련아이템 리스트", 1L);
         productRepository.save(prod);
+    }
+
+    @Test
+    public void insertColor(){
+        resetColor();
+
+        // { 색상num, 색상명, 개수 }  옆의 데이터를 DTO로 받되 색상명과 개수를 배열로 받을 예정
+
+        Color color = new Color("블루", 2);
+        colorRepository.save(color);
+
     }
 }

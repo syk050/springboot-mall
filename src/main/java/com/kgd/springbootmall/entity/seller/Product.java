@@ -46,5 +46,10 @@ public class Product {
     private Integer cate_num;                       // 외래키
 
 
-
+    public Product(String name, String clarif, String rel_items, Long color_num) {
+        this.name = name;
+        this.clarif = clarif;
+        this.rel_items = rel_items;
+        this.color_num = color_num;
+    }
 }

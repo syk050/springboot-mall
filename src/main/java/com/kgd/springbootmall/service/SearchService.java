@@ -2,6 +2,7 @@ package com.kgd.springbootmall.service;
 
 import com.kgd.springbootmall.dto.ProductDTO;
 import com.kgd.springbootmall.entity.seller.Products;
+import com.kgd.springbootmall.repository.ColorRepository;
 import com.kgd.springbootmall.repository.ProductRepository;
 import com.kgd.springbootmall.repository.SearchRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +26,8 @@ import java.util.Map;
 public class SearchService {
     private final SearchRepository searchRepository;
     private final ProductRepository productRepository;
+
+    private final ColorRepository colorRepository;
 
 
     @Transactional
@@ -87,9 +90,8 @@ public class SearchService {
     public void resetDB(){                                                                                              // Test 코드에 필요한 Products 테이블 reset service 코드(id속성의 auto_increment를 초기화하고, 테이블 내용을 전체 삭제 한다)
         searchRepository.deleteAll();
         searchRepository.resetAuto();
-        productRepository.deleteAll();
-        productRepository.resetAuto();
     }
+
 
 
 }
