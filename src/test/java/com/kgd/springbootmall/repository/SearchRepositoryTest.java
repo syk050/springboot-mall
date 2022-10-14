@@ -1,5 +1,6 @@
 package com.kgd.springbootmall.repository;
 
+import com.kgd.springbootmall.entity.seller.Product;
 import com.kgd.springbootmall.entity.seller.Products;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,14 +25,14 @@ public class SearchRepositoryTest {
     @Autowired
     private SearchRepository searchRepository;
 
+    @Autowired
+    private ProductRepository productRepository;
+
     List<Products> prodList;
     Products prod1;
 
     @Before
     public void beforeTest(){
-        searchRepository.deleteAll();
-        searchRepository.resetAuto();
-
         String name = "제품명";
         String category = "카테고리";
         int price = 10000;
@@ -42,11 +43,6 @@ public class SearchRepositoryTest {
         String seller = "셀러";
         String rel_items = "3, 4";
 
-
-//        prod1 = new Products(                                                                                         // 낱개 추가 테스트 코드
-//                "제품명", "카테고리", 10000, 10, "설명", true, 2, "셀러"
-//        );
-        
         
         prodList = new ArrayList<>();
 
@@ -61,25 +57,41 @@ public class SearchRepositoryTest {
 
     }
 
-    @Test
-    public void resetDB(){                                                                                              // DB reset test
+    public void resetProducts(){                                                                                              // DB reset test
         searchRepository.deleteAll();
         searchRepository.resetAuto();
+
+
+    }
+
+    public void resetProduct(){
+        productRepository.deleteAll();
+        productRepository.resetAuto();
     }
 
 
     @Test
-    public void insertTest(){                                                                                           // 낱개 추가 테스트 코드
-        Products rtn_prods = searchRepository.save(prod1);
+    public void insertProducts(){                                                                                           // 낱개 추가 테스트 코드
+        resetProducts();
 
+        Products rtn_prods = searchRepository.save(prod1);
         assert(prod1.getName().equals(rtn_prods.getName()));
     }
 
 
     @Test
-    public void insetListTest(){                                                                                        // 리스트 추가 테스트 코드
-        List<Products> list = searchRepository.saveAll(prodList);
+    public void insertProductsList(){// 리스트 추가 테스트 코드
+        resetProducts();
 
+        List<Products> list = searchRepository.saveAll(prodList);
         assert(prodList.get(0).getName().equals(list.get(0).getName()));
+    }
+
+    @Test
+    public void insertProduct(){
+        resetProduct();
+
+        Product prod = new Product();
+        productRepository.save(prod);
     }
 }

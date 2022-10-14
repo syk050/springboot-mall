@@ -2,6 +2,7 @@ package com.kgd.springbootmall.service;
 
 import com.kgd.springbootmall.dto.ProductDTO;
 import com.kgd.springbootmall.entity.seller.Products;
+import com.kgd.springbootmall.repository.ProductRepository;
 import com.kgd.springbootmall.repository.SearchRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +24,8 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class SearchService {
     private final SearchRepository searchRepository;
+    private final ProductRepository productRepository;
+
 
     @Transactional
     public Page<ProductDTO> getByName(String str, Pageable pageable){                                               // url로 query를 받아 검색하는 service 코드
@@ -84,7 +87,10 @@ public class SearchService {
     public void resetDB(){                                                                                              // Test 코드에 필요한 Products 테이블 reset service 코드(id속성의 auto_increment를 초기화하고, 테이블 내용을 전체 삭제 한다)
         searchRepository.deleteAll();
         searchRepository.resetAuto();
+        productRepository.deleteAll();
+        productRepository.resetAuto();
     }
+
 
 }
 
