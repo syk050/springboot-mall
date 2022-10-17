@@ -17,6 +17,8 @@ public class SellerController {
     @PostMapping("/post")
     public void postProduct()
     {
+        // Json으로 받거나, 각 개별 클래스로 해당하는 데이터 수신 및 처리
+        sellerService.insertData();
 
     }
 
