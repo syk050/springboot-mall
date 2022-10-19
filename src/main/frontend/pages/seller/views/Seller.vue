@@ -25,7 +25,7 @@
   <!--      태그 입력하고 엔터 누르면 옆에 태그 div 동적으로 추가됨-->
         </div>
         <p style="display:block">간단한 설명</p>
-        <textarea cols="50" rows="4"></textarea>
+        <textarea cols="50" rows="4" name="p_clarif" id="p_clarif_input" class="p_input"></textarea>
         <div>
           <p>색상</p>
           <input name="p_color" id="p_color_input" class="p_input"><br/>
@@ -68,7 +68,31 @@ export default {
   components : {
     'common-footer' : commonFooter,
   },
+  data(){
+    return {
+      form : {},
+      pName : '',
+      relItmes : '',    // 추가 제품(자질구래한 것) 'space' 분할기능이 service 단에 있으니 ex){1, 2, 3} 처럼 관련 아이템 번호를 스페이스로 구별하여 생성
+      pCategory : '',   // 최종 카테고리(자식)
+      pClarif : '',
+      pColor : {},      // 지원 가능 색상 배열
+      pCount : {},
+      pPrice : {},
+    }
+  },
   mounted() {
+  },
+  methods : {
+    SendPost() {
+      const pName = document.getElementById("p_name_input");
+      const relItmes = document.getElementById("p_rel_item_input");
+      const pCategory = document.getElementById("p_category_input");
+      const pClarif = document.getElementById("p_clarif_input");
+      const pColor = document.getElementById("p_color_input");
+      const pCount = document.getElementById("p_count_input");
+      const pPrice = document.getElementById("p_price_input");
+
+    }
   }
 }
 </script>
