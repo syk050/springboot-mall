@@ -1,9 +1,11 @@
 package com.kgd.springbootmall.controller;
 
 
+import com.kgd.springbootmall.dto.seller.ProductAddDTO;
 import com.kgd.springbootmall.service.SellerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,8 +17,9 @@ public class SellerController {
     private final SellerService sellerService;
 
     @PostMapping("/post")
-    public void postProduct()
+    public void postProduct(@RequestBody ProductAddDTO productAddDTO)
     {
+        System.out.println("수신완료");
         // Json으로 받거나, 각 개별 클래스로 해당하는 데이터 수신 및 처리
         sellerService.insertData();
 
