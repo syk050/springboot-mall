@@ -1,0 +1,2 @@
+Ctrl + O            : 사용하지 않는 import 자동 제거(Java)
+Ctrl + Alt + L      : 줄 간격 자동 정렬
