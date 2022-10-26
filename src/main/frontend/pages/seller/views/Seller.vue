@@ -15,8 +15,10 @@
       <input name="p_tag" id="p_tag_input" class="p_input"><br>
       <p style="display:block">간단한 설명</p>
       <textarea cols="50" rows="4" name="p_clarif" id="p_clarif_input" class="p_input" v-model="pClarif"></textarea><br>
-      <p>색상</p>
-      <input name="p_color" id="p_color_input" class="p_input" v-model="pColor"><br>
+      <div id="colorTagDiv">
+        <p>색상</p>
+        <input name="p_color" id="p_color_input" class="p_input" v-model="pColor">
+      </div>
       <p>개수</p>
       <input name="p_count" id="p_count_input" class="p_input" v-model="pCount"><br>
       <p>가격</p>
@@ -49,6 +51,7 @@
 <script>
 import commonFooter from "../../layout/common-footer";
 import {loadMenu} from "../../api/communication";            // 통신전용 파일의 get 메소드
+// import $ from "jquery"
 export default {
   name: "App",
   components: {
@@ -68,8 +71,7 @@ export default {
     }
   },
   mounted() {
-    document.getElementById("p_color_input").addEventListener('keyup', this.pushColorToArray);
-
+    document.getElementById("p_color_input").addEventListener('keyup', this.pushColorToArray);            // Color input 입력 후, Enter 시 배열 추가 func
   },
   methods: {
     sendPost() {
@@ -81,7 +83,6 @@ export default {
         "clarif": this.pClarif,
         "c_name": this.pColor,
         "count": this.pCount,
-
       };
 
       console.log(this.form);
@@ -93,15 +94,52 @@ export default {
 
     },
 
-    pushColorToArray(){
-      if(event.keyCode === 13){
-        this.pColorArr.push(this.pColor);
-        this.pColor = '';
+    pushColorToArray() {
+      if (event.keyCode === 13) {
+        if (this.pColor == '') {                                // 아무것도 입력된 것이 없으면 동작 X
+          return;
+        }
+        else if (this.pColorArr.includes(this.pColor)) {
+          alert("이미 값이 추가되었습니다");
+        } else {
+          this.pColorArr.push(this.pColor);             // 배열에 추가
+          this.pushEffect();                            // 이펙트 동작
+        }
 
+        this.pColor = '';                               // 초기화
         console.log("pColorArr : ", this.pColorArr);
       }
+    },
 
-    }
+    pushEffect() {
+      // 해당되는 input 태그에서 생성되어 오른쪽 자신의 자리로 이동하는 animation 생성 예정
+      let colorTagDiv = document.getElementById("colorTagDiv");
+
+      let tagDiv = document.createElement("div");
+      let tagTxt = document.createElement("p");
+      let tagDelBtn = document.createElement("button");
+
+      tagDiv.setAttribute('class', 'tagDiv');
+      tagTxt.setAttribute('class', 'tagTxt');
+      tagDelBtn.setAttribute('class', 'tagDelBtn');
+
+      tagTxt.innerText = this.pColor;
+      tagDelBtn.innerText = "X";
+
+      tagDelBtn.addEventListener("click", () => {
+        let idx = this.pColorArr.indexOf(tagTxt.innerText);
+        this.pColorArr.splice(idx, 1);
+
+        let parent = tagDiv.parentElement;
+        parent.removeChild(tagDiv);
+      })
+
+
+      tagDiv.appendChild(tagTxt);
+      tagDiv.appendChild(tagDelBtn);
+      colorTagDiv.appendChild(tagDiv);
+
+    },
 
 
   }
@@ -123,7 +161,7 @@ p {
   min-width: 1000px;
 }
 
-fieldset{
+fieldset {
   padding-left: 30px;
 }
 
@@ -137,12 +175,75 @@ fieldset{
   text-align: center;
 }
 
-.p_input{
+.p_input {
   margin-left: 10px;
 }
+
+
+#colorTagDiv {
+}
+
 
 #btn_div {
   text-align: center;
 }
+
+</style>
+
+
+<!--scoped는 제한된 css만 적용됨(동적 적용 및 타 컴포넌트에도 적용하려면 scoped가 없는 style 작성해야 함)-->
+<style>
+
+@keyframes fadeOutRight {
+  from {
+    opacity: 0;
+    left: -100px;
+    top: -100px;
+  }
+  to {
+    opacity: 1;
+    left: 0px;
+    top: 0px;
+  }
+
+}
+
+p {
+  display: inline;
+  margin: 0px 3px;
+}
+
+.tagDiv {
+  position: relative;
+  border: 1px solid black;
+  border-radius: 3px;
+  margin: 2px;
+  padding: 2px;
+  display: inline;
+  vertical-align: center;
+  -webkit-animation: fadeOutRight 1s;
+  -moz-animation: fadeOutRight 1s;
+  -ms-animation: fadeOutRight 1s;
+  -o-animation: fadeOutRight 1s;
+  animation: fadeOutRight 1s;
+}
+
+/*  브라우저 호환성을 위한 처리
+-webkit : 크롬 & 사파리
+-moz : 파이어폭스
+-o : 오페라
+-ms : 인터넷 익스플로러
+
+*/
+
+
+.tagDelBtn {
+  margin: 2px;
+  width: 18px;
+  height: 18px;
+  padding: 0px;
+  vertical-align: center;
+}
+
 
 </style>
