@@ -51,7 +51,8 @@
 <script>
 import commonFooter from "../../layout/common-footer";
 import {loadMenu} from "../../api/communication";            // 통신전용 파일의 get 메소드
-// import $ from "jquery"
+// import $ from "jquery";
+
 export default {
   name: "App",
   components: {
@@ -98,8 +99,7 @@ export default {
       if (event.keyCode === 13) {
         if (this.pColor == '') {                                // 아무것도 입력된 것이 없으면 동작 X
           return;
-        }
-        else if (this.pColorArr.includes(this.pColor)) {
+        } else if (this.pColorArr.includes(this.pColor)) {
           alert("이미 값이 추가되었습니다");
         } else {
           this.pColorArr.push(this.pColor);             // 배열에 추가
@@ -118,10 +118,14 @@ export default {
       let tagDiv = document.createElement("div");
       let tagTxt = document.createElement("p");
       let tagDelBtn = document.createElement("button");
+      let tagNumInput = document.createElement("input");
 
       tagDiv.setAttribute('class', 'tagDiv');
       tagTxt.setAttribute('class', 'tagTxt');
       tagDelBtn.setAttribute('class', 'tagDelBtn');
+      tagNumInput.setAttribute('class', 'tagNumInput');
+      tagNumInput.setAttribute('value', 1);
+      tagNumInput.setAttribute('type', 'number');
 
       tagTxt.innerText = this.pColor;
       tagDelBtn.innerText = "X";
@@ -132,13 +136,20 @@ export default {
 
         let parent = tagDiv.parentElement;
         parent.removeChild(tagDiv);
-      })
+      });
 
+      // let tmpStr = "";
+      // tmpStr += "<div class='tagDiv'>";
+      // tmpStr += "<p class='tagTxt'>"
+      // tmpStr += this.pColor
+      // tmpStr += "</p>"
+      //       <button class="tagDelBtn"></button>
+      //     </div>`
 
       tagDiv.appendChild(tagTxt);
       tagDiv.appendChild(tagDelBtn);
+      tagDiv.appendChild(tagNumInput);
       colorTagDiv.appendChild(tagDiv);
-
     },
 
 
@@ -214,12 +225,15 @@ p {
 }
 
 .tagDiv {
+  width: 70px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
   position: relative;
   border: 1px solid black;
   border-radius: 3px;
   margin: 2px;
   padding: 2px;
-  display: inline;
   vertical-align: center;
   -webkit-animation: fadeOutRight 1s;
   -moz-animation: fadeOutRight 1s;
@@ -243,6 +257,15 @@ p {
   height: 18px;
   padding: 0px;
   vertical-align: center;
+}
+
+.tagNumInput{
+  width : 20px;
+}
+.tagNumInput::-webkit-inner-spin-button{
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
 }
 
 
